@@ -57,3 +57,11 @@ Scenario: Armazenar resposta em branco à lista
   Then há uma lista de discussão “Qual é a derivada de 2x” criada pelo usuário “Carlos” armazenada no sistema
   And a discussão possui a resposta “Não faço ideia” do usuário João
   And o sistema envia uma mensagem de erro devido ao fato de uma mensagem vazia ter sido recebida
+
+Scenario: Armazenar resposta à lista trancada
+  Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema
+  And a discussão possui a resposta "Não faço ideia" do usuário "João"
+  And a lista está trancada
+  When eu envio a resposta "É 2" à discussão ao sistema
+  Then a discussão possui a resposta "Não faço ideia" do usuário João
+  And o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas
