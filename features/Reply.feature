@@ -74,3 +74,11 @@ Scenario: Armazenar resposta à lista trancada
   When eu envio a resposta "É 2" à discussão ao sistema
   Then a discussão possui a resposta "Não faço ideia" do usuário João
   And o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas
+
+Scenario: Armazenar resposta sem estar logado
+  Given eu não estou logado no fórum 
+  And há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema
+  And a discussão possui a resposta "Não faço ideia" do usuário "João"
+  When eu envio a resposta "É 2" à discussão ao sistema
+  Then a discussão possui a resposta "Não faço ideia" do usuário João
+  And o sistema envia uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão
