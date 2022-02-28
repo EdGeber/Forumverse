@@ -74,3 +74,4 @@ Scenario: Armazenar resposta à lista trancada
   When eu envio a resposta "É 2" à discussão ao sistema
   Then a discussão possui a resposta "Não faço ideia" do usuário João
   And o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas
+  And a lista continua trancada
