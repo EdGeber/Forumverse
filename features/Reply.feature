@@ -89,4 +89,4 @@ Scenario: Armazenar resposta à comentário
   And a discussão possui a resposta "Não faço ideia" do usuário "João"
   When eu envio ao sistema a resposta "É 2" ao comentário de "João"
   Then a discussão possui a resposta "Não faço ideia" do usuário "João"
-  And a discussão possui a minha resposta "É 2" armazenada como uma respota à resposta de "João"
+  And a discussão possui a minha resposta "É 2" armazenada como uma resposta à resposta de "João"
