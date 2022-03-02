@@ -59,7 +59,7 @@ Scenario: Armazenar resposta à lista de discussão
   And a discussão possui a resposta "Não faço ideia" do usuário João
   And a discussão possui a minha resposta "É 2"
 
-Scenario: Armazenar resposta em branco à lista
+Scenario: Tentar armazenar resposta em branco à lista
   Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema
   And a discussão possui a resposta "Não faço ideia" do usuário João
   When eu envio uma resposta vazia como resposta à discussão ao sistema
@@ -67,7 +67,7 @@ Scenario: Armazenar resposta em branco à lista
   And a discussão possui a resposta "Não faço ideia" do usuário João
   And o sistema envia uma mensagem de erro devido ao fato de uma mensagem vazia ter sido recebida
 
-Scenario: Armazenar resposta à lista trancada
+Scenario: Tentar armazenar resposta à lista trancada
   Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema
   And a discussão possui a resposta "Não faço ideia" do usuário "João"
   And a lista está trancada
@@ -76,7 +76,7 @@ Scenario: Armazenar resposta à lista trancada
   And o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas
   And a lista continua trancada
 
-Scenario: Armazenar resposta sem estar logado
+Scenario: Tentar armazenar resposta sem estar logado
   Given eu não estou logado no fórum 
   And há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema
   And a discussão possui a resposta "Não faço ideia" do usuário "João"
