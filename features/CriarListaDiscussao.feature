@@ -51,3 +51,5 @@ Feature: criar uma lista de discussão
 
     Scenario: pedido na questão 7-f)
         Given ---- mudança pedida na questão 8 ----
+
+    Mudança master questão 14-a)

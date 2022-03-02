@@ -29,3 +29,5 @@ Feature: remover lista de discussão
     Scenario: pedido na questão 7-f)
     >>>>>>> desenvolvimento        
         Given ---- mudança pedida na questão 8 ----
+
+    Mudança master questão 14-a)
