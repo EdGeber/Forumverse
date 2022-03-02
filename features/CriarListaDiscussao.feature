@@ -42,5 +42,5 @@ Scenario: criar lista de discussão que já existe
 	When eu envio outra lista com as mesmas especificações para o sistema
 	Then o sistema continua a possuir apenas uma lista de discussão de
         nome “Não consigo achar a próxima missão!” no tópico “Grand Chase”
-
+    And ---- passo pedido na questão 7-e)-I ------
 
