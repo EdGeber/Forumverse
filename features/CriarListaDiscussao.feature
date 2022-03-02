@@ -42,6 +42,7 @@ Feature: criar uma lista de discussão
 	    When eu envio outra lista com as mesmas especificações para o sistema
 	    Then o sistema continua a possuir apenas uma lista de discussão de
             nome “Não consigo achar a próxima missão!” no tópico “Grand Chase”
+<<<<<<< HEAD
     <<<<<<< HEAD
         And ---- passo pedido na questão 7-e)-I ------
     =======
@@ -53,3 +54,11 @@ Feature: criar uma lista de discussão
         Given ---- mudança pedida na questão 8 ----
 
     Mudança master questão 14-a)
+=======
+
+    Scenario: pedido na questão 7-d)
+
+    Scenario: pedido na questão 7-f)
+
+    Mudança 1 desenvolvimento questão 14-a)
+>>>>>>> Commit desenvolvimento 1 da questão 14-a)
