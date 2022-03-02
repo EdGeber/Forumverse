@@ -50,3 +50,4 @@ Feature: criar uma lista de discussão
     >>>>>>> desenvolvimento
 
     Scenario: pedido na questão 7-f)
+        Given ---- mudança pedida na questão 8 ----

@@ -27,4 +27,5 @@ Feature: remover lista de discussão
     Scenario: pedido na questão 7-d)
 
     Scenario: pedido na questão 7-f)
-    >>>>>>> desenvolvimento
+    >>>>>>> desenvolvimento        
+        Given ---- mudança pedida na questão 8 ----
