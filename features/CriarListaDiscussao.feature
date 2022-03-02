@@ -35,7 +35,7 @@ Scenario: criar lista de discussão sem tópico
     Then eu vejo que não foi criada a lista de discussão
     And recebo um aviso de erro indicando à falta de tópico
 
-###~Service scenarios
+###~Service scenario
 Scenario: criar lista de discussão que já existe
 	Given há uma lista de discussão de nome “Não consigo achar a
         próxima missão!” e tópico “Grand Chase” no sistema
