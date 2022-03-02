@@ -23,3 +23,4 @@ Scenario: remover lista de discussão que não existe
 
 Scenario: questão 7-d) do Roteiro de gerência de configuração
 
+Scenario: questão 7-f) do Roteiro de gerência de configuração
