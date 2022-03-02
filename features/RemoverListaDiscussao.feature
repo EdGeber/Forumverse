@@ -21,3 +21,4 @@ Scenario: remover lista de discussão que não existe
     Then o sistema continua a não possuir a lista de discussão de nome “Limpei
         o radiador do meu carro” no tópico “Automóveis” no sistema
 
+Scenario: pedido na questão 7-d)

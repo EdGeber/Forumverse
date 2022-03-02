@@ -43,4 +43,4 @@ Scenario: criar lista de discussão que já existe
 	Then o sistema continua a possuir apenas uma lista de discussão de
         nome “Não consigo achar a próxima missão!” no tópico “Grand Chase”
 
-
+Scenario: pedido na questão 7-d)
