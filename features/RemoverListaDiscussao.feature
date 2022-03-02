@@ -38,4 +38,9 @@ Feature: remover lista de discussão
 =======
 
     Mudança 1 desenvolvimento questão 14-a)
+<<<<<<< HEAD
 >>>>>>> Commit desenvolvimento 1 da questão 14-a)
+=======
+
+    Mudança 2 desenvolvimento questão 14-a)
+>>>>>>> Commit desenvolvimento 2 da questão 14-a)
