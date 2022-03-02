@@ -22,3 +22,5 @@ Scenario: remover lista de discussão que não existe
         o radiador do meu carro” no tópico “Automóveis” no sistema
 
 Scenario: pedido na questão 7-d)
+
+Scenario: pedido na questão 7-f)

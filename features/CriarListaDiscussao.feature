@@ -44,3 +44,5 @@ Scenario: criar lista de discussão que já existe
         nome “Não consigo achar a próxima missão!” no tópico “Grand Chase”
 
 Scenario: pedido na questão 7-d)
+
+Scenario: pedido na questão 7-f)
