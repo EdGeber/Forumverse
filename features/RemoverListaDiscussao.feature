@@ -12,7 +12,7 @@ Scenario: remover uma lista de discussão
     And eu vejo que a lista de discussão de nome “Pior mapa do jogo” 
         não mais está presente no tópico “Battlefield 1”
 
-###~Service scenarios
+###~Service scenario
 Scenario: remover lista de discussão que não existe
 	Given não há uma lista de discussão de nome “Limpei o radiador do meu
         carro” no tópico “Automóveis” no sistema
@@ -22,3 +22,6 @@ Scenario: remover lista de discussão que não existe
         o radiador do meu carro” no tópico “Automóveis” no sistema
     And (passo requerido na questão "7-e) -> I.")
 
+Scenario: questão 7-d) do Roteiro de gerência de configuração
+
+Scenario: questão 7-f) do Roteiro de gerência de configuração
