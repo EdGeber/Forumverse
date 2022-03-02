@@ -24,4 +24,4 @@ Feature: remover lista de discussão
 
     Scenario: questão 7-d) do Roteiro de gerência de configuração
 
-    Scenario: questão 7-f) do Roteiro de gerência de configuração
+    Scenario: questão 7-f) do Roteiro de gerência de configuração*correção, questão 8.
