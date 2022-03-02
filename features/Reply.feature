@@ -41,7 +41,7 @@ Scenario: Responder comentário da lista
   And eu vejo a resposta do usuário "João": "Não faço ideia"
   And eu vejo logo abaixo da resposta de João a minha resposta, composta por uma citação à mensagem de João e o conteúdo "É 2".
 
-Scenario: Responder lista sem estar logado
+Scenario: Tentar responder lista sem estar logado
   Given eu não estou logado no fórum
   And eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"
   And eu vejo a resposta do usuário "João": "Não faço ideia"
