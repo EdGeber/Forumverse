@@ -67,3 +67,6 @@ Feature: criar uma lista de discussão
 
     Mudança 2 desenvolvimento questão 14-a)
 >>>>>>> Commit desenvolvimento 2 da questão 14-a)
+    
+    Scenario: pedido na questão 15.
+        Given: ajuste pedido na questão 15.
