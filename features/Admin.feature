@@ -81,6 +81,14 @@ Feature: Admin account
     When  I try to create a new user account using the email "julius12345@gmail.com"
     Then  The forum will not allow me to do so
 
+  Scenario: Fail to exclude an admin user
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
+    And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
+    When  I try to exclude Kaori
+    Then  I can't exclude because Kaori is an admin user
+    And   The only answer to the question is still "Use the print function.", made by Kaori
+
   Scenario: Fail to edit another admin's answer
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
