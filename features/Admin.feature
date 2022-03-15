@@ -99,7 +99,7 @@ Feature: Admin account
     Then  The system acknowledges successful admin account creation
 
     When  I go to the forum's authentication page
-    And   I input "Sora" for the username, "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
+    And   "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
     Then  I am able to authenticate successfully
     And   I am at the forum's initial page
     And   I can see my account is an admin account
