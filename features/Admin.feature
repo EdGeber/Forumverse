@@ -16,6 +16,26 @@ Feature: Admin account
     And   I am at the forum's initial page
     And   I can see my account is an admin account
 
+  Scenario: Editing of an answer from another user
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    And   The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew
+
+    When  I select the option to edit Mathews's answer
+    And   I edit it to "Yes, I live in South Carolina"
+    And   I confirm the edition
+    Then  I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    And   The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
+    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
+
+    When  I log in with a non-admin account
+    And   I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    Then  The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
+    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
+
   Scenario: Removal of an answer from an existing thread
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in JavaScript?", made by user John
@@ -60,26 +80,6 @@ Feature: Admin account
 
     When  I try to create a new user account using the email "julius12345@gmail.com"
     Then  The forum will not allow me to do so
-
-  Scenario: Editing of an answer from another user
-    Given I am logged as an admin
-    And   I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    And   The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew
-
-    When  I select the option to edit Mathews's answer
-    And   I edit it to "Yes, I live in South Carolina"
-    And   I confirm the edition
-    Then  I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    And   The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
-    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
-
-    When  I log in with a non-admin account
-    And   I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    Then  The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
-    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
 
   Scenario: Fail to edit another admin's answer
     Given I am logged as an admin
