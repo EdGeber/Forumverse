@@ -89,6 +89,14 @@ Feature: Admin account
     Then  I can't edit because Kaori is an admin user
     And   The only answer to the question is still "Use the print function.", made by Kaori
 
+  Scenario: Fail to delete another admin's answer
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
+    And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
+    When  I try to delete Kaori's answer
+    Then  I can't delete because Kaori is an admin user
+    And   The only answer to the question is still "Use the print function.", made by Kaori
+
   Scenario: Fail to create admin account with an existing username
     Given There is a registered user in the forum with username "Naomi", email "IamNaomi@gmail.com" and password "Jun'ichirou"
     And   I have asked the forum system to create a new admin account
