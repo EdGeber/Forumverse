@@ -5,6 +5,37 @@ Feature: Admin account
 
   # ALL MENTIONED USERS ARE NON-ADMIN USERS EXCEPT WHEN OTHERWISE SPECIFIED
 
+  Scenario: Successful creation of admin account
+    Given There is no registered user in the forum with username "Sora", be it admin or non-admin
+    When  I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"
+    Then  The system acknowledges successful admin account creation
+
+    When  I go to the forum's authentication page
+    And   "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
+    Then  I am able to authenticate successfully
+    And   I am at the forum's initial page
+    And   I can see my account is an admin account
+
+  Scenario: Editing of an answer from another user
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    And   The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew
+
+    When  I select the option to edit Mathews's answer
+    And   I edit it to "Yes, I live in South Carolina"
+    And   I confirm the edition
+    Then  I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    And   The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
+    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
+
+    When  I log in with a non-admin account
+    And   I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
+    Then  The first answer to the question is "No, I live in Recife", made by Anne
+    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
+    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
+
   Scenario: Removal of an answer from an existing thread
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in JavaScript?", made by user John
@@ -33,26 +64,6 @@ Feature: Admin account
     When  I search for a discussion with question "How to print in C#?"
     Then  A discussion with that name does not show up as a result
 
-  Scenario: Editing of an answer from another user
-    Given I am logged as an admin
-    And   I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    And   The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew
-
-    When  I select the option to edit Mathews's answer
-    And   I edit it to "Yes, I live in South Carolina"
-    And   I confirm the edition
-    Then  I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    And   The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
-    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
-
-    When  I log in with a non-admin account
-    And   I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
-    Then  The first answer to the question is "No, I live in Recife", made by Anne
-    And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
-    And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
-
   Scenario: Exclusion of a non-admin user
     Given I am logged as an admin
     And   There is a user Julius in the forum whose registered email is "julius12345@gmail.com"
@@ -70,12 +81,28 @@ Feature: Admin account
     When  I try to create a new user account using the email "julius12345@gmail.com"
     Then  The forum will not allow me to do so
 
+  Scenario: Fail to exclude an admin user
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
+    And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
+    When  I try to exclude Kaori
+    Then  I can't exclude because Kaori is an admin user
+    And   The only answer to the question is still "Use the print function.", made by Kaori
+
   Scenario: Fail to edit another admin's answer
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
     And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
     When  I try to edit Kaori's answer
     Then  I can't edit because Kaori is an admin user
+    And   The only answer to the question is still "Use the print function.", made by Kaori
+
+  Scenario: Fail to delete another admin's answer
+    Given I am logged as an admin
+    And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
+    And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
+    When  I try to delete Kaori's answer
+    Then  I can't delete because Kaori is an admin user
     And   The only answer to the question is still "Use the print function.", made by Kaori
 
   Scenario: Fail to create admin account with an existing username
@@ -92,17 +119,6 @@ Feature: Admin account
     When  I provide "Kasa" as the username of the admin account I'm trying to create
     Then  The system won't let me create the admin account because the username "Kasa" is taken
     And   There is still only one admin account with username "Kasa" in the forum, and its email is "IamKasa@gmail.com"
-
-  Scenario: Successful creation of admin account
-    Given There is no registered user in the forum with username "Sora", be it admin or non-admin
-    When  I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"
-    Then  The system acknowledges successful admin account creation
-
-    When  I go to the forum's authentication page
-    And   I input "Sora" for the username, "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
-    Then  I am able to authenticate successfully
-    And   I am at the forum's initial page
-    And   I can see my account is an admin account
 
   Scenario: 'Admin' flag on admin answer
     Given There is an admin user Junia in the forum with email "JuniaWhoAreYa@gmail.com" and password "IamALiar"
