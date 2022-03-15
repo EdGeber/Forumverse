@@ -44,6 +44,23 @@ Feature: Admin account
     When  I search for a discussion with question "How to print in C#?"
     Then  A discussion with that name does not show up as a result
 
+  Scenario: Exclusion of a non-admin user
+    Given I am logged as an admin
+    And   There is a user Julius in the forum whose registered email is "julius12345@gmail.com"
+    And   I am at the page of the discussion with question "How to print in Ruby?", made by Julius
+    And   The only answer to the question is "This guy is asking "How to print in" questions for every language! He is trolling", made by Madeline
+
+    When  I select the option to exclude user Julius
+    And   I confirm my intention to exclude
+    Then  I am redirected to the start page
+    And   I see a confirmation message of the deletion
+
+    When  I search for a discussion with question "How to print in Ruby?"
+    Then  A discussion with that name does not show up as a result
+
+    When  I try to create a new user account using the email "julius12345@gmail.com"
+    Then  The forum will not allow me to do so
+
   Scenario: Editing of an answer from another user
     Given I am logged as an admin
     And   I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph
@@ -63,23 +80,6 @@ Feature: Admin account
     Then  The first answer to the question is "No, I live in Recife", made by Anne
     And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
     And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
-
-  Scenario: Exclusion of a non-admin user
-    Given I am logged as an admin
-    And   There is a user Julius in the forum whose registered email is "julius12345@gmail.com"
-    And   I am at the page of the discussion with question "How to print in Ruby?", made by Julius
-    And   The only answer to the question is "This guy is asking "How to print in" questions for every language! He is trolling", made by Madeline
-
-    When  I select the option to exclude user Julius
-    And   I confirm my intention to exclude
-    Then  I am redirected to the start page
-    And   I see a confirmation message of the deletion
-
-    When  I search for a discussion with question "How to print in Ruby?"
-    Then  A discussion with that name does not show up as a result
-
-    When  I try to create a new user account using the email "julius12345@gmail.com"
-    Then  The forum will not allow me to do so
 
   Scenario: Fail to edit another admin's answer
     Given I am logged as an admin
