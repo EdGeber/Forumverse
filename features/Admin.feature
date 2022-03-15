@@ -5,6 +5,17 @@ Feature: Admin account
 
   # ALL MENTIONED USERS ARE NON-ADMIN USERS EXCEPT WHEN OTHERWISE SPECIFIED
 
+  Scenario: Successful creation of admin account
+    Given There is no registered user in the forum with username "Sora", be it admin or non-admin
+    When  I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"
+    Then  The system acknowledges successful admin account creation
+
+    When  I go to the forum's authentication page
+    And   "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
+    Then  I am able to authenticate successfully
+    And   I am at the forum's initial page
+    And   I can see my account is an admin account
+
   Scenario: Removal of an answer from an existing thread
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in JavaScript?", made by user John
@@ -92,17 +103,6 @@ Feature: Admin account
     When  I provide "Kasa" as the username of the admin account I'm trying to create
     Then  The system won't let me create the admin account because the username "Kasa" is taken
     And   There is still only one admin account with username "Kasa" in the forum, and its email is "IamKasa@gmail.com"
-
-  Scenario: Successful creation of admin account
-    Given There is no registered user in the forum with username "Sora", be it admin or non-admin
-    When  I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"
-    Then  The system acknowledges successful admin account creation
-
-    When  I go to the forum's authentication page
-    And   "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password
-    Then  I am able to authenticate successfully
-    And   I am at the forum's initial page
-    And   I can see my account is an admin account
 
   Scenario: 'Admin' flag on admin answer
     Given There is an admin user Junia in the forum with email "JuniaWhoAreYa@gmail.com" and password "IamALiar"
