@@ -52,21 +52,6 @@ Feature: Admin account
     And   The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew
     And   Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin
 
-  Scenario: Removal of an answer from an existing thread
-    Given I am logged as an admin
-    And   I am at the page of the discussion with question "How to print in JavaScript?", made by user John
-    And   The only answer to the question is "I don't know", made by Mary
-
-    When  I select the option to delete Mary's answer
-    And   I confirm my intention to delete
-    Then  I'm still at the page of the discussion with question "How to print in JavaScript?", made by user John
-    And   I see a confirmation message of the deletion
-    And   In the place of Mary's former answer, I see a message telling that the answer was deleted by an admin
-
-    When  I log in with a non-admin account
-    And   I go to the page of the discussion with question "How to print in JavaScript?", made by user John
-    Then  In the place of an answer by Mary, I see a message telling that Mary's answer was deleted by an admin
-
   Scenario: Removal of an existing discussion thread
     Given I am logged as an admin
     And   I am at the page of the discussion with question "How to print in C#?", made by user Johnathan
@@ -111,14 +96,6 @@ Feature: Admin account
     And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
     When  I try to edit Kaori's answer
     Then  I can't edit because Kaori is an admin user
-    And   The only answer to the question is still "Use the print function.", made by Kaori
-
-  Scenario: Fail to delete another admin's answer
-    Given I am logged as an admin
-    And   I am at the page of the discussion with question "How to print in Python?", made by user Williams
-    And   The only answer to the question is "Use the print function.", made by Kaori, an admin user
-    When  I try to delete Kaori's answer
-    Then  I can't delete because Kaori is an admin user
     And   The only answer to the question is still "Use the print function.", made by Kaori
 
   Scenario: Fail to create admin account with an existing username
