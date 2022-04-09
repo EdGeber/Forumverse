@@ -1,0 +1,31 @@
+<html>
+
+<h1>Create account</h1>
+
+<table>
+    <tr>
+        <h2>Email</h2>
+        <input [(ngModel)]="newUser.email">
+    </tr>
+
+    <tr>
+        <h2>Username</h2>
+        <input (change)="removeDuplicateNameWarning()" [(ngModel)]="newUser.name">
+    </tr>
+
+    <tr>
+        <h2>Password</h2>
+        <input [(ngModel)]="newUser.password">
+    </tr>
+</table>
+
+<button (click)="removeMissingFieldWarning(); registerUser()">Done!</button>
+
+<div *ngIf="isMissingField">Please fill in all fields.</div>
+
+<div *ngIf="isNameDuplicate">
+    This username is already taken. Please choose another one.
+</div>
+
+
+</html>

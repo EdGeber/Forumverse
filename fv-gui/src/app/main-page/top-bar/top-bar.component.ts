@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { NgModule } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 
 @Component({
-  selector: 'main-page-root',
+  selector: 'top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
 
 export class TopBarComponent {
-    title = "fv-gui";
 }

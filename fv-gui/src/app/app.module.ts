@@ -5,14 +5,20 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 // import here every component created
+import { Page } from './page';
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
 import { RightBarComponent } from './main-page/right-bar/right-bar';
+import { UserRegistComponent } from './user-regist-page/user-regist.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 
 @NgModule({
     declarations: [
+        Page,
         TopBarComponent,
-        RightBarComponent
+        RightBarComponent,
+        UserRegistComponent,
+        MainPageComponent
     ],
     imports: [
         BrowserModule,
@@ -25,13 +31,23 @@ import { RightBarComponent } from './main-page/right-bar/right-bar';
             // example, TopBarComponent is the root of the main page,
             // so its path name is 'main'.
             {
+                path: '',
+                redirectTo: 'main',
+                pathMatch: 'full'
+            },
+            {
                 path: 'main',
-                component: TopBarComponent
+                component: MainPageComponent
+            },
+            {
+                path: 'register',
+                component: UserRegistComponent
             },
         ])
     ],
     // don't change
     providers: [],
-    bootstrap: [TopBarComponent]
+    bootstrap: [Page]
 })
+
 export class AppModule { }
