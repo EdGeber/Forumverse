@@ -4,16 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-// import here the root component of each page. For example,
-// TopBarComponent is the root component of main-page. We
-// know that because the name of its selector ends in "root"
-// (it is 'main-page-root')
+// import here every component created
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
+import { RightBarComponent } from './main-page/right-bar/right-bar';
 
 
 @NgModule({
     declarations: [
-        TopBarComponent
+        TopBarComponent,
+        RightBarComponent
     ],
     imports: [
         BrowserModule,
