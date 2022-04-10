@@ -13,30 +13,38 @@ div{
 }
 .center
 {
-    height: fit-content;
+    height:100%;
     display: flex;
+    min-height: 90vh;
 }
 
 .center-left
 {
-    height: fit-content;
+    width: 20%;
+    height: auto;
     display: flow-root;
 }
 
 .center-center
 {
-   height: fit-content;
+    width: 60%;
+   height: auto;
 }
 
     
 .center-right
 {
-    height: fit-content;
+    width: 20%;
+    height: auto;
 }
 
 .bot{
     height: fit-content;
-    display: flex;
+    width: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-color: #80808033;
 }
 

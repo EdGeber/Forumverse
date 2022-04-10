@@ -1,7 +1,11 @@
 .greetings{
+    padding-top: 20%;
+    padding-bottom: 5%;
     display: flex;
     font-size: xx-large;
     font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
 
 #hi{
@@ -17,13 +21,17 @@
 .thread{
     font-size: xx-large;
     font-weight: bold;
-    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
 }
 
 .thread-button{
     font-size: 100%;
     min-height: 35px;
-    width: 100%;
+    width: 70%;
     font-weight: bold;
     opacity: 0.8;
     transition: 0.5s;
@@ -34,9 +42,10 @@
     display: inline-block;
     cursor: pointer;
     border-radius: 8px;
-    border: 2px solid  #DB00B6;
+    border: 3px solid  #DB00B6;
     background-color: #380B7A;
-
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .thread-button:hover

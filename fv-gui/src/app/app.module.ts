@@ -31,6 +31,7 @@ import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.co
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
+import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,7 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
         HomeBottomBarComponent,
         TopBarComponent,
         HomePageComponent,
-
+        HomeDiscussionsComponent,
         /* user-regist-page */
         UserRegistFieldsComponent,
         UserRegistTopBarComponent,

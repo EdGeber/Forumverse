@@ -1,12 +1,23 @@
 .botbar{
-    width: 100%;
     display: flex;
+    background-color: #80808033;
+    vertical-align: baseline;
+
 }
 #bottom-bar-right{
+    flex-direction: row;
     display: flex;
+    flex:auto;
+    align-items:center;
+    margin-right: 4%;
+    justify-content: right;
+    background-color: transparent;
 }
 #bottom-bar-left{
     display: flex;
+    flex: auto;
+    margin-left: 2%;
+    background-color: transparent;
 }
 
 .bottom-bar-button{
