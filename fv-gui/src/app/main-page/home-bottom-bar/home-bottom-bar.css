@@ -1,0 +1,42 @@
+.botbar{
+    width: 100%;
+    display: flex;
+}
+#bottom-bar-right{
+    display: flex;
+}
+#bottom-bar-left{
+    display: flex;
+}
+
+.bottom-bar-button{
+    font-size: 100%;
+    min-height: 35px;
+    width: 100%;
+    font-weight: bold;
+    opacity: 0.8;
+    transition: 0.5s;
+    border: none;
+    color: #12CDD4;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid  #DB00B6;
+    background-color: #380B7A;
+}
+
+.bottom-bar-button:hover
+{
+    opacity: 1;
+}
+
+.bottom-bar-button:active
+{
+    background-color: #DB00B6;
+    border: 2px solid  #12CDD4;
+    color:#380B7A ;
+    transition: 0.2s;
+}
+
