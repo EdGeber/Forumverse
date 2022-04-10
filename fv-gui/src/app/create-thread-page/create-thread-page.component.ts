@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CreateDiscus } from '../../../../common/CreateDiscus'
+import { Thread } from '../../../../common/Thread'
 import { lastValueFrom } from 'rxjs';
 import { Ack, ACK, ErrorHandlers } from '../../../../common/Ack';
-import { DiscussionService } from '../services/discussion.service';
+import { ThreadService } from '../services/thread.service';
 
 @Component({
   selector: 'create-discus-page',
-  templateUrl: './create-discus-page.component.html',
-  styleUrls: ['./create-discus-page.component.css']
+  templateUrl: './create-thread-page.component.html',
+  styleUrls: ['./create-thread-page.component.css']
 })
 
-export class CreateDiscussionComponent {
+export class CreateThreadComponent {
     
     // private properties
     private readonly _ERROR_HANDLING: ErrorHandlers = {};
 
     // public properties
-    public title = "Create discussion";
-    public discCreate = new CreateDiscus();
+    public title = "Create Thread";
+    public threadCreate = new Thread();
     public isMissingField = false;
-    public isDiscussionDuplicate = false;
+    public isThreadDuplicate = false;
 
     // private methods
     private _handleError(ack: Ack) {
@@ -31,24 +31,24 @@ export class CreateDiscussionComponent {
     // public methods
     constructor(private _router: Router) {
 
-        this._ERROR_HANDLING[ACK.CREATE_DISCUSSION.MISSING_FIELD.code] =
+        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_FIELD.code] =
             () => this.isMissingField = true;
 
-        this._ERROR_HANDLING[ACK.CREATE_DISCUSSION.DUPLICATE_DISCUSNAME.code] =
-            () => this.isDiscussionDuplicate = true;
+        this._ERROR_HANDLING[ACK.CREATE_THREAD.DUPLICATE_THREADNAME.code] =
+            () => this.isThreadDuplicate = true;
 
     }
 
     public removeMissingFieldWarning() {
         this.isMissingField = false;
     }
-    public removeDuplicateDiscussionWarning() {
-        this.isDiscussionDuplicate = false;
+    public removeDuplicateThreadWarning() {
+        this.isThreadDuplicate = false;
     }
 
-    public async createDiscussion() {
+    public async createThread() {
         var ack = await
-            lastValueFrom(DiscussionService.tryCreateDiscussion(this.discCreate));
+            lastValueFrom(ThreadService.tryCreateThread(this.threadCreate));
         
         if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
         else this._handleError(ack);

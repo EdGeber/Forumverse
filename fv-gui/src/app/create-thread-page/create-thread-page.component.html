@@ -5,19 +5,19 @@
 <table>
     <tr>
         <h2>Discussion Name</h2>
-        <input (change)="removeDuplicateDiscussionWarning()" [(ngModel)]="discCreate.discusName">
+        <input (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
     </tr>
-
+    
     <tr>
         <h2>Discussion Topics</h2>
     </tr>
 </table>
 
-<button (click)="removeMissingFieldWarning(); createDiscussion()">Done!</button>
+<button (click)="removeMissingFieldWarning(); createThread()">Done!</button>
 
 <div *ngIf="isMissingField">Please create a name for the discussion.</div>
 
-<div *ngIf="isDiscussionDuplicate">
+<div *ngIf="isThreadDuplicate">
     Duplicated discussion name. Please create another name.
 </div>
 
