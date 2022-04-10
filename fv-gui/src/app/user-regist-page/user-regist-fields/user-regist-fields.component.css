@@ -35,6 +35,8 @@ body{
     font-size: 1.1rem;
     font-family: sans-serif;
     color: #deac1e;
+    font-weight: bold;
+    font-size: 110%;
 }
 .inputs{
     margin-bottom: 40px;
@@ -47,6 +49,9 @@ body{
     border-radius: 5px;
     border: #db00b6 solid 2px;
     padding: 0.4rem;
+    color: #12CDD4;
+    font-weight: bold;
+    font-size: 110%;
 }
 .donebutton{
     padding: 0.9rem 3.5rem;

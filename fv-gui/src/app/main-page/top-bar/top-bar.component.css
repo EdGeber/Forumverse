@@ -139,12 +139,12 @@ body{
 }
 
 .login-container{
-    width: 30%;
+    width: 25%;
     height: auto;
     margin-left: 4px;
-    margin-right: 4px;
+    margin-right: 5%;
     display: flex;
-    justify-content:right;
+    justify-content:end;
     align-items: center;
     background-color: transparent;
 }
@@ -160,7 +160,7 @@ body{
     background-color: transparent;
 }
 .top-bar-button{
-    font-size: 110%;
+    font-size: 100%;
     min-height: 35px;
     width: 100%;
     font-weight: bold;
