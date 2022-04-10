@@ -1,0 +1,36 @@
+<html>
+
+<div class="container">
+    <h1 class="title">Log in</h1>
+    
+    <table class="table-fields">
+        <tr class="inputs">
+            <h2 class="inputTitle">Email</h2>
+            <input class="inputReg" [(ngModel)]="user.email">
+        </tr>
+    
+        <tr class="inputs">
+            <h2 class="inputTitle">Password</h2>
+            <input class="inputReg " type="password" [(ngModel)]="user.password">
+        </tr>
+    </table>
+
+    <div class="hints">
+        
+        <p class="hint">
+            Don't have an account yet? <a routerLink="/register">Create one</a>.
+        </p>
+
+    </div>
+
+    <button (click)="loginUser()" class="donebutton">Done!</button>
+
+    <div *ngIf="isMissingField">Please fill in all fields.</div>
+
+    <div *ngIf="isUserNotFound">
+        User not found.
+    </div>
+
+</div>
+
+</html>
