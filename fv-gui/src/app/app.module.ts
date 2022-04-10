@@ -23,6 +23,9 @@ import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fie
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
+// create-discussion-page
+import { ThreadPageComponent } from './thread-page/thread-page.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -44,10 +47,14 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
         AdminRegistPageComponent,
 
         /* create-thread-page */
-        CreateThreadComponent
+        CreateThreadComponent,
+        
+        /* thread-page */
+        ThreadPageComponent
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
@@ -76,7 +83,11 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
             {
                 path: 'create-thread',
                 component: CreateThreadComponent
-            }
+            },
+            {
+                path: 'thread',
+                component: ThreadPageComponent
+            },
         ])
     ],
     // don't change

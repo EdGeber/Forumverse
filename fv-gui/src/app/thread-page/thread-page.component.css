@@ -1,0 +1,18 @@
+* {
+    color: white;
+}
+
+ul{
+    list-style-position: inside; /*Avoid dots overlapping text*/
+    padding-left: 0.5rem;
+}
+
+/* Hides the first dot */
+.thread-info:first-child{
+    list-style-type: none;
+}
+
+.thread-info{
+float: left; /*Makes the list horizontal*/
+padding-right: 0.75rem;
+}
