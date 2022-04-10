@@ -17,6 +17,12 @@ import { UserRegistFieldsComponent } from './user-regist-page/user-regist-fields
 import { UserRegistTopBarComponent } from './user-regist-page/user-regist-top-bar/user-regist-top-bar.component';
 import { UserRegistPageComponent } from './user-regist-page/user-regist-page.component';
 
+// admin-regist-page
+import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.component';
+import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
+
+// create-discussion-page
+import { CreateDiscussionComponent } from './create-discus-page/create-discus-page.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +36,15 @@ import { UserRegistPageComponent } from './user-regist-page/user-regist-page.com
         /* user-regist-page */
         UserRegistFieldsComponent,
         UserRegistTopBarComponent,
-        UserRegistPageComponent
+        UserRegistPageComponent,
+
+        /* user-regist-page */
+        AdminRegistFieldsComponent,
+        /* AdminRegistTopBarComponent,*/
+        AdminRegistPageComponent,
+
+        /* create-discus-page */
+        CreateDiscussionComponent
     ],
     imports: [
         BrowserModule,
@@ -55,6 +69,14 @@ import { UserRegistPageComponent } from './user-regist-page/user-regist-page.com
                 path: 'register',
                 component: UserRegistPageComponent
             },
+            {
+                path: 'register-admin',
+                component: AdminRegistPageComponent
+            },
+            {
+                path: 'create-discussion',
+                component: CreateDiscussionComponent
+            }
         ])
     ],
     // don't change
