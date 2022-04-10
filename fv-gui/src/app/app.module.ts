@@ -9,9 +9,9 @@ import { Page } from './page';
 
 // main-page
 import { HomeRightBarComponent } from './main-page/home-right-bar/home-right-bar';
+import { HomeLeftBarComponent } from './main-page/home-left-bar/home-left-bar';
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
 import { HomePageComponent } from './main-page/home-page.component';
-
 // user-regist-page
 import { UserRegistFieldsComponent } from './user-regist-page/user-regist-fields/user-regist-fields.component';
 import { UserRegistTopBarComponent } from './user-regist-page/user-regist-top-bar/user-regist-top-bar.component';
@@ -30,6 +30,7 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
 
         /* main-page */
         HomeRightBarComponent,
+        HomeLeftBarComponent,
         TopBarComponent,
         HomePageComponent,
 

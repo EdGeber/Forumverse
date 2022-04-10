@@ -1,0 +1,53 @@
+.greetings{
+    display: flex;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+#hi{
+    color: #12CDD4;
+    padding-right: 5px;
+}
+
+#login{
+    color: #FAC710;
+    font-weight: bold;
+}
+
+.thread{
+    font-size: xx-large;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+.thread-button{
+    font-size: 100%;
+    min-height: 35px;
+    width: 100%;
+    font-weight: bold;
+    opacity: 0.8;
+    transition: 0.5s;
+    border: none;
+    color: #12CDD4;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid  #DB00B6;
+    background-color: #380B7A;
+
+}
+
+.thread-button:hover
+{
+    opacity: 1;
+}
+
+.thread-button:active
+{
+    background-color: #DB00B6;
+    border: 2px solid  #12CDD4;
+    color:#380B7A ;
+    transition: 0.2s;
+}
