@@ -16,8 +16,9 @@
 
     <div class="top-bar-right-container">
         <div class="login-container">
-            <a routerLink="/login"><button class="top-bar-button">Log in</button></a>
+            <button class="top-bar-button" [routerLink]="'/register'">Log in</button>
         </div>
+
         <div class="signup-container">
                 <button class="top-bar-button" [routerLink]="'/register'">
                 Sign up

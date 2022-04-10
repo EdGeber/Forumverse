@@ -34,6 +34,7 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
 // create-discussion-page
 import { ThreadPageComponent } from './thread-page/thread-page.component';
 import { CommonModule } from '@angular/common';
+import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,7 @@ import { CommonModule } from '@angular/common';
         HomeBottomBarComponent,
         TopBarComponent,
         HomePageComponent,
-
+        HomeDiscussionsComponent,
         /* user-regist-page */
         UserRegistFieldsComponent,
         UserRegistTopBarComponent,

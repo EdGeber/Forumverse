@@ -20,9 +20,9 @@ body{
 .top-bar-left-container{
     width: 20%;
     background-color:  transparent;
-    padding-left: 1%;
+    padding-right: 5%;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
 }
 
@@ -150,19 +150,19 @@ body{
 }
 
 .signup-container{
-    width: 30%;
+    width: 25%;
     height: auto;
     margin-left: 4px;
-    padding-right: 5%;
+    margin-right: 30%;
     display: flex;
     justify-content:end;
     align-items: center;
     background-color: transparent;
 }
 .top-bar-button{
-    font-size: 100%;
+    font-size: 110%;
     min-height: 35px;
-    width: 100%;
+    width: 110%;
     font-weight: bold;
     opacity: 0.8;
     transition: 0.5s;
