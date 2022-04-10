@@ -22,7 +22,7 @@ export class ThreadService {
     }
 
     private static _isMissingTopicField(thread: Thread): boolean {
-        return thread.topics == []
+        return thread.topic1 == "" && thread.topic2 == "" && thread.topic3 == ""
     }
 
     private static _isThreadDuplicate(thread: Thread): boolean {
