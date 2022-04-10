@@ -35,7 +35,8 @@ div{
 }
 
 .bot{
-    background: chartreuse;
-    height: 3%;
+    height: fit-content;
+    display: flex;
+    background-color: #80808033;
 }
 
