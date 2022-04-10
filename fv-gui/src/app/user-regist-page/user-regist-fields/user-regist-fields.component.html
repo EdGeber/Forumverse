@@ -1,13 +1,12 @@
 <html>
 
 <div class="container">
-    <p class="top-bar"><a routerLink="/home">Forumverse</a></p>
     <h1 class="title">Create account</h1>
     
     <table class="table-fields">
         <tr class="inputs">
             <h2 class="inputTitle">Email</h2>
-            <input class="inputReg" [(ngModel)]="newUser.email">
+            <input class="inputReg" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.email">
         </tr>
     
         <tr class="inputs">
@@ -17,28 +16,33 @@
     
         <tr class="inputs">
             <h2 class="inputTitle">Password</h2>
-            <input class="inputReg " type="password" [(ngModel)]="newUser.password">
+            <input class="inputReg " type="password" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.password">
         </tr>
     </table>
 
     <div class="hints">
         
-        <p class="hint-login">
-            Already have an account? <a routerLink="/log-in">Log in</a> instead.
+        <p class="hint">
+            Already have an account? <a routerLink="/login">Log in</a> instead.
         </p>
 
-        <p class="hint-admin">
-            <a routerLink="register-admin">Create an admin account</a>
+        <p class="hint">
+            <a routerLink="/register-admin">Create an admin account</a>
         </p>
 
     </div>
 
-    <button (click)="removeMissingFieldWarning(); registerUser()" class="donebutton">Done!</button>
+    <button (click)="registerUser()" class="donebutton">Done!</button>
 
     <div *ngIf="isMissingField">Please fill in all fields.</div>
 
     <div *ngIf="isNameDuplicate">
         This username is already taken. Please choose another one.
+    </div>
+
+    <div *ngIf="isEmailPassDuplicate">
+        An account with this email and password already exists.
+        Would you like to <a routerLink="/login">log in</a>?
     </div>
 
 </div>

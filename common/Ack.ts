@@ -11,9 +11,11 @@ export const ACK = {
     OK: 0,
 
     REGISTER_USER: { // 1 to 99
-        OK:                 new Ack("logIN", 0),
-        MISSING_FIELD:      new Ack("logIN", 1),
-        DUPLICATE_USERNAME: new Ack("logIN", 2),
+        OK:                       new Ack("registerUser", 0),
+        MISSING_FIELD:            new Ack("registerUser", 1),
+        DUPLICATE_USERNAME:       new Ack("registerUser", 2),
+        INVALID_TOKEN:            new Ack("registerUser", 3),
+        DUPLICATE_EMAIL_AND_PASS: new Ack("registerUser", 4),
     },
 
     GET_LOGGED_USER: {
@@ -24,5 +26,11 @@ export const ACK = {
         OK:                     new Ack("Thread", 0),
         MISSING_FIELD:          new Ack("Thread", 200),
         DUPLICATE_THREADNAME:   new Ack("Thread", 201),
+    },
+
+    LOGIN: { // 300 to 399
+        OK:             new Ack("login", 0),
+        MISSING_FIELD:  new Ack("login", 301),
+        USER_NOT_FOUND: new Ack("login", 302),
     }
 }

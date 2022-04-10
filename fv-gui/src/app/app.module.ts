@@ -22,6 +22,12 @@ import { UserRegistPageComponent } from './user-regist-page/user-regist-page.com
 // admin-regist-page
 import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.component';
 import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
+import { AdminRegistTopBarComponent } from './admin-regist-page/admin-regist-top-bar/admin-regist-top-bar.component';
+
+// login-page
+import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginFieldsComponent } from './login-page/login-fields/login-fields.component';
+import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.component';
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
@@ -44,11 +50,15 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
 
         /* user-regist-page */
         AdminRegistFieldsComponent,
-        /* AdminRegistTopBarComponent,*/
+        AdminRegistTopBarComponent,
         AdminRegistPageComponent,
 
         /* create-thread-page */
-        CreateThreadComponent
+        CreateThreadComponent,
+        /* login-page */
+        LoginPageComponent,
+        LoginFieldsComponent,
+        LoginTopBarComponent,
     ],
     imports: [
         BrowserModule,
@@ -80,7 +90,11 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
             {
                 path: 'create-thread',
                 component: CreateThreadComponent
-            }
+            },
+            {
+                path: 'login',
+                component: LoginPageComponent
+            },
         ])
     ],
     // don't change
