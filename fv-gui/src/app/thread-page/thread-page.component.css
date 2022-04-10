@@ -1,5 +1,6 @@
 * {
     color: white;
+    margin-left: 0.5rem;
 }
 
 ul{
@@ -15,4 +16,18 @@ ul{
 .thread-info{
 float: left; /*Makes the list horizontal*/
 padding-right: 0.75rem;
+}
+
+.reply{
+    margin-bottom: 1rem;
+    margin-top: 0rem;
+}
+
+.reply-header, h2{
+    color: cyan;
+}
+
+textarea{
+    color: black;
+    background-color: white;
 }

@@ -12,9 +12,14 @@
 <h2>{{thread.name}}</h2>
 <p>{{thread.text}}</p>
 
-<div *ngFor="let r of thread.replies">
+<div class="reply" *ngFor="let r of thread.replies">
     <br>
-    <p> {{r.author.name}}  on {{r.timeSent}}</p> <br>
+    <p class="reply-header"> {{r.author.name}}  on {{r.timeSent}}</p>
     <p>{{r.content}} </p>
 </div>
+
+<br>
+<textarea rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
+<button (click)="sendReply()">Send</button>
+
 </html>

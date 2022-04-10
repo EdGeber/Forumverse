@@ -10,6 +10,7 @@ import { User }   from "../../../../common/User";
 })
 export class ThreadPageComponent implements OnInit{ 
     thread: Thread = new Thread();
+    replyText: string = "";
 
     ngOnInit(): void {
         //testes    
@@ -23,5 +24,10 @@ export class ThreadPageComponent implements OnInit{
         thread.addReply(new Reply(sampleUser,"Come on!"))
         
         this.thread = thread;
+    }
+
+    sendReply(){
+        console.log(this.replyText);
+        this.replyText = "";
     }
 }
