@@ -24,13 +24,14 @@ export const ACK = {
 
     CREATE_THREAD: { // 200 to 299
         OK:                     new Ack("Thread", 0),
-        MISSING_FIELD:          new Ack("Thread", 200),
-        DUPLICATE_THREADNAME:   new Ack("Thread", 201),
+        MISSING_NAMEFIELD:      new Ack("Thread", 200),
+        MISSING_TOPICFIELD:     new Ack("Thread", 201),
+        DUPLICATE_THREADNAME:   new Ack("Thread", 202),
     },
 
     LOGIN: { // 300 to 399
         OK:             new Ack("login", 0),
         MISSING_FIELD:  new Ack("login", 301),
-        USER_NOT_FOUND: new Ack("login", 302),
+        USER_NOT_FOUND: new Ack("login", 302)
     }
 }

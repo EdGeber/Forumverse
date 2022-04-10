@@ -9,6 +9,8 @@ import { Page } from './page';
 
 // main-page
 import { HomeRightBarComponent } from './main-page/home-right-bar/home-right-bar';
+import { HomeLeftBarComponent } from './main-page/home-left-bar/home-left-bar';
+import { HomeBottomBarComponent } from './main-page/home-bottom-bar/home-bottom-bar';
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
 import { HomePageComponent } from './main-page/home-page.component';
 
@@ -36,6 +38,8 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
 
         /* main-page */
         HomeRightBarComponent,
+        HomeLeftBarComponent,
+        HomeBottomBarComponent,
         TopBarComponent,
         HomePageComponent,
 

@@ -20,7 +20,8 @@ export class CreateThreadComponent {
     // public properties
     public title = "Create Thread";
     public threadCreate = new Thread();
-    public isMissingField = false;
+    public isMissingNameField = false;
+    public isMissingTopicField = false;
     public isThreadDuplicate = false;
 
     // private methods
@@ -31,8 +32,11 @@ export class CreateThreadComponent {
     // public methods
     constructor(private _router: Router) {
 
-        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_FIELD.code] =
-            () => this.isMissingField = true;
+        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_NAMEFIELD.code] =
+            () => this.isMissingNameField = true;
+        
+        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_TOPICFIELD.code] =
+            () => this.isMissingTopicField = true;
 
         this._ERROR_HANDLING[ACK.CREATE_THREAD.DUPLICATE_THREADNAME.code] =
             () => this.isThreadDuplicate = true;
@@ -40,8 +44,10 @@ export class CreateThreadComponent {
     }
 
     public removeMissingFieldWarning() {
-        this.isMissingField = false;
+        this.isMissingNameField = false;
+        this.isMissingTopicField = false;
     }
+
     public removeDuplicateThreadWarning() {
         this.isThreadDuplicate = false;
     }
