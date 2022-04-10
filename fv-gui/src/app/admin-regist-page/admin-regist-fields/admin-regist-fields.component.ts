@@ -22,6 +22,7 @@ export class AdminRegistFieldsComponent {
     public newUser = new User(true);
     public isMissingField = false;
     public isNameDuplicate = false;
+    public isTokenInvalid = false;
     public isEmailPassDuplicate = false;
 
     // private methods
@@ -38,6 +39,9 @@ export class AdminRegistFieldsComponent {
         this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_USERNAME.code] =
             () => this.isNameDuplicate = true;
         
+        this._ERROR_HANDLING[ACK.REGISTER_USER.INVALID_TOKEN.code] =
+            () => this.isTokenInvalid = true;
+        
         this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS.code] =
             () => this.isEmailPassDuplicate = true;
     }
@@ -51,9 +55,13 @@ export class AdminRegistFieldsComponent {
     public removeDuplicateEmailPassWarning() {
         this.isEmailPassDuplicate = false;
     }
+    public removeTokenInvalidWarning(){
+        this.isTokenInvalid = false;
+    }
     public removeAllWarnings() {
         this.removeMissingFieldWarning();
         this.removeDuplicateEmailPassWarning();
+        this.removeTokenInvalidWarning();
         this.removeDuplicateEmailPassWarning();
     }
 

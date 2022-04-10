@@ -45,7 +45,7 @@ export class UserService {
             ack = ACK.REGISTER_USER.DUPLICATE_USERNAME;
         else if(this._isEmailAndPasswordDuplicate(user))
             ack = ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS;
-        else if(user.isAdmin && !(user.adminToken in this._tokens))
+        else if(user.isAdmin && !(this._tokens.includes(user.adminToken)))
             ack = ACK.REGISTER_USER.INVALID_TOKEN;
         else {
             ack = ACK.REGISTER_USER.OK;
