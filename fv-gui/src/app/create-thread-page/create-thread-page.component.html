@@ -4,18 +4,26 @@
 
 <table>
     <tr>
-        <h2>Discussion Name</h2>
+        <h2>Discussion Name:</h2>
         <input (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
     </tr>
-    
-    <tr>
-        <h2>Discussion Topics</h2>
-    </tr>
+    <div>
+        <p>Topics Selection:</p>
+        <div>
+            <input type="checkbox" id="python" value="Python" [(ngModel)]="threadCreate.topics">
+            <label for="python"> Python</label><br>
+        </div>
+        <div>
+            <input type="checkbox" id="c++" value="C++" [(ngModel)]="threadCreate.topics">
+            <label for="c++"> C++</label><br>
+        </div>
+    </div>
 </table>
 
 <button (click)="removeMissingFieldWarning(); createThread()">Done!</button>
 
-<div *ngIf="isMissingField">Please create a name for the discussion.</div>
+<div *ngIf="isMissingNameField">Please create a name for the discussion.</div>
+<div *ngIf="isMissingTopicField">Please select at least one tag for the discussion.</div>
 
 <div *ngIf="isThreadDuplicate">
     Duplicated discussion name. Please create another name.

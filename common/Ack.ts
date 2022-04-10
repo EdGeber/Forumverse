@@ -22,7 +22,8 @@ export const ACK = {
 
     CREATE_THREAD: { // 200 to 299
         OK:                     new Ack("Thread", 0),
-        MISSING_FIELD:          new Ack("Thread", 200),
-        DUPLICATE_THREADNAME:   new Ack("Thread", 201),
+        MISSING_NAMEFIELD:      new Ack("Thread", 200),
+        MISSING_TOPICFIELD:     new Ack("Thread", 201),
+        DUPLICATE_THREADNAME:   new Ack("Thread", 202),
     }
 }

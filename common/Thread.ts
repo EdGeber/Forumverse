@@ -8,20 +8,20 @@ export class Thread{
     timeCreated: Date;
     replies: Reply[];
     isLocked: Boolean = false;
-    text: string[];
+    text: string;
 
     constructor(){
         this.name = "";
         this.author = new User();
         this.topics = [];
         this.timeCreated = new Date();
-        this.text = [];
+        this.text = "";
         this.replies = [];
         this.isLocked = false; 
        }
        
     // Used to fill the thread fields
-    populateThread(name:string, author:User, topics:string[], text:string[]){
+    populateThread(name:string, author:User, topics:string[], text:string){
         this.name = name;
         this.author = author;
         this.topics = topics;

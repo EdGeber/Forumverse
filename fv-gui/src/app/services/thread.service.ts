@@ -7,7 +7,8 @@ export class ThreadService {
 
     public static tryCreateThread(thread: Thread): Observable<Ack> {
         let ack: Ack;
-        if(this._isMissingField(thread)) ack = ACK.CREATE_THREAD.MISSING_FIELD;
+        if(this._isMissingNameField(thread)) ack = ACK.CREATE_THREAD.MISSING_NAMEFIELD;
+        else if(this._isMissingTopicField(thread)) ack = ACK.CREATE_THREAD.MISSING_TOPICFIELD;
         else if(this._isThreadDuplicate(thread)) ack = ACK.CREATE_THREAD.DUPLICATE_THREADNAME;
         else {
             ack = ACK.CREATE_THREAD.OK;
@@ -16,8 +17,12 @@ export class ThreadService {
         return of(ack);
     }
 
-    private static _isMissingField(thread: Thread): boolean {
-        return thread.name == "" || thread.topics == []
+    private static _isMissingNameField(thread: Thread): boolean {
+        return thread.name == ""
+    }
+
+    private static _isMissingTopicField(thread: Thread): boolean {
+        return thread.topics == []
     }
 
     private static _isThreadDuplicate(thread: Thread): boolean {
