@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { lastValueFrom } from "rxjs";
+import { ACK } from "../../../../common/Ack";
 import { Reply } from "../../../../common/Reply";
 import { Thread } from "../../../../common/Thread"; 
 import { User }   from "../../../../common/User"; 
+import { UserService } from "../services/user.service";
 
 @Component({
     selector: 'thread-page',
@@ -26,8 +29,25 @@ export class ThreadPageComponent implements OnInit{
         this.thread = thread;
     }
 
-    sendReply(){
-        console.log(this.replyText);
-        this.replyText = "";
+    async sendReply(){
+        let ack = await lastValueFrom(UserService.loggedUser);
+        let user: User|null = null;
+
+        if(ack.code == ACK.OK){
+            console.log(ack.body)
+            
+            if(ack.body){
+                user = <User>ack.body;
+                let reply = new Reply(user,this.replyText)
+                console.log(reply);
+                this.replyText = "";
+
+                //TODO: Adicionar ACK para simular resposta do servidor
+                this.thread.addReply(reply);
+            }
+            else{
+                alert("You need to be logged in to send a reply!")
+            }
+        }
     }
 }
