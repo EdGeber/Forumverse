@@ -1,0 +1,42 @@
+div{
+    height: 100%; width: 100%;
+}
+.pg
+{
+    height:fit-content;
+    display: flow-root;
+}
+.top
+{
+    height: fit-content;
+    display: flow-root;
+}
+.center
+{
+    height: fit-content;
+    display: flex;
+}
+
+.center-left
+{
+    height: fit-content;
+    display: flow-root;
+}
+
+.center-center
+{
+   height: fit-content;
+}
+
+    
+.center-right
+{
+    height: fit-content;
+}
+
+.bot{
+    height: fit-content;
+    display: flex;
+    background-color: #80808033;
+}
+

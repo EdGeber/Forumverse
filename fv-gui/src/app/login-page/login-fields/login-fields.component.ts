@@ -7,22 +7,20 @@ import { lastValueFrom } from 'rxjs';
 import { Ack, ACK, ErrorHandlers } from '../../../../../common/Ack';
 
 @Component({
-  selector: 'user-regist-fields',
-  templateUrl: './user-regist-fields.component.html',
-  styleUrls: ['./user-regist-fields.component.css']
+  selector: 'login-fields',
+  templateUrl: './login-fields.component.html',
+  styleUrls: ['../../user-regist-page/user-regist-fields/user-regist-fields.component.css']
 })
 
-export class UserRegistFieldsComponent {
+export class LoginFieldsComponent {
     
     // private properties
     private readonly _ERROR_HANDLING: ErrorHandlers = {};
 
     // public properties
-    public title = "User registration";
-    public newUser = new User();
+    public user = new User();
     public isMissingField = false;
-    public isNameDuplicate = false;
-    public isEmailPassDuplicate = false;
+    public isUserNotFound = false;
 
     // private methods
     private _handleError(ack: Ack) {
@@ -32,39 +30,33 @@ export class UserRegistFieldsComponent {
     // public methods
     constructor(private _router: Router) {
 
-        this._ERROR_HANDLING[ACK.REGISTER_USER.MISSING_FIELD.code] =
+        this._ERROR_HANDLING[ACK.LOGIN.MISSING_FIELD.code] =
             () => this.isMissingField = true;
 
-        this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_USERNAME.code] =
-            () => this.isNameDuplicate = true;
+        this._ERROR_HANDLING[ACK.LOGIN.USER_NOT_FOUND.code] =
+            () => this.isUserNotFound = true;
 
-        this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS.code] =
-            () => this.isEmailPassDuplicate = true;
     }
 
     public removeMissingFieldWarning() {
         this.isMissingField = false;
     }
-    public removeDuplicateNameWarning() {
-        this.isNameDuplicate = false;
-    }
-    public removeDuplicateEmailPassWarning() {
-        this.isEmailPassDuplicate = false;
+    public removeUserNotFoundWarning() {
+        this.isUserNotFound = false;
     }
     public removeAllWarnings() {
         this.removeMissingFieldWarning();
-        this.removeDuplicateEmailPassWarning();
-        this.removeDuplicateEmailPassWarning();
+        this.removeUserNotFoundWarning();
     }
 
-    public async registerUser() {
+    public async loginUser() {
         this.removeAllWarnings();
         
         var ack = await
-            lastValueFrom(UserService.tryRegisterUser(this.newUser));
+            lastValueFrom(UserService.tryLoginUser(this.user));
         
         if(ack.code == ACK.OK) {
-            this.newUser = new User();
+            this.user = new User();
             this.removeAllWarnings();
             this._router.navigateByUrl("/home");
         }

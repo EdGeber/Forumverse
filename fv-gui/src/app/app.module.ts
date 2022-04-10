@@ -9,6 +9,8 @@ import { Page } from './page';
 
 // main-page
 import { HomeRightBarComponent } from './main-page/home-right-bar/home-right-bar';
+import { HomeLeftBarComponent } from './main-page/home-left-bar/home-left-bar';
+import { HomeBottomBarComponent } from './main-page/home-bottom-bar/home-bottom-bar';
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
 import { HomePageComponent } from './main-page/home-page.component';
 
@@ -20,6 +22,12 @@ import { UserRegistPageComponent } from './user-regist-page/user-regist-page.com
 // admin-regist-page
 import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.component';
 import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
+import { AdminRegistTopBarComponent } from './admin-regist-page/admin-regist-top-bar/admin-regist-top-bar.component';
+
+// login-page
+import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginFieldsComponent } from './login-page/login-fields/login-fields.component';
+import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.component';
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
@@ -33,6 +41,8 @@ import { CommonModule } from '@angular/common';
 
         /* main-page */
         HomeRightBarComponent,
+        HomeLeftBarComponent,
+        HomeBottomBarComponent,
         TopBarComponent,
         HomePageComponent,
 
@@ -43,14 +53,18 @@ import { CommonModule } from '@angular/common';
 
         /* user-regist-page */
         AdminRegistFieldsComponent,
-        /* AdminRegistTopBarComponent,*/
+        AdminRegistTopBarComponent,
         AdminRegistPageComponent,
 
         /* create-thread-page */
         CreateThreadComponent,
         
         /* thread-page */
-        ThreadPageComponent
+        ThreadPageComponent,
+        /* login-page */
+        LoginPageComponent,
+        LoginFieldsComponent,
+        LoginTopBarComponent,
     ],
     imports: [
         BrowserModule,
@@ -88,6 +102,10 @@ import { CommonModule } from '@angular/common';
                 path: 'thread',
                 component: ThreadPageComponent
             },
+            {
+                path: 'login',
+                component: LoginPageComponent
+            }
         ])
     ],
     // don't change

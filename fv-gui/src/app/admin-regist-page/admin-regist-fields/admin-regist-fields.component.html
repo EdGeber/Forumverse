@@ -1,12 +1,11 @@
 <html>
 
 <div class="container">
-        <p class="top-bar"><a routerLink="/home">Forumverse</a></p>
         <h1 class="title">Create account</h1>
         <table class="table-fields">
         <tr class="inputs">
             <h2 class="inputTitle">Email</h2>
-            <input class="inputReg" [(ngModel)]="newUser.email">
+            <input class="inputReg" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.email">
         </tr>
     
         <tr class="inputs">
@@ -16,16 +15,45 @@
     
         <tr class="inputs">
             <h2 class="inputTitle">Password</h2>
-            <input class="inputReg " type="password" [(ngModel)]="newUser.password">
+            <input class="inputReg " type="password" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.password">
         </tr>
+
+        <tr class="inputs">
+            <h2 class="inputTitle">Authentication token</h2>
+            <input class="inputReg " (change)="removeTokenInvalidWarning()" [(ngModel)]="newUser.adminToken">
+        </tr>
+
     </table>
 
-    <button (click)="removeMissingFieldWarning(); registerUser()" class="donebutton">Done!</button>
+    <div class="hints">
+        
+        <p class="hint">
+            Already have an admin account? <a routerLink="/login">Log in</a> instead.
+        </p>
+
+        <p class="hint">
+            Don't have an authentication token? Then you came to the
+            wrong place. <a routerLink="/register">Create a normal account</a>
+            instead.
+        </p>
+
+    </div>
+
+    <button (click)="registerUser()" class="donebutton">Done!</button>
 
     <div *ngIf="isMissingField">Please fill in all fields.</div>
 
     <div *ngIf="isNameDuplicate">
         This username is already taken. Please choose another one.
+    </div>
+
+    <div *ngIf="isTokenInvalid">
+        Invalid token.
+    </div>
+
+    <div *ngIf="isEmailPassDuplicate">
+        An account with this email and password already exists.
+        Would you like to <a routerLink="/login">log in</a>?
     </div>
 
 </div>
