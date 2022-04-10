@@ -1,0 +1,35 @@
+.pg
+{
+    height:fit-content;
+    display: flow-root;
+}
+.top
+{
+    height: fit-content;
+    display: flow-root;
+}
+.center
+{
+    height: fit-content;
+    display: flex;
+}
+
+.center-left
+{
+}
+
+.center-center
+{
+    height: 2000px;
+}
+
+    
+.center-right
+{
+}
+
+.bot{
+    background: chartreuse;
+    height: 3%;
+}
+
