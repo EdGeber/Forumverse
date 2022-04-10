@@ -19,18 +19,7 @@ export class Thread{
         this.replies = [];
         this.isLocked = false; 
        }
-
-    // Provides an empty thread to be used during the thread creation
-    createEmptyThread(){
-        // this.name = "";
-        // this.author = null;
-        // this.topics = null;
-        // this.timeCreated = new Date();
-        // this.text = [];
-        // this.replies = [];
-        // this.isLocked = false;
-    }
-
+       
     // Used to fill the thread fields
     populateThread(name:string, author:User, topics:string[], text:string[]){
         this.name = name;

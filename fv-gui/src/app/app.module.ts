@@ -17,6 +17,10 @@ import { UserRegistFieldsComponent } from './user-regist-page/user-regist-fields
 import { UserRegistTopBarComponent } from './user-regist-page/user-regist-top-bar/user-regist-top-bar.component';
 import { UserRegistPageComponent } from './user-regist-page/user-regist-page.component';
 
+// admin-regist-page
+import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.component';
+import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
+
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
 
@@ -33,6 +37,11 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
         UserRegistFieldsComponent,
         UserRegistTopBarComponent,
         UserRegistPageComponent,
+
+        /* user-regist-page */
+        AdminRegistFieldsComponent,
+        /* AdminRegistTopBarComponent,*/
+        AdminRegistPageComponent,
 
         /* create-thread-page */
         CreateThreadComponent
@@ -59,6 +68,10 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
             {
                 path: 'register',
                 component: UserRegistPageComponent
+            },
+            {
+                path: 'register-admin',
+                component: AdminRegistPageComponent
             },
             {
                 path: 'create-thread',
