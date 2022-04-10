@@ -5,14 +5,32 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 // import here every component created
+import { Page } from './page';
+
+// main-page
+import { HomeRightBarComponent } from './main-page/home-right-bar/home-right-bar';
 import { TopBarComponent } from './main-page/top-bar/top-bar.component';
-import { RightBarComponent } from './main-page/right-bar/right-bar';
+import { HomePageComponent } from './main-page/home-page.component';
+
+// user-regist-page
+import { UserRegistFieldsComponent } from './user-regist-page/user-regist-fields/user-regist-fields.component';
+import { UserRegistTopBarComponent } from './user-regist-page/user-regist-top-bar/user-regist-top-bar.component';
+import { UserRegistPageComponent } from './user-regist-page/user-regist-page.component';
 
 
 @NgModule({
     declarations: [
+        Page,
+
+        /* main-page */
+        HomeRightBarComponent,
         TopBarComponent,
-        RightBarComponent
+        HomePageComponent,
+
+        /* user-regist-page */
+        UserRegistFieldsComponent,
+        UserRegistTopBarComponent,
+        UserRegistPageComponent
     ],
     imports: [
         BrowserModule,
@@ -22,16 +40,26 @@ import { RightBarComponent } from './main-page/right-bar/right-bar';
             // add here the path of each root component imported above.
             // The path name is arbitrary, you give it the name you want,
             // but it should be the name of the url of the page. For
-            // example, TopBarComponent is the root of the main page,
-            // so its path name is 'main'.
+            // example, TopBarComponent is the root of the home page,
+            // so its path name is 'home'.
+            { // root
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full'
+            },
             {
-                path: 'main',
-                component: TopBarComponent
+                path: 'home',
+                component: HomePageComponent
+            },
+            {
+                path: 'register',
+                component: UserRegistPageComponent
             },
         ])
     ],
     // don't change
     providers: [],
-    bootstrap: [TopBarComponent]
+    bootstrap: [Page]
 })
+
 export class AppModule { }

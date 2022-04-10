@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { NgModule } from '@angular/core';
 
 @Component({
-  selector: 'main-page-root',
+  selector: 'top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
 
-export class TopBarComponent {
-    title = "Main Page";
-    
-}
+export class TopBarComponent { }

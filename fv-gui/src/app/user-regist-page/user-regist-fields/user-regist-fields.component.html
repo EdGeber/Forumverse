@@ -1,0 +1,33 @@
+<html>
+
+<div class="container">
+        <p class="top-bar">Forumverse</p>
+        <h1 class="title">Create account</h1>
+        <table class="table-fields">
+        <tr class="inputs">
+            <h2 class="inputTitle">Email</h2>
+            <input class="inputReg" [(ngModel)]="newUser.email">
+        </tr>
+    
+        <tr class="inputs">
+            <h2 class="inputTitle">Username</h2>
+            <input class="inputReg" (change)="removeDuplicateNameWarning()" [(ngModel)]="newUser.name">
+        </tr>
+    
+        <tr class="inputs">
+            <h2 class="inputTitle">Password</h2>
+            <input class="inputReg" [(ngModel)]="newUser.password">
+        </tr>
+    </table>
+
+    <button (click)="removeMissingFieldWarning(); registerUser()" class="donebutton">Done!</button>
+
+    <div *ngIf="isMissingField">Please fill in all fields.</div>
+
+    <div *ngIf="isNameDuplicate">
+        This username is already taken. Please choose another one.
+    </div>
+
+</div>
+
+</html>
