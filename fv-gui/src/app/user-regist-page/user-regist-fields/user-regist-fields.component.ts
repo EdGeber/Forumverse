@@ -22,6 +22,7 @@ export class UserRegistFieldsComponent {
     public newUser = new User();
     public isMissingField = false;
     public isNameDuplicate = false;
+    public isEmailPassDuplicate = false;
 
     // private methods
     private _handleError(ack: Ack) {
@@ -37,6 +38,8 @@ export class UserRegistFieldsComponent {
         this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_USERNAME.code] =
             () => this.isNameDuplicate = true;
 
+        this._ERROR_HANDLING[ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS.code] =
+            () => this.isEmailPassDuplicate = true;
     }
 
     public removeMissingFieldWarning() {
@@ -45,13 +48,24 @@ export class UserRegistFieldsComponent {
     public removeDuplicateNameWarning() {
         this.isNameDuplicate = false;
     }
+    public removeDuplicateEmailPassWarning() {
+        this.isEmailPassDuplicate = false;
+    }
+    public removeAllWarnings() {
+        this.removeMissingFieldWarning();
+        this.removeDuplicateEmailPassWarning();
+        this.removeDuplicateEmailPassWarning();
+    }
 
     public async registerUser() {
+        this.removeAllWarnings();
+        
         var ack = await
             lastValueFrom(UserService.tryRegisterUser(this.newUser));
         
         if(ack.code == ACK.OK) {
             this.newUser = new User();
+            this.removeAllWarnings();
             this._router.navigateByUrl("/home");
         }
         else this._handleError(ack);

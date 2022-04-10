@@ -22,6 +22,11 @@ import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.
 import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
 import { AdminRegistTopBarComponent } from './admin-regist-page/admin-regist-top-bar/admin-regist-top-bar.component';
 
+// login-page
+import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginFieldsComponent } from './login-page/login-fields/login-fields.component';
+import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.component';
+
 // create-discussion-page
 import { CreateDiscussionComponent } from './create-discus-page/create-discus-page.component';
 
@@ -43,6 +48,11 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
         AdminRegistFieldsComponent,
         AdminRegistTopBarComponent,
         AdminRegistPageComponent,
+
+        /* login-page */
+        LoginPageComponent,
+        LoginFieldsComponent,
+        LoginTopBarComponent,
 
         /* create-discus-page */
         CreateDiscussionComponent
@@ -73,6 +83,10 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
             {
                 path: 'register-admin',
                 component: AdminRegistPageComponent
+            },
+            {
+                path: 'login',
+                component: LoginPageComponent
             },
             {
                 path: 'create-discussion',
