@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { CreateDiscus } from "./CreateDiscus";
 
 export interface ErrorHandlers { [index: number]: () => void }
 
@@ -17,5 +18,11 @@ export const ACK = {
 
     GET_LOGGED_USER: {
         OK: new Ack<User|null>("getLoggedUser", 0),
+    },
+
+    CREATE_DISCUSSION: { // 200 to 299
+        OK:                     new Ack("createDiscus", 0),
+        MISSING_FIELD:          new Ack("createDiscus", 200),
+        DUPLICATE_DISCUSNAME:   new Ack("createDiscus", 201),
     }
 }
