@@ -19,7 +19,7 @@ export class AdminRegistFieldsComponent {
 
     // public properties
     public title = "User registration";
-    public newUser = new User();
+    public newUser = new User(true);
     public isMissingField = false;
     public isNameDuplicate = false;
 
@@ -50,7 +50,10 @@ export class AdminRegistFieldsComponent {
         var ack = await
             lastValueFrom(UserService.tryRegisterUser(this.newUser));
         
-        if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
+        if(ack.code == ACK.OK) {
+            this.newUser = new User(true);
+            this._router.navigateByUrl("/home");
+        }
         else this._handleError(ack);
     }
 }

@@ -50,7 +50,10 @@ export class UserRegistFieldsComponent {
         var ack = await
             lastValueFrom(UserService.tryRegisterUser(this.newUser));
         
-        if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
+        if(ack.code == ACK.OK) {
+            this.newUser = new User();
+            this._router.navigateByUrl("/home");
+        }
         else this._handleError(ack);
     }
 }

@@ -37,7 +37,10 @@ export class UserService {
     }
 
     private static _isMissingField(user: User): boolean {
-        return user.name == "" || user.email == "" || user.password == ""
+        let isMissing = user.name == "" || user.email == "" || user.password == "";
+        if(user.isAdmin) 
+            isMissing = isMissing || user.adminToken == "";
+        return isMissing;
     }
 
     private static _isNameDuplicate(user: User): boolean {

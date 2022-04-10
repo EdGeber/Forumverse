@@ -20,6 +20,7 @@ import { UserRegistPageComponent } from './user-regist-page/user-regist-page.com
 // admin-regist-page
 import { AdminRegistPageComponent } from './admin-regist-page/admin-regist-page.component';
 import { AdminRegistFieldsComponent } from './admin-regist-page/admin-regist-fields/admin-regist-fields.component';
+import { AdminRegistTopBarComponent } from './admin-regist-page/admin-regist-top-bar/admin-regist-top-bar.component';
 
 // create-discussion-page
 import { CreateDiscussionComponent } from './create-discus-page/create-discus-page.component';
@@ -40,7 +41,7 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
 
         /* user-regist-page */
         AdminRegistFieldsComponent,
-        /* AdminRegistTopBarComponent,*/
+        AdminRegistTopBarComponent,
         AdminRegistPageComponent,
 
         /* create-discus-page */
