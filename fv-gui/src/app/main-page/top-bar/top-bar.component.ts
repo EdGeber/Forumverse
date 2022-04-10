@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'top-bar',
@@ -6,5 +6,4 @@ import { Component, Injectable } from '@angular/core';
   styleUrls: ['./top-bar.component.css']
 })
 
-export class TopBarComponent {
-}
+export class TopBarComponent { }

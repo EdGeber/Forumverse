@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { UserService } from '../services/user.service'
+import { UserService } from '../../services/user.service'
 import { Router } from '@angular/router';
 
-import { User } from '../../../../common/User'
+import { User } from '../../../../../common/User'
 import { lastValueFrom } from 'rxjs';
-import { Ack, ACK, ErrorHandlers } from '../../../../common/Ack';
+import { Ack, ACK, ErrorHandlers } from '../../../../../common/Ack';
 
 @Component({
-  selector: 'user-regist-page',
-  templateUrl: './user-regist.component.html',
-  styleUrls: ['./user-regist.component.css']
+  selector: 'user-regist-fields',
+  templateUrl: './user-regist-fields.component.html',
+  styleUrls: ['./user-regist-fields.component.css']
 })
 
-export class UserRegistComponent {
+export class UserRegistFieldsComponent {
     
     // private properties
     private readonly _ERROR_HANDLING: ErrorHandlers = {};
@@ -50,7 +50,7 @@ export class UserRegistComponent {
         var ack = await
             lastValueFrom(UserService.tryRegisterUser(this.newUser));
         
-        if(ack.code == ACK.OK) this._router.navigateByUrl("/main");
+        if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
         else this._handleError(ack);
     }
 }
