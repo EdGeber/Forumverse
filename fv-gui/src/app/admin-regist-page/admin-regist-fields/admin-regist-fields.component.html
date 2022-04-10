@@ -20,7 +20,7 @@
 
         <tr class="inputs">
             <h2 class="inputTitle">Authentication token</h2>
-            <input class="inputReg " [(ngModel)]="newUser.adminToken">
+            <input class="inputReg " (change)="removeTokenInvalidWarning()" [(ngModel)]="newUser.adminToken">
         </tr>
 
     </table>
@@ -45,6 +45,10 @@
 
     <div *ngIf="isNameDuplicate">
         This username is already taken. Please choose another one.
+    </div>
+
+    <div *ngIf="isTokenInvalid">
+        Invalid token.
     </div>
 
     <div *ngIf="isEmailPassDuplicate">
