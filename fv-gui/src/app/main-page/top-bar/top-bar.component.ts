@@ -8,5 +8,6 @@ import { NgModule } from '@angular/core';
 })
 
 export class TopBarComponent {
-    title = "fv-gui";
+    title = "Main Page";
+    
 }

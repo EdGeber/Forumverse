@@ -1,6 +1,27 @@
 <html>
+<div class="top-bar">
+    <div class="top-bar-left-container">
+        <!-- Mudar para a logo do Forumverse -->
+        <!-- Forum verse Logo-->
+        <h1 class="LogoName">ForumVerse</h1>
+    </div>
 
-<h1>Forumverse</h1>
+    <div class="top-bar-center-container">
+        <form id="top-bar-form"> 
+            <input type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new...">
+            <button class="topbar-search-bar-button"><i class="material-icons" id="search-button-icon">search</i></button>
+        </form>
+    </div>
+
+    <div class="top-bar-right-container">
+        <div class="login-container">
+            <button class="top-bar-button">Log  in</button>
+        </div>
+        <div class="signup-container">
+            <button class="top-bar-button">Sign up</button>
+        </div>
+    </div>
+</div>
 
 <router-outlet></router-outlet>
 
