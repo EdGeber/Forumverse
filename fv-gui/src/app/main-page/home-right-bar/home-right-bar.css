@@ -30,8 +30,10 @@
 
 #topic-box-hr{
     color: #DB00B6;
-
+    background-color: #DB00B6;
 }
+
+
 #topics{
     justify-content: center;
     align-items: center;
