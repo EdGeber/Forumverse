@@ -17,8 +17,8 @@ import { UserRegistFieldsComponent } from './user-regist-page/user-regist-fields
 import { UserRegistTopBarComponent } from './user-regist-page/user-regist-top-bar/user-regist-top-bar.component';
 import { UserRegistPageComponent } from './user-regist-page/user-regist-page.component';
 
-// create-discussion-page
-import { CreateDiscussionComponent } from './create-discus-page/create-discus-page.component';
+// create-thread-page
+import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
 
 @NgModule({
     declarations: [
@@ -34,8 +34,8 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
         UserRegistTopBarComponent,
         UserRegistPageComponent,
 
-        /* create-discus-page */
-        CreateDiscussionComponent
+        /* create-thread-page */
+        CreateThreadComponent
     ],
     imports: [
         BrowserModule,
@@ -61,8 +61,8 @@ import { CreateDiscussionComponent } from './create-discus-page/create-discus-pa
                 component: UserRegistPageComponent
             },
             {
-                path: 'create-discussion',
-                component: CreateDiscussionComponent
+                path: 'create-thread',
+                component: CreateThreadComponent
             }
         ])
     ],
