@@ -9,20 +9,26 @@
 
     <div class="top-bar-center-container">
         <form id="top-bar-form"> 
-            <input type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new...">
-            <button class="topbar-search-bar-button"><i class="material-icons" id="search-button-icon">search</i></button>
+            <input type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new..."
+            [(ngModel)]="que">
+            <button class="topbar-search-bar-button" (click)='search()'><i class="material-icons" id="search-button-icon">search</i></button>
         </form>
     </div>
 
-    <div class="top-bar-right-container">
-        <div class="login-container">
-            <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
+    <div class="top-bar-right-container" *ngIf="!loggedUser">
+            <div class="login-container">
+                <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
+            </div>
+    
+            <div class="signup-container">
+                    <button class="top-bar-button" [routerLink]="'/register'">
+                    Sign up
+                    </button>
         </div>
-
-        <div class="signup-container">
-                <button class="top-bar-button" [routerLink]="'/register'">
-                Sign up
-                </button>
+    </div>
+    <div class="top-bar-right-container" *ngIf="loggedUser">
+        <div class="logout-container">
+            <button class="top-bar-button" (click)="logout()" [routerLink]="'../home'">Log in</button>
         </div>
     </div>
 </div>

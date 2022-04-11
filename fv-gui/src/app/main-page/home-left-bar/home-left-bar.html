@@ -1,12 +1,14 @@
 <html>
-    <div class="greetings">
-        <p id="hi" >Hello,</p>
-        <p id="login">????</p>
-    </div>
+    <div *ngIf="loggedUser != null">
+        <div class="greetings">
+            <p id="hi" >Hello,</p>
+            <p id="login">{{loggedUser.name}}</p>
+        </div>
 
 
-    <div class="thread">
-        <button class="thread-button" [routerLink]="'/create-thread'">New Thread</button>
-        <button class="thread-button" [routerLink]="'/remove-thread'">Delete Thread</button>
+        <div class="thread">
+            <button class="thread-button" [routerLink]="'/create-thread'">New Thread</button>
+            <button class="thread-button" [routerLink]="'/remove-thread'">Delete Thread</button>
+        </div>
     </div>
 </html>

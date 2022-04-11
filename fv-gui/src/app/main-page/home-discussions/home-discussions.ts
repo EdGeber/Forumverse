@@ -27,6 +27,11 @@ export class HomeDiscussionsComponent implements OnInit{
   topic2: string = '';
   topic3: string = '';
   
+  public sortType: number = 1;
+  public filterType: number = 1;
+
+  selected: string = '';
+
   constructor(private route: ActivatedRoute){ }
 
   ngOnInit(): void {
@@ -60,13 +65,14 @@ export class HomeDiscussionsComponent implements OnInit{
   // 0: Latest
   // 1: Relevant
   // 2: Popular
-  public async sortby(type: number){
+  public async sortby(){
     this.setThreads();
-    if(type == 1)
+
+    if(this.sortType == 1)
     {
-      this.threads.sort((a,b)=>a.timeCreated.getTime()-b.timeCreated.getTime());
+      this.threads.sort((a,b)=>b.timeCreated.getTime()-a.timeCreated.getTime());
     } 
-    else if (type == 2) {
+    else if (this.sortType == 2) {
       this.shuffle();
     } else {
       this.shuffle();
@@ -74,11 +80,27 @@ export class HomeDiscussionsComponent implements OnInit{
   };
   // 0: all
   // 1: mine
-  public async filterby(type: number){
-    // nope
-    // nope
-    // nope
-    // :D
+  public async filterby(){
+    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
+    let user: User | null = ack.body as (User|null);
+    
+    if(user && this.filterType==2)
+    {
+      this.threads.forEach(t => {
+        if(t.author!=user){
+          this.threads.splice(this.threads.indexOf(t), 1);
+        };
+      })
+    }
+  }
+
+  public async isLogged(){
+    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
+    let user: User | null = ack.body as (User|null);
+    if(user){
+      return true;
+    }
+    return false;
   }
 
   private removeallbut(tags: boolean[])
@@ -93,14 +115,5 @@ export class HomeDiscussionsComponent implements OnInit{
   public async filterbyTags(topics: boolean[]){
     this.setThreads();
     this.removeallbut(topics);
-  }
-
-  public async search(q: string){
-    this.setThreads();
-    this.threads.forEach(t => {
-      if(!t.name.includes(q)){
-        this.threads.splice(this.threads.indexOf(t), 1);
-      };
-    });
   }
 }

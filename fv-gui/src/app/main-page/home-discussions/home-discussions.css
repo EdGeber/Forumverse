@@ -121,4 +121,14 @@ select{
     align-items: center;
     min-height: 100%;
     flex-grow: 2;
+    cursor: pointer;
+}
+
+#sort-options{
+    border:0px;
+    outline:0px;
+}
+#filter-options{
+    border:0px;
+    outline:0px;
 }

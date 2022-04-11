@@ -9,19 +9,19 @@
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="filter-text">Filter by:</p>
-                            <select name="filter-options" id="filter-options">
-                                <option value="All Posts">All Posts</option>
-                                <option value="My Posts">My Posts</option>
+                            <select name="filter-options" id="filter-options" [(ngModel)]="filterType" (change)="filterby()">
+                                <option value=1>All Posts</option>
+                                <option value=2>My Posts</option>
                             </select>    
                         </div>
                     </div>
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="sort-text">Sort by:</p>
-                            <select name="sort-options" id="sort-options">
-                                  <option value="latest">Latest</option>
-                                  <option value="relevant">Relevant</option>
-                                  <option value="popular">Popular</option>
+                            <select name="sort-options" id="sort-options" [(ngModel)]="sortType" (change)="sortby()">
+                                  <option value=1>Latest</option>
+                                  <option value=2>Relevant</option>
+                                  <option value=3>Popular</option>
                               </select>                         
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3;">HTML</p>
                             </div>
                             <hr>
-                            <div class="thread-bot">
+                            <div class="thread-bot" [routerLink]="'../thread/:' + t.id.toString()">
                                 <h1>{{t.name}}</h1>
                             </div>
                     </div>
