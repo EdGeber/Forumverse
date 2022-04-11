@@ -38,6 +38,43 @@ export class ThreadService {
         return of(ack);
     }
 
+    public static DeleteReplyById(id: number, thread: Thread, user:User|null){
+        let ack: Ack;
+
+        if(!user){
+            ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
+            return of(ack)
+        }
+
+        let threadOnArray = this._getThreadByID(thread.id);
+
+        if (threadOnArray != undefined){
+            let replies = threadOnArray.replies;
+            let removed = null;
+
+            for (let i = 0; i < replies.length; i++) {
+                if(replies[i].id == id){
+                    if((user != replies[i].author) && (!user.isAdmin)){
+                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
+                        return of(ack)
+                    }
+
+                    removed = replies.splice(i,1) 
+                    break;
+                }
+            }
+            if(removed){
+                ack = ACK.THREAD.OK;
+            } else {
+                ack = ACK.THREAD.UNEXPECTED_ERROR;
+            }
+
+        } else{
+            ack = ACK.THREAD.UNEXPECTED_ERROR;
+        }
+        return of(ack);
+    }
+
     private static _getThreadByID(id:number): Thread|undefined{
         return ThreadService._createdThreads.find(t => t.id == id);
     }

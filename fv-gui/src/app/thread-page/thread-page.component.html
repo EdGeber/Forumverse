@@ -15,6 +15,7 @@
 <div class="reply" *ngFor="let r of thread.replies">
     <br>
     <p class="reply-header"> {{r.author.name}}  on {{r.timeSent}}</p>
+    <button *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
     <p>{{r.content}} </p>
 </div>
 

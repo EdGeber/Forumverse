@@ -43,6 +43,7 @@ export class Thread{
     }
 
     addReply(reply: Reply){
+        reply.id = this.replies.length;
         this.replies.push(reply);
     }
 }

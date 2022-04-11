@@ -38,8 +38,9 @@ export const ACK = {
         DUPLICATE_THREADNAME:   new Ack("Thread", 203),
         
         //250 to 299: THREAD OPERATIONS
-        EMPTY_REPLY_MSG:      new Ack('Thread',250),
-        UNEXPECTED_ERROR:     new Ack('Thread',251)
+        EMPTY_REPLY_MSG:            new Ack('Thread',250),
+        UNEXPECTED_ERROR:           new Ack('Thread',251),
+        DELETE_PERMISSION_DENIED:   new Ack('Thread',252)
     },
 
     LOGIN: { // 300 to 399
