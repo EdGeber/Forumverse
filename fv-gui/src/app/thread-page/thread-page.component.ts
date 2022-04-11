@@ -51,9 +51,9 @@ export class ThreadPageComponent implements OnInit{
                 //TODO: Adicionar ACK para simular resposta do servidor
                 let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
 
-                if(replyAck == ACK.CREATE_THREAD.EMPTY_REPLY_MSG){
+                if(replyAck == ACK.THREAD.EMPTY_REPLY_MSG){
                     alert("Reply cannot be empty!");
-                } else if(replyAck == ACK.CREATE_THREAD.UNEXPECTED_ERROR){
+                } else if(replyAck == ACK.THREAD.UNEXPECTED_ERROR){
                     alert("An unexpect error ocurred");
                 }
             }

@@ -23,15 +23,15 @@ export class ThreadService {
     public static trySendReply(reply:Reply, thread:Thread){
         let ack: Ack;
         if(this._emptyReplyText(reply)){
-            ack = ACK.CREATE_THREAD.EMPTY_REPLY_MSG;
+            ack = ACK.THREAD.EMPTY_REPLY_MSG;
         }
         else{
             let threadOnArray = this._getThreadByID(thread.id)
             if(threadOnArray != undefined){
                 threadOnArray.addReply(reply);
-                ack = ACK.CREATE_THREAD.OK;
+                ack = ACK.THREAD.OK;
             } else {
-                ack = ACK.CREATE_THREAD.UNEXPECTED_ERROR;
+                ack = ACK.THREAD.UNEXPECTED_ERROR;
             }
         }
         return of(ack);
