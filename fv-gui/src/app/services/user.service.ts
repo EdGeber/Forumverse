@@ -59,6 +59,14 @@ export class UserService {
         return of(ack);
     }
 
+    // not implemented by the server
+    public static tryLogoutUser(user: User) {
+        if(this.loggedUser == null) throw Error("Logout is not possible because the user is not logged in");
+
+        this._loggedUser = null;
+        return of(ACK.LOGOUT.OK);
+    }
+
     private static _isMissingFieldRegister(user: User): boolean {
         let isMissing = user.name == "" || user.email == "" || user.password == "";
         if(user.isAdmin) 

@@ -48,5 +48,9 @@ export const ACK = {
         OK:             new Ack("login", 0),
         MISSING_FIELD:  new Ack("login", 301),
         USER_NOT_FOUND: new Ack("login", 302)
+    },
+
+    LOGOUT: { // 400 to 499
+        OK: new Ack("logout", 0),
     }
 }
