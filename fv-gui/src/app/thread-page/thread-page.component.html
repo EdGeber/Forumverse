@@ -1,17 +1,20 @@
 <html>
-<ul>
-    <li class="thread-info">By {{thread.author.name}}</li>
-    <li class="thread-info">In {{thread.timeCreated}}</li>
-    <li class="thread-info">Last activity {{LastActivity}}</li>   
-    <li class="thread-info">{{thread.replies.length}} replies</li>
-    <li *ngIf="thread.isLocked">LOCKED</li>
-</ul>
-<br>
+
+<div class>
+    <ul>
+        <li class="thread-info">By {{thread.author.name}}</li>
+        <li class="thread-info">In {{thread.timeCreated}}</li>
+        <li class="thread-info">Last activity {{LastActivity}}</li>   
+        <li class="thread-info">{{thread.replies.length}} replies</li>
+        <li *ngIf="thread.isLocked">LOCKED</li>
+    </ul>
+    <br>
+</div>
 
 <hr>
 
-<h2>{{thread.name}}</h2>
-<p id="thread-text">{{thread.text}}</p>
+<h2 id="thread-title">{{thread.name}}</h2>
+<p  id="thread-text">{{thread.text}}</p>
 
 <div class="reply" *ngFor="let r of thread.replies">
     <br>
@@ -20,8 +23,10 @@
     <p>{{r.content}} </p>
 </div>
 
-<br>
-<textarea rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
-<button (click)="sendReply()">Send</button>
+<div id="answer-div">
+    <br>
+    <textarea rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
+    <button (click)="sendReply()">Send</button>
+</div>
 
 </html>
