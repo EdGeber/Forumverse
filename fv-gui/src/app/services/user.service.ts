@@ -60,7 +60,7 @@ export class UserService {
     }
 
     // not implemented by the server
-    public static tryLogoutUser(user: User) {
+    public static tryLogoutUser() {
         if(this.loggedUser == null) throw Error("Logout is not possible because the user is not logged in");
 
         this._loggedUser = null;
