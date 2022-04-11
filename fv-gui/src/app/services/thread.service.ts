@@ -32,8 +32,12 @@ export class ThreadService {
         else{
             let threadOnArray = this._getThreadByID(thread.id)
             if(threadOnArray != undefined){
-                threadOnArray.addReply(reply);
-                ack = ACK.THREAD.OK;
+                if(threadOnArray.isLocked){
+                    ack = ACK.THREAD.LOCKED_THREAD;
+                } else {
+                    threadOnArray.addReply(reply);
+                    ack = ACK.THREAD.OK;
+                }
             } else {
                 ack = ACK.THREAD.UNEXPECTED_ERROR;
             }
