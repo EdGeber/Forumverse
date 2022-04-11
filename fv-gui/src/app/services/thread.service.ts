@@ -20,9 +20,30 @@ export class ThreadService {
         return of(ack);
     }
 
+    public static trySendReply(reply:Reply, thread:Thread){
+        let ack: Ack;
+        if(this._emptyReplyText(reply)){
+            ack = ACK.CREATE_THREAD.EMPTY_REPLY_MSG;
+        }
+        else{
+            let threadOnArray = this._getThreadByID(thread.id)
+            if(threadOnArray != undefined){
+                threadOnArray.addReply(reply);
+                ack = ACK.CREATE_THREAD.OK;
+            } else {
+                ack = ACK.CREATE_THREAD.UNEXPECTED_ERROR;
+            }
+        }
+        return of(ack);
+    }
+
+    private static _getThreadByID(id:number): Thread|undefined{
+        return ThreadService._createdThreads.find(t => t.id == id);
+    }
+
     public static getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
         let ack = ACK.GET_THREAD.OK;
-        let thread = ThreadService._createdThreads.find(t => t.id == id);
+        let thread = ThreadService._getThreadByID(id);
         ack.body = thread;
         return of(ack);
     }
@@ -37,5 +58,9 @@ export class ThreadService {
 
     private static _isThreadDuplicate(thread: Thread): boolean {
         return this._createdThreads.find(u => u.name == thread.name) != undefined;
+    }
+
+    private static _emptyReplyText(reply:Reply): boolean {
+        return reply.content == "";
     }
 }

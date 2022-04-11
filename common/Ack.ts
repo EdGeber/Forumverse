@@ -35,6 +35,7 @@ export const ACK = {
 
         //250 to 299: THREAD OPERATIONS
         EMPTY_REPLY_MSG:      new Ack('Thread',250),
+        UNEXPECTED_ERROR:     new Ack('Thread',251)
     },
 
     LOGIN: { // 300 to 399

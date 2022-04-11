@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { find, lastValueFrom } from "rxjs";
-import { ACK } from "../../../../common/Ack";
+import { Ack, ACK } from "../../../../common/Ack";
 import { Reply } from "../../../../common/Reply";
 import { Thread } from "../../../../common/Thread"; 
 import { User }   from "../../../../common/User"; 
@@ -49,7 +49,13 @@ export class ThreadPageComponent implements OnInit{
                 this.replyText = "";
 
                 //TODO: Adicionar ACK para simular resposta do servidor
-                this.thread.addReply(reply);
+                let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
+
+                if(replyAck == ACK.CREATE_THREAD.EMPTY_REPLY_MSG){
+                    alert("Reply cannot be empty!");
+                } else if(replyAck == ACK.CREATE_THREAD.UNEXPECTED_ERROR){
+                    alert("An unexpect error ocurred");
+                }
             }
             else{
                 alert("You need to be logged in to send a reply!")
