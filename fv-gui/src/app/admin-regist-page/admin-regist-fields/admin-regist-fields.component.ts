@@ -19,7 +19,7 @@ export class AdminRegistFieldsComponent {
 
     // public properties
     public title = "User registration";
-    public newUser = new User(true);
+    public newUser = new User('', '', '', true);
     public isMissingField = false;
     public isNameDuplicate = false;
     public isTokenInvalid = false;
@@ -72,7 +72,7 @@ export class AdminRegistFieldsComponent {
             lastValueFrom(UserService.tryRegisterUser(this.newUser));
         
         if(ack.code == ACK.OK) {
-            this.newUser = new User(true);
+            this.newUser = new User('', '', '', true);
             this._router.navigateByUrl("/home");
         }
         else this._handleError(ack);

@@ -9,6 +9,8 @@ export class UserService {
 
     private static _tokens: string[] = ["123", "456"];
 
+    public static hi = 'hello';
+
 
     public static get loggedUser(): Observable<Ack<User|null>> {
         let ack = ACK.GET_LOGGED_USER.OK;
@@ -41,12 +43,16 @@ export class UserService {
 
         if(this._isMissingFieldRegister(user))
             ack = ACK.REGISTER_USER.MISSING_FIELD;
+
         else if(this._isNameDuplicate(user))
             ack = ACK.REGISTER_USER.DUPLICATE_USERNAME;
+
         else if(this._isEmailAndPasswordDuplicate(user))
             ack = ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS;
+
         else if(user.isAdmin && !(this._tokens.includes(user.adminToken)))
             ack = ACK.REGISTER_USER.INVALID_TOKEN;
+            
         else {
             ack = ACK.REGISTER_USER.OK;
             this._registeredUsers.push(user);
