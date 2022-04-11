@@ -1,0 +1,59 @@
+
+.wrapper
+{
+    padding-top: 5%;
+    padding-left: 4%;
+    padding-right: 10%;
+}
+
+.thread-component
+{
+
+}
+
+.thread-component-topbar
+{
+    display: flex;
+    flex-direction: row;
+    color: #12CDD4;
+}
+
+#thread-component-topbar-left{
+    max-width: 50%;
+    font-size: 150%;
+}
+
+#thread-component-topbar-right
+{
+    width: max-content;
+    width: fit-content;
+    padding-top: 2%;
+    padding-right: 4%;
+    display: flex;
+    flex-direction: row;
+    color: #12CDD4;
+}
+
+.wrapper-by{
+    height: max-content;
+    width: max-content;
+}
+
+.box-by{
+    border: 3px solid #DB00B6;
+    border-radius: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+select{
+    padding: 5px;
+    color: #FAC710;
+  }
+  select option { color: white; }
+  select option:first-child{
+    color: #FAC710;
+}
