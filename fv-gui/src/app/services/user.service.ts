@@ -29,7 +29,7 @@ export class UserService {
         else if(this._isEmailAndPasswordDuplicate(user))
             ack = ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS;
 
-        else if(user.isAdmin && !(this._tokens.includes(user.adminToken)))
+        else if(this._isAdminTokenInvalid(user))
             ack = ACK.REGISTER_USER.INVALID_TOKEN;
             
         else {
@@ -88,6 +88,10 @@ export class UserService {
 
     private static _isNameDuplicate(user: User): boolean {
         return this._registeredUsers.find(u => u.name == user.name) != undefined;
+    }
+
+    private static _isAdminTokenInvalid(user: User): boolean {
+        return user.isAdmin && !(this._tokens.includes(user.adminToken));
     }
 
     // ONLY USED FOR TESTING
