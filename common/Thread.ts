@@ -7,22 +7,22 @@ export class Thread{
     id: number;
     name: string;
     author: User;
-    topic1: string;
-    topic2: string;
-    topic3: string;
+    topic1: boolean;
+    topic2: boolean;
+    topic3: boolean;
     text: string;
     timeCreated: Date;
     replies: Reply[];
-    isLocked: Boolean = false;
+    isLocked: boolean = false;
 
     constructor(){
         this.id = Thread.total;
 
         this.name = "";
         this.author = new User();
-        this.topic1 = "";
-        this.topic2 = "";
-        this.topic3 = "";
+        this.topic1 = false;
+        this.topic2 = false;
+        this.topic3 = false;
         this.timeCreated = new Date();
         this.text = "";
         this.replies = [];
@@ -30,8 +30,8 @@ export class Thread{
        }
 
     // Used to fill the thread fields
-    populateThread(name:string, author:User, topic1:string, 
-                    topic2:string, topic3:string, text:string) {
+    populateThread(name:string, author:User, topic1:boolean, 
+                    topic2:boolean, topic3:boolean, text:string) {
         this.name = name;
         this.author = author;
         this.topic1 = topic1;

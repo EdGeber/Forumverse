@@ -34,7 +34,7 @@ export class HomeDiscussionsComponent implements OnInit{
     this.setThreads();
   }
 
-  async setThreads(){
+  public async setThreads(){
     let ack = await lastValueFrom(ThreadService.getThreadsArray());
     this.threads = <Thread[]>ack.body;
   }
@@ -61,6 +61,7 @@ export class HomeDiscussionsComponent implements OnInit{
   // 1: Relevant
   // 2: Popular
   public async sortby(type: number){
+    this.setThreads();
     if(type == 1)
     {
       this.threads.sort((a,b)=>a.timeCreated.getTime()-b.timeCreated.getTime());
@@ -80,11 +81,26 @@ export class HomeDiscussionsComponent implements OnInit{
     // :D
   }
 
-  public async filterbyTags(topics: string[]){
-    
+  private removeallbut(tags: boolean[])
+  {
+    this.threads.forEach(t => {
+      if(t.topic1 != tags[0] && t.topic2 != tags[1] && t.topic3 != tags[3]){
+        this.threads.splice(this.threads.indexOf(t), 1);
+      };
+    });
+  }
+
+  public async filterbyTags(topics: boolean[]){
+    this.setThreads();
+    this.removeallbut(topics);
   }
 
   public async search(q: string){
-    
+    this.setThreads();
+    this.threads.forEach(t => {
+      if(!t.name.includes(q)){
+        this.threads.splice(this.threads.indexOf(t), 1);
+      };
+    });
   }
 }
