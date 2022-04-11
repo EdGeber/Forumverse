@@ -89,21 +89,22 @@ export class ThreadService {
             ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
             return of(ack)
         }
-
-        let threadOnArray = ThreadService.arrayThreads.threads.find(t => t.id == id);
+        
+        console.log(this._getThreadByID(id))
+        let threadOnArray = this._getThreadByID(id);
 
         if (threadOnArray != undefined){
-            let threads = ThreadService.arrayThreads.threads;
+            let threads = ThreadService._createdThreads;
             let removed = null;
 
-            for (let i = 0; i < this.arrayThreads.threads.length; i++) {
+            for (let i = 0; i < threads.length; i++) {
                 if(threads[i].id == id){
                     if((user != threads[i].author) && (!user.isAdmin)){
                         ack = ACK.THREAD.DELETE_PERMISSION_DENIED
                         return of(ack)
                     }
 
-                    removed = this.arrayThreads.threads.splice(i,1) 
+                    removed = threads.splice(i,1) 
                     break;
                 }
             }

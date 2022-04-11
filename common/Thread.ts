@@ -4,7 +4,7 @@ import { User } from "./User";
 export class Thread{
     static total: number = 0;
 
-    public id: number;
+    id: number;
     name: string;
     author: User;
     topic1: boolean;

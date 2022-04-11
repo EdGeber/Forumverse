@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { find, lastValueFrom } from "rxjs";
 import { Ack, ACK } from "../../../../common/Ack";
 import { Thread } from "../../../../common/Thread"; 
@@ -19,7 +19,7 @@ export class RemoveThreadComponent implements OnInit{
     loggedUser: User|null = null;
     
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private _router: Router) {}
 
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
@@ -61,11 +61,16 @@ export class RemoveThreadComponent implements OnInit{
     async deleteThread(thread: Thread){
         let ack:Ack;
         ack = await lastValueFrom(ThreadService.DeleteThreadById(thread.id,this.thread,this.loggedUser));
+        
 
-        if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
+
+        if(ack.code == ACK.OK) {
+            this._router.navigateByUrl("/home");
+        } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
             alert("Could not delete thread. Please try again!");
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
             alert("You don't has permission to delete this thread!")
         }
+         
     }
 }
