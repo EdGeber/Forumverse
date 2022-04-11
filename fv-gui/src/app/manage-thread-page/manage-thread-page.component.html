@@ -37,8 +37,12 @@
                     <h1>{{t.name}}</h1>
                 </div>
                 <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="deleteThread(t)">Delete</button>
+                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="lockThread(t)">Lock Thread</button>
+                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="unlockThread(t)">Unlock Thread</button>
         </div>
     </div>
 </div>
-
+<div>
+    <button class="donebutton" [routerLink]="'/home'">Return</button>
+</div>
 </html>
