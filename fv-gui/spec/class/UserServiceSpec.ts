@@ -3,7 +3,9 @@ import { ACK, Ack } from '../../../common/Ack'
 import { User } from '../../../common/User';
 import { lastValueFrom, of } from 'rxjs';
 
-describe("UserService's registration service", () => {
+describe("UserService's tryRegisterUser", () => {
+    // test writing is mostly driven by the possible ack error
+    // codes each method can raise
 
     it("tells when a user field is missing", async () => {
         let user1  = new User();  // missing
@@ -29,6 +31,30 @@ describe("UserService's registration service", () => {
         expect(ack5).toEqual(ACK.REGISTER_USER.MISSING_FIELD);
         expect(ack6).toEqual(ACK.REGISTER_USER.OK);
         expect(ack7).toEqual(ACK.REGISTER_USER.MISSING_FIELD);
+    });
+
+    it("tells when the username is duplicate", async () => {
+        let user1  = new User('email1', 'name', 'pass1');              // not duplicate
+        let user2  = new User('email3', 'name', 'pass2');              // duplicate
+        let admin3 = new User('email4', 'name', 'pass4', true, '1');   // duplicate
+        let admin4 = new User('email4', 'name', 'pass4', true, '123'); // duplicate
+
+        let admin5 = new User('email6', 'john', 'pass5', true, '456'); // not duplicate
+        let user6  = new User('email7', 'john', 'pass6');              // duplicate
+
+        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
+        let ack2 = await lastValueFrom(UserService.tryRegisterUser(user2));
+        let ack3 = await lastValueFrom(UserService.tryRegisterUser(admin3));
+        let ack4 = await lastValueFrom(UserService.tryRegisterUser(admin4));
+        let ack5 = await lastValueFrom(UserService.tryRegisterUser(admin5));
+        let ack6 = await lastValueFrom(UserService.tryRegisterUser(user6));
+
+        expect(ack1).toEqual(ACK.REGISTER_USER.OK);
+        expect(ack2).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
+        expect(ack3).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
+        expect(ack4).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
+        expect(ack5).toEqual(ACK.REGISTER_USER.OK);
+        expect(ack6).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
     });
 
 })
