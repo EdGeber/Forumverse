@@ -1,41 +1,41 @@
-<html>
+<html class="container">
 
-<h1>Create Discussion</h1>
+<h1 class="title">Create Discussion</h1>
 
 <table>
     <tr>
-        <h2>Discussion Name:</h2>
-        <input (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
+        <h2 class="inputTitle">Discussion Name:</h2>
+        <input class="inputReg" (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
     </tr>
     <div>
-        <p>Topics Selection:</p>
-        <div>
+        <p class="inputTitle">Topics Selection:</p>
+        <div class="table-fields">
             <input type="checkbox" id="python" value="Python" [(ngModel)]="threadCreate.topic1">
-            <label for="python"> Python</label><br>
+            <label class="inputTitle" for="python"> Python</label><br>
         </div>
-        <div>
+        <div class="table-fields">
             <input type="checkbox" id="c++" value="C++" [(ngModel)]="threadCreate.topic2">
-            <label for="c++"> C++</label><br>
+            <label class="inputTitle" for="c++"> C++</label><br>
         </div>
-        <div>
+        <div class="table-fields">
             <input type="checkbox" id="html" value="Html" [(ngModel)]="threadCreate.topic3">
-            <label for="html"> Html</label><br>
+            <label class="inputTitle" for="html"> Html</label><br>
         </div>
     </div>
     <br>
-    <textarea rows=10 cols= 50 [(ngModel)]="threadCreate.text"></textarea>
+    <textarea class="inputReg" rows=10 cols= 50 [(ngModel)]="threadCreate.text"></textarea>
 </table>
 
-<button (click)="removeMissingFieldWarning(); createThread()">Done!</button>
+<button class="donebutton" (click)="removeMissingFieldWarning(); createThread()">Done!</button>
 
-<div *ngIf="isMissingNameField">Please create a name for the discussion.</div>
-<div *ngIf="isMissingTopicField">Please select at least one tag for the discussion.</div>
+<div class="inputTitle" *ngIf="isMissingNameField">Please create a name for the discussion.</div>
+<div class="inputTitle"  *ngIf="isMissingTopicField">Please select at least one tag for the discussion.</div>
 
-<div *ngIf="isThreadDuplicate">
+<div class="inputTitle"  *ngIf="isThreadDuplicate">
     Duplicated discussion name. Please create another name.
 </div>
 
-<div *ngIf="isNotLoggedIn">
+<div class="inputTitle"  *ngIf="isNotLoggedIn">
     You need to be logged in to create a thread.
 </div>
 
