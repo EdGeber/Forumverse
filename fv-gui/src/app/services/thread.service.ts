@@ -4,9 +4,12 @@ import { ACK, Ack } from "../../../../common/Ack";
 import { User } from "../../../../common/User";
 import { Reply } from "../../../../common/Reply";
 import { UserService } from "./user.service";
+import { RemoveThreadComponent } from "../remove-thread-page/remove-thread-page.component"
 
 export class ThreadService {
     private static _createdThreads: Thread[] = [];
+
+    public static arrayThreads: RemoveThreadComponent;
 
     public static tryCreateThread(thread: Thread): Observable<Ack> {
         let ack: Ack;
@@ -29,8 +32,12 @@ export class ThreadService {
         else{
             let threadOnArray = this._getThreadByID(thread.id)
             if(threadOnArray != undefined){
-                threadOnArray.addReply(reply);
-                ack = ACK.THREAD.OK;
+                if(threadOnArray.isLocked){
+                    ack = ACK.THREAD.LOCKED_THREAD;
+                } else {
+                    threadOnArray.addReply(reply);
+                    ack = ACK.THREAD.OK;
+                }
             } else {
                 ack = ACK.THREAD.UNEXPECTED_ERROR;
             }
@@ -75,6 +82,44 @@ export class ThreadService {
         return of(ack);
     }
 
+    public static DeleteThreadById(id: number, thread: Thread, user:User|null){
+        let ack: Ack;
+
+        if(!user){
+            ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
+            return of(ack)
+        }
+        
+        console.log(this._getThreadByID(id))
+        let threadOnArray = this._getThreadByID(id);
+
+        if (threadOnArray != undefined){
+            let threads = ThreadService._createdThreads;
+            let removed = null;
+
+            for (let i = 0; i < threads.length; i++) {
+                if(threads[i].id == id){
+                    if((user != threads[i].author) && (!user.isAdmin)){
+                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
+                        return of(ack)
+                    }
+
+                    removed = threads.splice(i,1) 
+                    break;
+                }
+            }
+            if(removed){
+                ack = ACK.THREAD.OK;
+            } else {
+                ack = ACK.THREAD.UNEXPECTED_ERROR;
+            }
+
+        } else{
+            ack = ACK.THREAD.UNEXPECTED_ERROR;
+        }
+        return of(ack);
+    }
+
     private static _getThreadByID(id:number): Thread|undefined{
         return ThreadService._createdThreads.find(t => t.id == id);
     }
@@ -93,21 +138,7 @@ export class ThreadService {
         ack.body = this._createdThreads;
         return of(ack);
     }
-    /* 
-    public static tryRemoveLockThread(thread: Thread): Observable<Ack> {
-        let ack: Ack;
-        if(this._isMissingThread(thread)) ack = ACK.THREAD.MISSING_THREAD;
-        else {
-            ack = ACK.THREAD.OK
-        }
-        return of(ack);
-    } 
-
-    private static _isMissingThread(thread: Thread): boolean {
-        return this.getThreadsByID == undefined;
-    }
-    */
-
+    
     private static _isMissingNameField(thread: Thread): boolean {
         return thread.name == ""
     }

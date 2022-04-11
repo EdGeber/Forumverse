@@ -13,8 +13,8 @@ export class Thread{
     text: string;
     timeCreated: Date;
     replies: Reply[];
-    isLocked: boolean = false;
-
+    isLocked: Boolean = false;
+    
     constructor(){
         this.id = Thread.total;
 

@@ -9,34 +9,12 @@ export class UserService {
 
     private static _tokens: string[] = ["123", "456"];
 
-    public static hi = 'hello';
-
 
     public static get loggedUser(): Observable<Ack<User|null>> {
         let ack = ACK.GET_LOGGED_USER.OK;
         ack.body = this._loggedUser;
         return of(ack);  // observable that returns ack
     };
-
-    public static tryLoginUser(user: User): Observable<Ack> {
-        // this must be true if logIn is called. If it isn't,
-        // then there is a bug in the code. A person must not
-        // be able to try to log in if they are already logged in.
-        if(this._loggedUser != null) throw Error("User already logged in");
-        let ack: Ack;
-
-        if(this._isMissingFieldLogin(user)) ack = ACK.LOGIN.MISSING_FIELD;
-        else {
-            let fullUser =
-                this._registeredUsers.find(u => u.password == user.password && u.email == user.email);
-            if(fullUser == undefined) ack = ACK.LOGIN.USER_NOT_FOUND;
-            else {
-                this._loggedUser = fullUser;
-                ack = ACK.LOGIN.OK;
-            }
-        }        
-        return of(ack);
-    }
 
     public static tryRegisterUser(user: User): Observable<Ack> {
         let ack: Ack;
@@ -59,6 +37,34 @@ export class UserService {
         }
 
         return of(ack);
+    }
+
+    public static tryLoginUser(user: User): Observable<Ack> {
+        // this must be true if logIn is called. If it isn't,
+        // then there is a bug in the code. A person must not
+        // be able to try to log in if they are already logged in.
+        if(this._loggedUser != null) throw Error("User already logged in");
+        let ack: Ack;
+
+        if(this._isMissingFieldLogin(user)) ack = ACK.LOGIN.MISSING_FIELD;
+        else {
+            let fullUser =
+                this._registeredUsers.find(u => u.password == user.password && u.email == user.email);
+            if(fullUser == undefined) ack = ACK.LOGIN.USER_NOT_FOUND;
+            else {
+                this._loggedUser = fullUser;
+                ack = ACK.LOGIN.OK;
+            }
+        }        
+        return of(ack);
+    }
+
+    // not implemented by the server
+    public static tryLogoutUser(user: User) {
+        if(this.loggedUser == null) throw Error("Logout is not possible because the user is not logged in");
+
+        this._loggedUser = null;
+        return of(ACK.LOGOUT.OK);
     }
 
     private static _isMissingFieldRegister(user: User): boolean {

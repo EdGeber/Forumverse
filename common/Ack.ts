@@ -40,12 +40,17 @@ export const ACK = {
         //250 to 299: THREAD OPERATIONS
         EMPTY_REPLY_MSG:            new Ack('Thread',250),
         UNEXPECTED_ERROR:           new Ack('Thread',251),
-        DELETE_PERMISSION_DENIED:   new Ack('Thread',252)
+        DELETE_PERMISSION_DENIED:   new Ack('Thread',252),
+        LOCKED_THREAD:              new Ack('Thread',253)
     },
 
     LOGIN: { // 300 to 399
         OK:             new Ack("login", 0),
         MISSING_FIELD:  new Ack("login", 301),
         USER_NOT_FOUND: new Ack("login", 302)
+    },
+
+    LOGOUT: { // 400 to 499
+        OK: new Ack("logout", 0),
     }
 }
