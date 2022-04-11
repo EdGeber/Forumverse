@@ -1,8 +1,9 @@
-import { Observable, Observer, of } from "rxjs";
+import { lastValueFrom, Observable, Observer, of } from "rxjs";
 import { Thread } from "../../../../common/Thread";
 import { ACK, Ack } from "../../../../common/Ack";
 import { User } from "../../../../common/User";
 import { Reply } from "../../../../common/Reply";
+import { UserService } from "./user.service";
 
 export class ThreadService {
     private static _createdThreads: Thread[] = [];
