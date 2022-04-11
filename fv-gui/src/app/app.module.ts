@@ -37,8 +37,8 @@ import { ThreadPageComponent } from './thread-page/thread-page.component';
 import { CommonModule } from '@angular/common';
 import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
 
-// remove-thread-page
-import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.component';
+// manage-thread-page
+import { ManageThreadComponent } from './manage-thread-page/manage-thread-page.component';
 
 @NgModule({
     declarations: [
@@ -72,8 +72,8 @@ import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.c
         LoginFieldsComponent,
         LoginTopBarComponent,
 
-        /* remove-thread-page */
-        RemoveThreadComponent
+        /* manage-thread-page */
+        ManageThreadComponent
     ],
     imports: [
         BrowserModule,
@@ -116,8 +116,8 @@ import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.c
                 component: LoginPageComponent
             },
             {
-                path: 'remove-thread',
-                component: RemoveThreadComponent
+                path: 'manage-thread',
+                component: ManageThreadComponent
             }
         ])
     ],

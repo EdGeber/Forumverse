@@ -9,11 +9,11 @@ import { UserService } from "../services/user.service";
 
 
 @Component({
-    selector: 'remove-thread-page',
-    templateUrl: './remove-thread-page.component.html',
-    styleUrls: ['./remove-thread-page.component.css']
+    selector: 'manage-thread-page',
+    templateUrl: './manage-thread-page.component.html',
+    styleUrls: ['./manage-thread-page.component.css']
 })
-export class RemoveThreadComponent implements OnInit{
+export class ManageThreadComponent implements OnInit{
     threads: Thread[] = [];
     thread: Thread = new Thread();
     loggedUser: User|null = null;
@@ -58,18 +58,49 @@ export class RemoveThreadComponent implements OnInit{
         return this.loggedUser == user || this.loggedUser.isAdmin;
     }
 
+    async lockThread(thread: Thread){
+        let ack:Ack;
+        ack = await lastValueFrom(ThreadService.LockThreadById(thread.id,this.loggedUser));
+        
+        if(ack.code == ACK.OK) {
+            alert("Thread locked successfully!");
+        } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
+            alert("Could not lock the thread. Please try again!");
+        } else if(ack.code == ACK.THREAD.LOCK_PERMISSION_DENIED.code){
+            alert("You don't has permission to lock this thread!");
+        } else if(ack.code == ACK.THREAD.LOCKED_THREAD.code){
+            alert("Thread already locked!")
+        }
+    }
+    
+    async unlockThread(thread: Thread){
+        let ack:Ack;
+        ack = await lastValueFrom(ThreadService.UnlockThreadById(thread.id,this.loggedUser));
+        
+        if(ack.code == ACK.OK) {
+            alert("Thread unlocked successfully!");
+        } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
+            alert("Could not unlock the thread. Please try again!");
+        } else if(ack.code == ACK.THREAD.UNLOCK_PERMISSION_DENIED.code){
+            alert("You don't has permission to unlock this thread!");
+        } else if(ack.code == ACK.THREAD.UNLOCKED_THREAD.code){
+            alert("Thread already unlocked!")
+        }
+    }
+    
+
     async deleteThread(thread: Thread){
         let ack:Ack;
-        ack = await lastValueFrom(ThreadService.DeleteThreadById(thread.id,this.thread,this.loggedUser));
-        
-
+        ack = await lastValueFrom(ThreadService.DeleteThreadById(thread.id,this.loggedUser));
 
         if(ack.code == ACK.OK) {
-            this._router.navigateByUrl("/home");
+            alert("Thread removed successfully!");
         } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
             alert("Could not delete thread. Please try again!");
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
-            alert("You don't has permission to delete this thread!")
+            alert("You don't has permission to delete this thread!");
+        } else if(ack.code == ACK.THREAD.MISSING_THREAD.code){
+            alert("Thread doesn't exist!")
         }
          
     }
