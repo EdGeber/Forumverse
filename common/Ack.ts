@@ -22,6 +22,10 @@ export const ACK = {
         OK: new Ack<User|null>("getLoggedUser", 0),
     },
 
+    GET_THREAD:{
+        OK: new Ack<Thread|undefined>("getThread",0),
+    },
+
     CREATE_THREAD: { 
         // 200 to 249: THREAD CREATION
         OK:                     new Ack("Thread", 0),

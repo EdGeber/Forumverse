@@ -1,6 +1,8 @@
 import { Observable, Observer, of } from "rxjs";
 import { Thread } from "../../../../common/Thread";
 import { ACK, Ack } from "../../../../common/Ack";
+import { User } from "../../../../common/User";
+import { Reply } from "../../../../common/Reply";
 
 export class ThreadService {
     private static _createdThreads: Thread[] = [];
@@ -13,7 +15,15 @@ export class ThreadService {
         else {
             ack = ACK.CREATE_THREAD.OK;
             this._createdThreads.push(thread);
+            Thread.total++;
         }
+        return of(ack);
+    }
+
+    public static getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
+        let ack = ACK.GET_THREAD.OK;
+        let thread = ThreadService._createdThreads.find(t => t.id == id);
+        ack.body = thread;
         return of(ack);
     }
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { lastValueFrom } from "rxjs";
+import { ActivatedRoute } from '@angular/router';
+import { find, lastValueFrom } from "rxjs";
 import { ACK } from "../../../../common/Ack";
 import { Reply } from "../../../../common/Reply";
 import { Thread } from "../../../../common/Thread"; 
 import { User }   from "../../../../common/User"; 
+import { ThreadService } from "../services/thread.service";
 import { UserService } from "../services/user.service";
 
 @Component({
@@ -15,18 +17,23 @@ export class ThreadPageComponent implements OnInit{
     thread: Thread = new Thread();
     replyText: string = "";
 
-    ngOnInit(): void {
-        //testes    
-        let sampleUser = new User();
-        sampleUser.name = "Paul";
+    constructor(private route: ActivatedRoute) { }
 
-        let thread = new Thread
-        thread.populateThread("How to print in Java?", sampleUser, [],"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu egestas leo, quis ornare felis. Vivamus nec erat mi. Aenean hendrerit ut erat in pulvinar. Donec sed est sed tortor vehicula consequat ut eget mi. Phasellus at rhoncus lacus, sit amet suscipit arcu. Duis sed ante posuere arcu ultrices bibendum eget at augue. Integer luctus sem quis elit feugiat facilisis. Maecenas in augue eleifend, semper diam efficitur, convallis mauris. Nullam vehicula egestas ipsum vitae semper. Vestibulum euismod ante quis scelerisque varius. In hac habitasse platea dictumst. Ut eget risus a mi sodales convallis a quis ante.");
-        
-        thread.addReply(new Reply(sampleUser,"Just search on Google!"))
-        thread.addReply(new Reply(sampleUser,"Come on!"))
-        
-        this.thread = thread;
+    ngOnInit(): void {
+
+        let routeParams = this.route.snapshot.paramMap;
+        let threadId = routeParams.get('id');
+
+        if(threadId){
+            threadId = threadId.substring(1)
+            this.setThread(parseInt(threadId));
+            console.log(this.thread)
+        }
+    }
+
+    async setThread(id:number){
+        let ack = await lastValueFrom(ThreadService.getThreadsByID(id));
+        this.thread = <Thread>ack.body;
     }
 
     async sendReply(){
@@ -39,7 +46,6 @@ export class ThreadPageComponent implements OnInit{
             if(ack.body){
                 user = <User>ack.body;
                 let reply = new Reply(user,this.replyText)
-                console.log(reply);
                 this.replyText = "";
 
                 //TODO: Adicionar ACK para simular resposta do servidor

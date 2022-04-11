@@ -2,6 +2,9 @@ import { Reply } from "./Reply";
 import { User } from "./User";
 
 export class Thread{
+    static total: number = 0;
+
+    id: number;
     name: string;
     author: User;
     topics: string[];
@@ -11,6 +14,8 @@ export class Thread{
     text: string;
 
     constructor(){
+        this.id = Thread.total;
+
         this.name = "";
         this.author = new User();
         this.topics = [];

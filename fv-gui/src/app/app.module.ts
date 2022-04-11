@@ -100,7 +100,7 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
                 component: CreateThreadComponent
             },
             {
-                path: 'thread',
+                path: 'thread/:id',
                 component: ThreadPageComponent
             },
             {
