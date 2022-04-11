@@ -16,18 +16,18 @@ import { UserService } from "../services/user.service";
 export class ThreadPageComponent implements OnInit{ 
     thread: Thread = new Thread();
     replyText: string = "";
+    loggedUser: User|null = null;
 
     constructor(private route: ActivatedRoute) { }
 
     ngOnInit(): void {
-
         let routeParams = this.route.snapshot.paramMap;
         let threadId = routeParams.get('id');
+        this.setLoggedUser();
 
         if(threadId){
             threadId = threadId.substring(1)
             this.setThread(parseInt(threadId));
-            console.log(this.thread)
         }
     }
 
@@ -37,27 +37,50 @@ export class ThreadPageComponent implements OnInit{
     }
 
     async sendReply(){
+        if(this.loggedUser){
+            let reply = new Reply(this.loggedUser,this.replyText)
+            this.replyText = "";
+
+            let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
+
+            if(replyAck == ACK.THREAD.EMPTY_REPLY_MSG){
+                alert("Reply cannot be empty!");
+            } else if(replyAck == ACK.THREAD.UNEXPECTED_ERROR){
+                alert("An unexpect error ocurred");
+            }
+        }
+        else{
+            alert("You need to be logged in to send a reply!")
+        }
+    }
+
+    async setLoggedUser(){
         let ack = await lastValueFrom(UserService.loggedUser);
-        let user: User|null = null;
 
-        if(ack.code == ACK.OK){            
+        if(ack.code == ACK.OK){
             if(ack.body){
-                user = <User>ack.body;
-                let reply = new Reply(user,this.replyText)
-                this.replyText = "";
-
-                //TODO: Adicionar ACK para simular resposta do servidor
-                let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
-
-                if(replyAck == ACK.THREAD.EMPTY_REPLY_MSG){
-                    alert("Reply cannot be empty!");
-                } else if(replyAck == ACK.THREAD.UNEXPECTED_ERROR){
-                    alert("An unexpect error ocurred");
-                }
+                this.loggedUser = <User>ack.body;
+            } else{
+                this.loggedUser = null;
             }
-            else{
-                alert("You need to be logged in to send a reply!")
-            }
+        }
+    }
+
+    isLoggedUserOrAdmin(user:User) : boolean{
+        if(!this.loggedUser){
+            return false;
+        }
+        return this.loggedUser == user || this.loggedUser.isAdmin;
+    }
+
+    async deleteReply(reply: Reply){
+        let ack:Ack;
+        ack = await lastValueFrom(ThreadService.DeleteReplyById(reply.id,this.thread,this.loggedUser));
+
+        if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
+            alert("Could not delete reply. Please try again!");
+        } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
+            alert("You don't has permission to delete this reply!")
         }
     }
 }

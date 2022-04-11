@@ -1,6 +1,7 @@
 import { User } from "./User";
 
 export class Reply{
+    id: number = -1;
     author: User;
     timeSent: Date;
     content: string;
