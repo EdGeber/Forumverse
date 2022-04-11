@@ -36,6 +36,16 @@ export class ThreadPageComponent implements OnInit{
         this.thread = <Thread>ack.body;
     }
 
+    get LastActivity(){
+        let replies = this.thread.replies;
+        if(replies.length > 0){
+            let lastActivity = replies[replies.length-1].timeSent;
+            return lastActivity;
+        } else {
+            return this.thread.timeCreated;
+        }
+    }
+
     async sendReply(){
         if(this.loggedUser){
             let reply = new Reply(this.loggedUser,this.replyText)
