@@ -112,6 +112,7 @@ select{
     color: #12CDD4;
     text-decoration: underline;
     padding-right: 10px;
+    font-weight: bold;
 }
 
 .thread-bot{
