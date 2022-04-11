@@ -22,11 +22,19 @@ export const ACK = {
         OK: new Ack<User|null>("getLoggedUser", 0),
     },
 
-    CREATE_THREAD: { // 200 to 299
+    GET_THREAD:{
+        OK: new Ack<Thread|undefined>("getThread",0),
+    },
+
+    THREAD: { // 200 to 299
         OK:                     new Ack("Thread", 0),
         MISSING_NAMEFIELD:      new Ack("Thread", 200),
         MISSING_TOPICFIELD:     new Ack("Thread", 201),
-        DUPLICATE_THREADNAME:   new Ack("Thread", 202),
+        MISSING_THREAD:         new Ack("Thread", 202),
+        DUPLICATE_THREADNAME:   new Ack("Thread", 203),
+        
+        //250 to 299: THREAD OPERATIONS
+        EMPTY_REPLY_MSG:      new Ack('Thread',250),
     },
 
     LOGIN: { // 300 to 399

@@ -32,6 +32,14 @@ import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.co
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
 
+// thread-page
+import { ThreadPageComponent } from './thread-page/thread-page.component';
+import { CommonModule } from '@angular/common';
+import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
+
+// remove-thread-page
+import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.component';
+
 @NgModule({
     declarations: [
         Page,
@@ -42,7 +50,7 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
         HomeBottomBarComponent,
         TopBarComponent,
         HomePageComponent,
-
+        HomeDiscussionsComponent,
         /* user-regist-page */
         UserRegistFieldsComponent,
         UserRegistTopBarComponent,
@@ -55,13 +63,21 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
 
         /* create-thread-page */
         CreateThreadComponent,
+        
+        /* thread-page */
+        ThreadPageComponent,
+
         /* login-page */
         LoginPageComponent,
         LoginFieldsComponent,
         LoginTopBarComponent,
+
+        /* remove-thread-page */
+        RemoveThreadComponent
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
@@ -92,9 +108,17 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
                 component: CreateThreadComponent
             },
             {
+                path: 'thread/:id',
+                component: ThreadPageComponent
+            },
+            {
                 path: 'login',
                 component: LoginPageComponent
             },
+            {
+                path: 'remove-thread',
+                component: RemoveThreadComponent
+            }
         ])
     ],
     // don't change
