@@ -4,6 +4,7 @@
     <li class="thread-info">In {{thread.timeCreated}}</li>
     <li class="thread-info">Last activity {{LastActivity}}</li>   
     <li class="thread-info">{{thread.replies.length}} replies</li>
+    <li *ngIf="thread.isLocked">LOCKED</li>
 </ul>
 <br>
 

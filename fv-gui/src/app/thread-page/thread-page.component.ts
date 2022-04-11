@@ -53,9 +53,11 @@ export class ThreadPageComponent implements OnInit{
 
             let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
 
-            if(replyAck == ACK.THREAD.EMPTY_REPLY_MSG){
+            if(replyAck.code == ACK.THREAD.EMPTY_REPLY_MSG.code){
                 alert("Reply cannot be empty!");
-            } else if(replyAck == ACK.THREAD.UNEXPECTED_ERROR){
+            } else if(replyAck.code == ACK.THREAD.LOCKED_THREAD.code){
+                alert("This thread is locked and don't accept new replies!")
+            } else if(replyAck.code == ACK.THREAD.UNEXPECTED_ERROR.code){
                 alert("An unexpect error ocurred");
             }
         }
