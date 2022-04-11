@@ -48,6 +48,14 @@ export class ThreadService {
         ack.body = thread;
         return of(ack);
     }
+
+    /* Não é pra retornar todas as threads, mas como vão ter poucas... */
+    public static getThreadsArray(): Observable<Ack<Thread[]|undefined>>
+    {
+        let ack = ACK.GET_THREAD_ARRAY.OK;
+        ack.body = this._createdThreads;
+        return of(ack);
+    }
     /* 
     public static tryRemoveLockThread(thread: Thread): Observable<Ack> {
         let ack: Ack;

@@ -28,8 +28,39 @@
                 </div>
             </div>
             <div class="thread-component-blob">
-                <!-- Para cada thread colocar o esqueleto de thread -->
-                <div class="thread-box">
+                <div class="thread-box-wrapper" *ngFor="let t of threads">
+                    <div class="thread-box">
+                            <div class="thread-top">
+                                <div class="op-wrapper">
+                                    <p class="fktxt">By: </p>
+                                    <p id="fkLink">{{t.author.name}} </p>
+                                </div>
+                                <p class="sp">・</p>
+                                <div class="op-wrapper">
+                                    <p class="fktxt">Created: </p>
+                                    <p id="fkfkLink">{{t.timeCreated.toLocaleDateString()}} {{t.timeCreated.toLocaleTimeString('en-US')}}</p>
+                                </div>
+                                <p class="sp">・</p>
+                                <div class="op-wrapper">
+                                    <p class="fktxt">Last Activity: </p>
+                                    <p class="fktxt" id="fkfkLink">Less than 1hr ago</p>
+                                    <!-- <p class="fktxt" id="fkfkLink">{{t.replies.at(-1).timeSent.toLocaleDateString()}} {{t.replies.at(-1).timeSent.toLocaleTimeString('en-US')}}</p> -->
+                                </div>
+                                <p class="sp">・</p>
+                                <div class="op-wrapper">
+                                    <p class="fktxt">Replies: </p>
+                                    <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
+                                </div>
+                                <p class="sp">・</p>
+                                <p class="op-wrapper" id="fkLinkk">{{t.topic1}}</p>
+                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic2 === 'true';">C++</p>
+                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3 === 'true';">HTML</p>
+                            </div>
+                            <hr>
+                            <div class="thread-bot">
+                                <h1>{{t.name}}</h1>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>

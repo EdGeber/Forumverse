@@ -26,6 +26,10 @@ export const ACK = {
         OK: new Ack<Thread|undefined>("getThread",0),
     },
 
+    GET_THREAD_ARRAY:{
+        OK: new Ack<Thread[]|undefined>("getThreadArray",0),
+    },
+
     THREAD: { // 200 to 299
         OK:                     new Ack("Thread", 0),
         MISSING_NAMEFIELD:      new Ack("Thread", 200),
