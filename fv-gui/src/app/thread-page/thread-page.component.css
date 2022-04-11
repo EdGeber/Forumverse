@@ -21,10 +21,15 @@ padding-right: 0.75rem;
 .reply{
     margin-bottom: 1rem;
     margin-top: 0rem;
+    white-space: pre-wrap;
 }
 
 .reply-header, h2{
     color: cyan;
+}
+
+textarea, #thread-text{
+    white-space: pre-wrap;
 }
 
 textarea{
