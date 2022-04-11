@@ -7,6 +7,7 @@ export class UserService {
 
     private static _registeredUsers: User[] = [];
 
+    // TODO: change to '_availableTokens'
     private static _tokens: string[] = ["123", "456"];
 
     public static hi = 'hello';
