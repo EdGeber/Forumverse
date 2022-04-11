@@ -31,10 +31,14 @@ import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.co
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
-// create-discussion-page
+
+// thread-page
 import { ThreadPageComponent } from './thread-page/thread-page.component';
 import { CommonModule } from '@angular/common';
 import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
+
+// remove-thread-page
+import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.component';
 
 @NgModule({
     declarations: [
@@ -62,10 +66,14 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
         
         /* thread-page */
         ThreadPageComponent,
+
         /* login-page */
         LoginPageComponent,
         LoginFieldsComponent,
         LoginTopBarComponent,
+
+        /* remove-thread-page */
+        RemoveThreadComponent
     ],
     imports: [
         BrowserModule,
@@ -106,6 +114,10 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
             {
                 path: 'login',
                 component: LoginPageComponent
+            },
+            {
+                path: 'remove-thread',
+                component: RemoveThreadComponent
             }
         ])
     ],
