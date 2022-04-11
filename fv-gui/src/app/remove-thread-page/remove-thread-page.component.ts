@@ -1,50 +1,71 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
+import { find, lastValueFrom } from "rxjs";
+import { Ack, ACK } from "../../../../common/Ack";
+import { Thread } from "../../../../common/Thread"; 
+import { User }   from "../../../../common/User"; 
+import { ThreadService } from "../services/thread.service";
+import { UserService } from "../services/user.service";
 
-import { Thread } from '../../../../common/Thread'
-import { lastValueFrom } from 'rxjs';
-import { Ack, ACK, ErrorHandlers } from '../../../../common/Ack';
-import { ThreadService } from '../services/thread.service';
 
 @Component({
-  selector: 'remove-discus-page',
-  templateUrl: './remove-thread-page.component.html',
-  styleUrls: ['./remove-thread-page.component.css']
+    selector: 'remove-thread-page',
+    templateUrl: './remove-thread-page.component.html',
+    styleUrls: ['./remove-thread-page.component.css']
 })
+export class RemoveThreadComponent implements OnInit{
+    threads: Thread[] = [];
+    thread: Thread = new Thread();
+    loggedUser: User|null = null;
+    
 
-export class RemoveThreadComponent {
-    /* 
-    // private properties
-    private readonly _ERROR_HANDLING: ErrorHandlers = {};
+    constructor(private route: ActivatedRoute) {}
 
-    // public properties
-    public title = "Remove Thread";
-    public threadRemove = new Thread();
-    public isMissingThread = false;
-
-    // private methods
-    private _handleError(ack: Ack) {
-        this._ERROR_HANDLING[ack.code]();
+    ngOnInit(): void {
+        let routeParams = this.route.snapshot.paramMap;
+        let threadId = routeParams.get('id');
+        this.setLoggedUser();
+        this.setThreads();
     }
 
-    // public methods
-    constructor(private _router: Router) {
-
-        this._ERROR_HANDLING[ACK.THREAD.MISSING_NAMEFIELD.code] =
-            () => this.isMissingThread = true;
-
+    public async setThreads(){
+        let ack = await lastValueFrom(ThreadService.getThreadsArray());
+        this.threads = <Thread[]>ack.body;
     }
 
-    public removeMissingThread() {
-        this.isMissingThread = false;
+    async setThread(id:number){
+        let ack = await lastValueFrom(ThreadService.getThreadsByID(id));
+        this.thread = <Thread>ack.body;
     }
 
 
-    public async removeThread() {
-        var ack = await
-            lastValueFrom(ThreadService.tryRemoveLockThread(this.threadRemove));
-        
-        if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
-        else this._handleError(ack);
-    } */
+    async setLoggedUser(){
+        let ack = await lastValueFrom(UserService.loggedUser);
+
+        if(ack.code == ACK.OK){
+            if(ack.body){
+                this.loggedUser = <User>ack.body;
+            } else{
+                this.loggedUser = null;
+            }
+        }
+    }
+
+    isLoggedUserOrAdmin(user:User) : boolean{
+        if(!this.loggedUser){
+            return false;
+        }
+        return this.loggedUser == user || this.loggedUser.isAdmin;
+    }
+
+    async deleteThread(thread: Thread){
+        let ack:Ack;
+        ack = await lastValueFrom(ThreadService.DeleteThreadById(thread.id,this.thread,this.loggedUser));
+
+        if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
+            alert("Could not delete thread. Please try again!");
+        } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
+            alert("You don't has permission to delete this thread!")
+        }
+    }
 }

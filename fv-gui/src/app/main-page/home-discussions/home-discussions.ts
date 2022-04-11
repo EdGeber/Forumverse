@@ -18,7 +18,7 @@ import { UserService } from "../../services/user.service";
 
 export class HomeDiscussionsComponent implements OnInit{ 
   
-  threads: Thread[] = [];
+  public threads: Thread[] = [];
   id: number = 0;
   name: string = '';
   author: User = new User();
@@ -26,6 +26,7 @@ export class HomeDiscussionsComponent implements OnInit{
   topic1: string = '';
   topic2: string = '';
   topic3: string = '';
+  length: number = 0;
   
   constructor(private route: ActivatedRoute){ }
 
