@@ -10,14 +10,20 @@
     <div>
         <p>Topics Selection:</p>
         <div>
-            <input type="checkbox" id="python" value="Python" [(ngModel)]="threadCreate.topics">
+            <input type="checkbox" id="python" value="Python" [(ngModel)]="threadCreate.topic1">
             <label for="python"> Python</label><br>
         </div>
         <div>
-            <input type="checkbox" id="c++" value="C++" [(ngModel)]="threadCreate.topics">
+            <input type="checkbox" id="c++" value="C++" [(ngModel)]="threadCreate.topic2">
             <label for="c++"> C++</label><br>
         </div>
+        <div>
+            <input type="checkbox" id="html" value="Html" [(ngModel)]="threadCreate.topic3">
+            <label for="html"> Html</label><br>
+        </div>
     </div>
+    <br>
+    <textarea rows=10 cols= 50 [(ngModel)]="threadCreate.text"></textarea>
 </table>
 
 <button (click)="removeMissingFieldWarning(); createThread()">Done!</button>

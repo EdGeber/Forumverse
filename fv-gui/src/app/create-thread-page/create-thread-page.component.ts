@@ -32,13 +32,13 @@ export class CreateThreadComponent {
     // public methods
     constructor(private _router: Router) {
 
-        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_NAMEFIELD.code] =
+        this._ERROR_HANDLING[ACK.THREAD.MISSING_NAMEFIELD.code] =
             () => this.isMissingNameField = true;
         
-        this._ERROR_HANDLING[ACK.CREATE_THREAD.MISSING_TOPICFIELD.code] =
+        this._ERROR_HANDLING[ACK.THREAD.MISSING_TOPICFIELD.code] =
             () => this.isMissingTopicField = true;
 
-        this._ERROR_HANDLING[ACK.CREATE_THREAD.DUPLICATE_THREADNAME.code] =
+        this._ERROR_HANDLING[ACK.THREAD.DUPLICATE_THREADNAME.code] =
             () => this.isThreadDuplicate = true;
 
     }

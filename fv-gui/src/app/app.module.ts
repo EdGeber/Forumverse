@@ -31,7 +31,14 @@ import { LoginTopBarComponent } from './login-page/login-topbar/login-top-bar.co
 
 // create-thread-page
 import { CreateThreadComponent } from './create-thread-page/create-thread-page.component';
+
+// thread-page
+import { ThreadPageComponent } from './thread-page/thread-page.component';
+import { CommonModule } from '@angular/common';
 import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
+
+// remove-thread-page
+import { RemoveThreadComponent } from './remove-thread-page/remove-thread-page.component';
 
 @NgModule({
     declarations: [
@@ -56,13 +63,21 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
 
         /* create-thread-page */
         CreateThreadComponent,
+        
+        /* thread-page */
+        ThreadPageComponent,
+
         /* login-page */
         LoginPageComponent,
         LoginFieldsComponent,
         LoginTopBarComponent,
+
+        /* remove-thread-page */
+        RemoveThreadComponent
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         FormsModule,
         HttpClientModule,
         RouterModule.forRoot([
@@ -93,9 +108,17 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
                 component: CreateThreadComponent
             },
             {
+                path: 'thread/:id',
+                component: ThreadPageComponent
+            },
+            {
                 path: 'login',
                 component: LoginPageComponent
             },
+            {
+                path: 'remove-thread',
+                component: RemoveThreadComponent
+            }
         ])
     ],
     // don't change
