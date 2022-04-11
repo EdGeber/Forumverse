@@ -5,6 +5,8 @@ import { Thread } from '../../../../common/Thread'
 import { lastValueFrom } from 'rxjs';
 import { Ack, ACK, ErrorHandlers } from '../../../../common/Ack';
 import { ThreadService } from '../services/thread.service';
+import { UserService } from '../services/user.service';
+import { User } from '../../../../common/User';
 
 @Component({
   selector: 'create-discus-page',
@@ -23,6 +25,7 @@ export class CreateThreadComponent {
     public isMissingNameField = false;
     public isMissingTopicField = false;
     public isThreadDuplicate = false;
+    public isNotLoggedIn = false;
 
     // private methods
     private _handleError(ack: Ack) {
@@ -53,10 +56,21 @@ export class CreateThreadComponent {
     }
 
     public async createThread() {
-        var ack = await
-            lastValueFrom(ThreadService.tryCreateThread(this.threadCreate));
-        
-        if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
-        else this._handleError(ack);
+        var userAck = await
+            lastValueFrom(UserService.loggedUser);
+
+        if(userAck.code == ACK.OK){
+            if(userAck.body){
+                this.threadCreate.author = <User>userAck.body;
+
+                var ack = await
+                lastValueFrom(ThreadService.tryCreateThread(this.threadCreate));
+            
+                if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
+                else this._handleError(ack);
+            } else {
+                this.isNotLoggedIn = true;
+            }
+        }
     }
 }

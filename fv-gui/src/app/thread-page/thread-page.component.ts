@@ -40,9 +40,7 @@ export class ThreadPageComponent implements OnInit{
         let ack = await lastValueFrom(UserService.loggedUser);
         let user: User|null = null;
 
-        if(ack.code == ACK.OK){
-            console.log(ack.body)
-            
+        if(ack.code == ACK.OK){            
             if(ack.body){
                 user = <User>ack.body;
                 let reply = new Reply(user,this.replyText)
