@@ -7,6 +7,8 @@ describe("UserService's tryRegisterUser", () => {
     // test writing is mostly driven by the possible ack error
     // codes each method can raise
 
+    afterEach(() => UserService._clearRegisteredUsers());
+
     it("tells when a user field is missing", async () => {
         let user1  = new User();  // missing
         let user2  = new User('email2', 'name2', 'pass2');  // full
@@ -56,5 +58,25 @@ describe("UserService's tryRegisterUser", () => {
         expect(ack5).toEqual(ACK.REGISTER_USER.OK);
         expect(ack6).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
     });
+
+    it("tells when email and password combination is duplicate", async () => {
+        let user1  = new User('email1', 'name1', 'pass1');  // ok
+        let user2  = new User('email1', 'name2', 'pass2');  // ok
+        let user3  = new User('email3', 'name3', 'pass1');  // ok
+        let user4  = new User('email1', 'name4', 'pass1');  // duplicate
+        let admin5 = new User('email1', 'name5', 'pass1', true, '123'); // duplicate
+
+        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
+        let ack2 = await lastValueFrom(UserService.tryRegisterUser(user2));
+        let ack3 = await lastValueFrom(UserService.tryRegisterUser(user3));
+        let ack4 = await lastValueFrom(UserService.tryRegisterUser(user4));
+        let ack5 = await lastValueFrom(UserService.tryRegisterUser(admin5));
+
+        expect(ack1).toEqual(ACK.REGISTER_USER.OK);
+        expect(ack2).toEqual(ACK.REGISTER_USER.OK);
+        expect(ack3).toEqual(ACK.REGISTER_USER.OK);
+        expect(ack4).toEqual(ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS);
+        expect(ack5).toEqual(ACK.REGISTER_USER.DUPLICATE_EMAIL_AND_PASS);
+    })
 
 })

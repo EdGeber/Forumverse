@@ -89,4 +89,9 @@ export class UserService {
     private static _isNameDuplicate(user: User): boolean {
         return this._registeredUsers.find(u => u.name == user.name) != undefined;
     }
+
+    // ONLY USED FOR TESTING
+    public static _clearRegisteredUsers(): void {
+        this._registeredUsers.length = 0;
+    }
 }
