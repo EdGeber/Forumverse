@@ -122,7 +122,7 @@ import { ManageThreadComponent } from './manage-thread-page/manage-thread-page.c
         ])
     ],
     // don't change
-    providers: [],
+    providers: [HomeDiscussionsComponent],
     bootstrap: [Page]
 })
 

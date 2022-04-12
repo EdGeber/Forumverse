@@ -8,6 +8,7 @@ import { Thread } from "../../../../../common/Thread";
 import { User }   from "../../../../../common/User"; 
 import { ThreadService } from "../../services/thread.service";
 import { UserService } from "../../services/user.service";
+import { HomeDiscussionsComponent } from '../home-discussions/home-discussions';
 
 @Component({
   selector: 'home-right-bar',
@@ -16,7 +17,7 @@ import { UserService } from "../../services/user.service";
 })
 
 export class HomeRightBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute){ };
+  constructor(private route: ActivatedRoute,  private homecomp: HomeDiscussionsComponent){ };
   loggedUser: User | null = null;
   threads: Thread[] = [];
   public que: string = "";
@@ -25,15 +26,9 @@ export class HomeRightBarComponent implements OnInit {
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
     this.islogged();
-    this.setThreads();
 
   }
 
-  public async setThreads(){
-    let ack = await lastValueFrom(ThreadService.getThreadsArray());
-    this.threads = <Thread[]>ack.body;
-  }
-  
 
   public async islogged(){
     let ack = await lastValueFrom(UserService.loggedUser);
@@ -47,23 +42,13 @@ export class HomeRightBarComponent implements OnInit {
     }
   }
 
-  public async search(){
-    var i = this.threads.length
-    while(i--)
-    {
-      if(!this.threads[i].name.includes(this.que.trim())){
-        this.threads.splice(i, 1);
-      };
-    }
-  }
-
   private removeallbut()
   {
-    var i = this.threads.length
+    var i = this.homecomp.threads.length
     while(i--)
     {
-      if(!((this.threads[i].topic1 && this.tags[0]) || (this.threads[i].topic2  && this.tags[1]) || (this.threads[i].topic3  && this.tags[2]))){
-        this.threads.splice(i, 1);
+      if(!((this.homecomp.threads[i].topic1 && this.tags[0]) || (this.homecomp.threads[i].topic2  && this.tags[1]) || (this.homecomp.threads[i].topic3  && this.tags[2]))){
+        this.homecomp.threads.splice(i, 1);
       };
     }
   }
