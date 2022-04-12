@@ -95,6 +95,7 @@ export class ManageThreadComponent implements OnInit{
 
         if(ack.code == ACK.OK) {
             alert("Thread removed successfully!");
+            this._router.navigateByUrl("/home");
         } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
             alert("Could not delete thread. Please try again!");
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
