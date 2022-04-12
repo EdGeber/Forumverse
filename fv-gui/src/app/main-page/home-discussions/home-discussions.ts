@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { find, lastValueFrom } from "rxjs";
@@ -15,7 +15,7 @@ import { UserService } from "../../services/user.service";
   styleUrls: ['./home-discussions.css']
 })
 
-
+@Injectable({providedIn: 'root'})
 export class HomeDiscussionsComponent implements OnInit{ 
 
   public threads: Thread[] = [];
@@ -88,6 +88,7 @@ export class HomeDiscussionsComponent implements OnInit{
     let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
     let user: User | null = ack.body as (User|null);
     
+
     if(user && this.filterType==2)
     {
       this.threads.forEach(t => {

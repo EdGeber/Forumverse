@@ -8,6 +8,7 @@ import { Thread } from "../../../../../common/Thread";
 import { User }   from "../../../../../common/User"; 
 import { ThreadService } from "../../services/thread.service";
 import { UserService } from "../../services/user.service";
+import { HomeDiscussionsComponent } from '../home-discussions/home-discussions';
 
 
 
@@ -18,7 +19,7 @@ import { UserService } from "../../services/user.service";
 })
 
 export class TopBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute){ 
+  constructor(private route: ActivatedRoute, private homecomp: HomeDiscussionsComponent){ 
   };
   loggedUser: User | null = null;
   threads: Thread[] = [];
@@ -50,6 +51,8 @@ export class TopBarComponent implements OnInit {
   }
 
   public async search(){
+    this.homecomp.setThreads();
+    this.setThreads();
     var i = this.threads.length;
     while(i--)
     {
