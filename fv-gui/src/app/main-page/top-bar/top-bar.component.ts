@@ -10,15 +10,17 @@ import { ThreadService } from "../../services/thread.service";
 import { UserService } from "../../services/user.service";
 
 
+
 @Component({
   selector: 'top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  styleUrls: ['./top-bar.component.css'],
 })
 
 export class TopBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute){ };
-  loggedUser: boolean = false;
+  constructor(private route: ActivatedRoute){ 
+  };
+  loggedUser: User | null = null;
   threads: Thread[] = [];
   public que: string = "";
 
@@ -40,16 +42,15 @@ export class TopBarComponent implements OnInit {
 
     if(ack.code == ACK.OK){
         if(ack.body){
-            this.loggedUser = true;
+          this.loggedUser = <User>ack.body;
         } else{
-            this.loggedUser = false;
+          this.loggedUser = null;
         }
     }
   }
 
   public async search(){
-    this.setThreads();
-    var i = this.threads.length
+    var i = this.threads.length;
     while(i--)
     {
       if(!this.threads[i].name.includes(this.que.trim())){
@@ -60,8 +61,8 @@ export class TopBarComponent implements OnInit {
 
   public async logout()
   {
-    /* let ack = await lastValueFrom();
-     */
+    let ack = await lastValueFrom(UserService.tryLogoutUser());
+
   }
 
 }

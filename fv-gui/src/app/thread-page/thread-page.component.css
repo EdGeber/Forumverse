@@ -1,6 +1,5 @@
 * {
     color: white;
-    margin-left: 0.5rem;
 }
 
 ul{
@@ -14,8 +13,17 @@ ul{
 }
 
 .thread-info{
-float: left; /*Makes the list horizontal*/
-padding-right: 0.75rem;
+    float: left; /*Makes the list horizontal*/
+    padding-right: 0.75rem;
+}
+
+hr{
+    margin-left: 0rem;
+    width: 100%;
+}
+
+.reply, #answer-div, #thread-title, #thread-text, .thread-info:first-child{
+    margin-left: 1rem;
 }
 
 .reply{
@@ -35,4 +43,5 @@ textarea, #thread-text{
 textarea{
     color: black;
     background-color: white;
+    margin-right: 1rem;
 }

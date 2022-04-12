@@ -32,8 +32,9 @@ export class HomeLeftBarComponent implements OnInit {
         if(ack.body){
             this.loggedUser = <User>ack.body;
         } else{
-            this.loggedUser = null;
+          this.loggedUser = null;
         }
     }
   }
+  
 }
