@@ -17,7 +17,7 @@ import { UserService } from "../../services/user.service";
 
 
 export class HomeDiscussionsComponent implements OnInit{ 
-  
+
   public threads: Thread[] = [];
   id: number = 0;
   name: string = '';
@@ -62,7 +62,9 @@ export class HomeDiscussionsComponent implements OnInit{
   
     return this.threads;
   };
-
+  public updatethreads(t: Thread[]){
+    this.threads = t;
+  }
   // 0: Latest
   // 1: Relevant
   // 2: Popular
@@ -81,6 +83,7 @@ export class HomeDiscussionsComponent implements OnInit{
   };
   // 0: all
   // 1: mine
+  // fazer loop while
   public async filterby(){
     let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
     let user: User | null = ack.body as (User|null);
@@ -102,19 +105,5 @@ export class HomeDiscussionsComponent implements OnInit{
       return true;
     }
     return false;
-  }
-
-  private removeallbut(tags: boolean[])
-  {
-    this.threads.forEach(t => {
-      if(t.topic1 != tags[0] && t.topic2 != tags[1] && t.topic3 != tags[3]){
-        this.threads.splice(this.threads.indexOf(t), 1);
-      };
-    });
-  }
-
-  public async filterbyTags(topics: boolean[]){
-    this.setThreads();
-    this.removeallbut(topics);
   }
 }

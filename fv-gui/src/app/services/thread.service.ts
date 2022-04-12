@@ -217,7 +217,8 @@ export class ThreadService {
     public static getThreadsArray(): Observable<Ack<Thread[]|undefined>>
     {
         let ack = ACK.GET_THREAD_ARRAY.OK;
-        ack.body = this._createdThreads;
+        /* To-do criar função deep copy array[thready] */
+        ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
         return of(ack);
     }
     

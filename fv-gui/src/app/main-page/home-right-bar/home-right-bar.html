@@ -8,15 +8,15 @@
                 </div>
                 <div id="topics">
                     <label class="container">Python
-                        <input type="checkbox" checked="checked">
+                        <input type="checkbox" [(ngModel)]="tags[0]" (change)="filterbyTags()">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container">C++
-                        <input type="checkbox">
+                        <input type="checkbox" [(ngModel)]="tags[1]" (change)="filterbyTags()">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container">Html
-                        <input type="checkbox">
+                        <input type="checkbox" [(ngModel)]="tags[2]" (change)="filterbyTags()">
                         <span class="checkmark"></span>
                     </label>
                 </div>
