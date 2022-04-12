@@ -3,13 +3,14 @@ import { ACK, Ack } from '../../../common/Ack'
 import { User } from '../../../common/User';
 import { lastValueFrom, of } from 'rxjs';
 
+// test writing is mostly driven by the possible ack error
+// codes each method can raise
+
 describe("UserService's tryRegisterUser", () => {
-    // test writing is mostly driven by the possible ack error
-    // codes each method can raise
 
     afterEach(() => UserService._clearRegisteredUsers());
 
-    it("tells when a user field is missing", async () => {
+    it("tells when a user field is missing on the registration", async () => {
         let user1  = new User();  // missing
         let user2  = new User('email2', 'name2', 'pass2');  // full
         let user3  = new User('email3', 'name3'         );  // missing
@@ -92,5 +93,23 @@ describe("UserService's tryRegisterUser", () => {
         expect(ack2).toEqual(ACK.REGISTER_USER.OK);
         expect(ack3).toEqual(ACK.REGISTER_USER.INVALID_TOKEN);
     })
+});
 
+describe("UserService's tryLoginUser", () => {
+
+    afterEach(() => UserService._clearRegisteredUsers());
+
+    it("tells when a field is missing", async () => {
+        let user1 = new User('email1', '', 'pass1');  // user not found (ok)
+        let user2 = new User('', '', 'pass2');        // missing
+        let user3 = new User('email3', '', 'pass3');  // missing
+
+        let ack1 = await lastValueFrom(UserService.tryLoginUser(user1));
+        let ack2 = await lastValueFrom(UserService.tryLoginUser(user2));
+        let ack3 = await lastValueFrom(UserService.tryLoginUser(user3));
+
+        expect(ack1).toEqual(ACK.LOGIN.USER_NOT_FOUND);
+        expect(ack2).toEqual(ACK.LOGIN.MISSING_FIELD);
+        expect(ack3).toEqual(ACK.LOGIN.USER_NOT_FOUND);
+    });
 })
