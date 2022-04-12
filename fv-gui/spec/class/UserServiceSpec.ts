@@ -95,11 +95,11 @@ describe("UserService's tryRegisterUser", () => {
     })
 });
 
-describe("UserService's tryLoginUser", () => {
+describe("UserService's login and logout services", () => {
 
     afterEach(() => UserService._clearRegisteredUsers());
 
-    it("tells when a field is missing", async () => {
+    it("tell when a field is missing (login)", async () => {
         let user1 = new User('email1', '', 'pass1');  // user not found (ok)
         let user2 = new User('', '', 'pass2');        // missing
         let user3 = new User('email3', '', 'pass3');  // missing
@@ -112,4 +112,41 @@ describe("UserService's tryLoginUser", () => {
         expect(ack2).toEqual(ACK.LOGIN.MISSING_FIELD);
         expect(ack3).toEqual(ACK.LOGIN.USER_NOT_FOUND);
     });
+
+    it("log the correct user from email and password information, and enable logout -> login", async () => {
+        let user1  = new User('email1', 'name1', 'pass1');  // register ok
+        let admin2 = new User('email2', 'name2', 'pass2', true, '123');  // register ok
+        let userLogin1  = new User('email1', '', 'pass1');   // login ok, return user1
+        let adminLogin2 = new User('email2', '', 'pass2');   // login ok, return admin2
+
+        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
+        expect(ack1).toEqual(ACK.REGISTER_USER.OK);
+
+        let ack2 = await lastValueFrom(UserService.tryRegisterUser(admin2));
+        expect(ack2).toEqual(ACK.REGISTER_USER.OK);
+
+        let ack3 = await lastValueFrom(UserService.tryLoginUser(userLogin1));
+        expect(ack3).toEqual(ACK.LOGIN.OK);
+
+        let expectedAck4 = ACK.GET_LOGGED_USER.OK;
+        expectedAck4.body = user1;
+        let ack4 = await lastValueFrom(UserService.loggedUser);
+        expect(ack4).toEqual(expectedAck4);
+
+        let ack5 = await lastValueFrom(UserService.tryLogoutUser());
+        expect(ack5).toEqual(ACK.LOGOUT.OK);
+
+
+        let ack6 = await lastValueFrom(UserService.tryLoginUser(adminLogin2));
+        expect(ack6).toEqual(ACK.LOGIN.OK);
+
+        let expectedAck7 = ACK.GET_LOGGED_USER.OK;
+        expectedAck7.body = admin2;
+        let ack7 = await lastValueFrom(UserService.loggedUser);
+        expect(ack7).toEqual(expectedAck7);
+
+        let ack8 = await lastValueFrom(UserService.tryLogoutUser());
+        expect(ack8).toEqual(ACK.LOGOUT.OK);
+
+    })
 })
