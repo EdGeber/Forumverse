@@ -80,9 +80,9 @@ describe("UserService's tryRegisterUser", () => {
     })
 
     it("tells when an admin token is invalid", async () => {
-        let user1   = new User('email1', 'name1', 'pass1');               // ok
-        let admin2  = new User('email2', 'name2', 'pass2', true, '123');  // ok
-        let admin3  = new User('email3', 'name3', 'pass3', true, '789');  // invalid
+        let user1  = new User('email1', 'name1', 'pass1');               // ok
+        let admin2 = new User('email2', 'name2', 'pass2', true, '123');  // ok
+        let admin3 = new User('email3', 'name3', 'pass3', true, '789');  // invalid
 
         let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
         let ack2 = await lastValueFrom(UserService.tryRegisterUser(admin2));

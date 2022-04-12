@@ -3,6 +3,8 @@ import { User } from "../../../../common/User";
 import { ACK, Ack } from "../../../../common/Ack";
 
 export class UserService {
+    // this property will be kept because the server
+    // won't hold login information
     private static _loggedUser: User|null = null;
 
     private static _registeredUsers: User[] = [];
@@ -45,12 +47,14 @@ export class UserService {
         // then there is a bug in the code. A person must not
         // be able to try to log in if they are already logged in.
         if(this._loggedUser != null) throw Error("User already logged in");
+        
         let ack: Ack;
 
         if(this._isMissingFieldLogin(user)) ack = ACK.LOGIN.MISSING_FIELD;
+
         else {
-            let fullUser =
-                this._registeredUsers.find(u => u.password == user.password && u.email == user.email);
+            // the user passed in only has fields email and password filled in
+            let fullUser = this._getFullUserFromLoginInfo(user);
             if(fullUser == undefined) ack = ACK.LOGIN.USER_NOT_FOUND;
             else {
                 this._loggedUser = fullUser;
@@ -92,6 +96,10 @@ export class UserService {
 
     private static _isAdminTokenInvalid(user: User): boolean {
         return user.isAdmin && !(this._tokens.includes(user.adminToken));
+    }
+
+    private static _getFullUserFromLoginInfo(user: User): User | undefined {
+        return this._registeredUsers.find(u => u.password == user.password && u.email == user.email);
     }
 
     // ONLY USED FOR TESTING
