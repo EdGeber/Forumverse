@@ -8,7 +8,7 @@ export class UserService {
     private static _registeredUsers: User[] = [];
 
     // TODO: change to '_availableTokens'
-    private static _tokens: string[] = ["123", "456"];
+    private static _tokens: string[] = ["123", "456"]; // never remove "123" or "456"
 
 
     public static get loggedUser(): Observable<Ack<User|null>> {
