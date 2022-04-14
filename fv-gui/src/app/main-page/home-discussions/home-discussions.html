@@ -9,7 +9,7 @@
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="filter-text">Filter by:</p>
-                            <select name="filter-options" id="filter-options" [(ngModel)]="filterType" (change)="filterby()">
+                            <select (change)="selectFilterBy($event)" name="filter-options" id="filter-options" [(ngModel)]="filterType" (change)="filterby()">
                                 <option value=1>All Posts</option>
                                 <option value=2>My Posts</option>
                             </select>    

@@ -19,6 +19,8 @@ import { UserService } from "../../services/user.service";
 export class HomeDiscussionsComponent implements OnInit{ 
 
   public threads: Thread[] = [];
+  public allThreads: Thread[] = [];
+  public onlyUserThread: Thread[] = [];
   id: number = 0;
   name: string = '';
   author: User = new User();
@@ -40,9 +42,14 @@ export class HomeDiscussionsComponent implements OnInit{
     this.setThreads();
   }
 
+  selectFilterBy (event: any) {
+    //update the ui
+    this.filterType = event.target.value;
+  }
   public async setThreads(){
     let ack = await lastValueFrom(ThreadService.getThreadsArray());
-    this.threads = <Thread[]>ack.body;
+    this.allThreads = <Thread[]>ack.body;
+    this.threads = this.allThreads;
   }
   
   private shuffle(): Thread[]{
@@ -91,11 +98,15 @@ export class HomeDiscussionsComponent implements OnInit{
 
     if(user && this.filterType==2)
     {
-      this.threads.forEach(t => {
-        if(t.author!=user){
-          this.threads.splice(this.threads.indexOf(t), 1);
+      this.onlyUserThread = [];
+      this.allThreads.forEach(t => {
+        if(t.author==user){
+          this.onlyUserThread.push(t);
         };
       })
+      this.threads = this.onlyUserThread;
+    }else{
+      this.threads = this.allThreads;
     }
   }
 
