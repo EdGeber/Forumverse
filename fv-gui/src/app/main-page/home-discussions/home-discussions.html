@@ -18,7 +18,7 @@
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="sort-text">Sort by:</p>
-                            <select name="sort-options" id="sort-options" [(ngModel)]="sortType" (change)="sortby()">
+                            <select (change)="selectSortBy($event)" name="sort-options" id="sort-options" [(ngModel)]="sortType" (change)="sortby()">
                                   <option value=1>Latest</option>
                                   <option value=2>Relevant</option>
                                   <option value=3>Popular</option>
