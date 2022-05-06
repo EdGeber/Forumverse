@@ -16,7 +16,7 @@ import { UserService } from "../../services/user.service";
 })
 
 export class HomeLeftBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute){ };
+  constructor(private route: ActivatedRoute, private _userService: UserService){ };
   loggedUser: User | null = null;
   
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class HomeLeftBarComponent implements OnInit {
   }
 
   public async islogged(){
-    let ack = await lastValueFrom(UserService.loggedUser);
+    let ack = await lastValueFrom(this._userService.loggedUser);
 
     if(ack.code == ACK.OK){
         if(ack.body){

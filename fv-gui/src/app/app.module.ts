@@ -39,6 +39,7 @@ import { HomeDiscussionsComponent } from './main-page/home-discussions/home-disc
 
 // manage-thread-page
 import { ManageThreadComponent } from './manage-thread-page/manage-thread-page.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
     declarations: [
@@ -122,7 +123,7 @@ import { ManageThreadComponent } from './manage-thread-page/manage-thread-page.c
         ])
     ],
     // don't change
-    providers: [HomeDiscussionsComponent],
+    providers: [HomeDiscussionsComponent, UserService],
     bootstrap: [Page]
 })
 

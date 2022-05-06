@@ -19,7 +19,10 @@ import { HomeDiscussionsComponent } from '../home-discussions/home-discussions';
 })
 
 export class TopBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private homecomp: HomeDiscussionsComponent){ 
+  constructor(
+	private route: ActivatedRoute,
+	private homecomp: HomeDiscussionsComponent,
+	private _userService: UserService){ 
   };
   loggedUser: User | null = null;
   threads: Thread[] = [];
@@ -39,7 +42,7 @@ export class TopBarComponent implements OnInit {
   
 
   public async islogged(){
-    let ack = await lastValueFrom(UserService.loggedUser);
+    let ack = await lastValueFrom(this._userService.loggedUser);
 
     if(ack.code == ACK.OK){
         if(ack.body){
@@ -64,7 +67,7 @@ export class TopBarComponent implements OnInit {
 
   public async logout()
   {
-    let ack = await lastValueFrom(UserService.tryLogoutUser());
+    let ack = await lastValueFrom(this._userService.tryLogoutUser());
 
   }
 

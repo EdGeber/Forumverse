@@ -30,7 +30,7 @@ export class UserRegistFieldsComponent {
     }
 
     // public methods
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _userService: UserService) {
 
         this._ERROR_HANDLING[ACK.REGISTER_USER.MISSING_FIELD.code] =
             () => this.isMissingField = true;
@@ -61,7 +61,7 @@ export class UserRegistFieldsComponent {
         this.removeAllWarnings();
         
         var ack = await
-            lastValueFrom(UserService.tryRegisterUser(this.newUser));
+            lastValueFrom(this._userService.tryRegisterUser(this.newUser));
         
         if(ack.code == ACK.OK) {
             this.newUser = new User();

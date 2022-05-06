@@ -33,7 +33,7 @@ export class HomeDiscussionsComponent implements OnInit{
 
   selected: string = '';
 
-  constructor(private route: ActivatedRoute){ }
+  constructor(private route: ActivatedRoute, private _userService: UserService){ }
 
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
@@ -85,7 +85,7 @@ export class HomeDiscussionsComponent implements OnInit{
   // 1: mine
   // fazer loop while
   public async filterby(){
-    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
+    let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
     let user: User | null = ack.body as (User|null);
     
 
@@ -100,7 +100,7 @@ export class HomeDiscussionsComponent implements OnInit{
   }
 
   public async isLogged(){
-    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
+    let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
     let user: User | null = ack.body as (User|null);
     if(user){
       return true;

@@ -18,7 +18,7 @@ export class ThreadPageComponent implements OnInit{
     replyText: string = "";
     loggedUser: User|null = null;
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute, private _userService: UserService) { }
 
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
@@ -67,7 +67,7 @@ export class ThreadPageComponent implements OnInit{
     }
 
     async setLoggedUser(){
-        let ack = await lastValueFrom(UserService.loggedUser);
+        let ack = await lastValueFrom(this._userService.loggedUser);
 
         if(ack.code == ACK.OK){
             if(ack.body){

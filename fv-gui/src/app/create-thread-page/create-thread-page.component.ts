@@ -33,7 +33,7 @@ export class CreateThreadComponent {
     }
 
     // public methods
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _userService: UserService) {
 
         this._ERROR_HANDLING[ACK.THREAD.MISSING_NAMEFIELD.code] =
             () => this.isMissingNameField = true;
@@ -57,7 +57,7 @@ export class CreateThreadComponent {
 
     public async createThread() {
         var userAck = await
-            lastValueFrom(UserService.loggedUser);
+            lastValueFrom(this._userService.loggedUser);
 
         if(userAck.code == ACK.OK){
             if(userAck.body){
