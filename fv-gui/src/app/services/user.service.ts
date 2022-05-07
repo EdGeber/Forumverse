@@ -1,25 +1,27 @@
 import { Observable, Observer, of } from "rxjs";
 import { User } from "../../../../common/User";
 import { ACK, Ack } from "../../../../common/Ack";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class UserService {
     // this property will be kept because the server
     // won't hold login information
-    private static _loggedUser: User|null = null;
+    private _loggedUser: User|null = null;
 
-    private static _registeredUsers: User[] = [];
+    private _registeredUsers: User[] = [];
 
     // TODO: change to '_availableTokens'
-    private static _tokens: string[] = ["123", "456"]; // never remove "123" or "456"
+    private _tokens: string[] = ["123", "456"]; // never remove "123" or "456"
 
 
-    public static get loggedUser(): Observable<Ack<User|null>> {
+    public get loggedUser(): Observable<Ack<User|null>> {
         let ack = ACK.GET_LOGGED_USER.OK;
         ack.body = this._loggedUser;
         return of(ack);  // observable that returns ack
     };
 
-    public static tryRegisterUser(user: User): Observable<Ack> {
+    public tryRegisterUser(user: User): Observable<Ack> {
         let ack: Ack;
 
         if(this._isMissingFieldRegister(user))
@@ -42,7 +44,7 @@ export class UserService {
         return of(ack);
     }
 
-    public static tryLoginUser(user: User): Observable<Ack> {
+    public tryLoginUser(user: User): Observable<Ack> {
         // this must be true if logIn is called. If it isn't,
         // then there is a bug in the code. A person must not
         // be able to try to log in if they are already logged in.
@@ -65,45 +67,45 @@ export class UserService {
     }
 
     // not implemented by the server
-    public static tryLogoutUser() {
+    public tryLogoutUser() {
         if(this.loggedUser == null) throw Error("Logout is not possible because the user is not logged in");
 
         this._loggedUser = null;
         return of(ACK.LOGOUT.OK);
     }
 
-    private static _isMissingFieldRegister(user: User): boolean {
+    private _isMissingFieldRegister(user: User): boolean {
         let isMissing = user.name == "" || user.email == "" || user.password == "";
         if(user.isAdmin) 
             isMissing = isMissing || user.adminToken == "";
         return isMissing;
     }
 
-    private static _isEmailAndPasswordDuplicate(user: User): boolean {
+    private _isEmailAndPasswordDuplicate(user: User): boolean {
         return this._registeredUsers
             .find(u =>
                 u.email == user.email &&
                 u.password == user.password) != undefined;
     }
 
-    private static _isMissingFieldLogin(user: User): boolean {
+    private _isMissingFieldLogin(user: User): boolean {
         return user.email == "" || user.password == "";
     }
 
-    private static _isNameDuplicate(user: User): boolean {
+    private _isNameDuplicate(user: User): boolean {
         return this._registeredUsers.find(u => u.name == user.name) != undefined;
     }
 
-    private static _isAdminTokenInvalid(user: User): boolean {
+    private _isAdminTokenInvalid(user: User): boolean {
         return user.isAdmin && !(this._tokens.includes(user.adminToken));
     }
 
-    private static _getFullUserFromLoginInfo(user: User): User | undefined {
+    private _getFullUserFromLoginInfo(user: User): User | undefined {
         return this._registeredUsers.find(u => u.password == user.password && u.email == user.email);
     }
 
     // ONLY USED FOR TESTING
-    public static _clearRegisteredUsers(): void {
+    public _clearRegisteredUsers(): void {
         this._registeredUsers.length = 0;
     }
 }

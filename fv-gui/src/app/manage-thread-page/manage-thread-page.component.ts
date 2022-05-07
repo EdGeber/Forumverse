@@ -19,7 +19,11 @@ export class ManageThreadComponent implements OnInit{
     loggedUser: User|null = null;
     
 
-    constructor(private route: ActivatedRoute, private _router: Router) {}
+    constructor(
+		private route: ActivatedRoute,
+		private _router: Router,
+		private _userService: UserService,
+		private _threadService: ThreadService) {}
 
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
@@ -29,18 +33,18 @@ export class ManageThreadComponent implements OnInit{
     }
 
     public async setThreads(){
-        let ack = await lastValueFrom(ThreadService.getThreadsArray());
+        let ack = await lastValueFrom(this._threadService.getThreadsArray());
         this.threads = <Thread[]>ack.body;
     }
 
     async setThread(id:number){
-        let ack = await lastValueFrom(ThreadService.getThreadsByID(id));
+        let ack = await lastValueFrom(this._threadService.getThreadsByID(id));
         this.thread = <Thread>ack.body;
     }
 
 
     async setLoggedUser(){
-        let ack = await lastValueFrom(UserService.loggedUser);
+        let ack = await lastValueFrom(this._userService.loggedUser);
 
         if(ack.code == ACK.OK){
             if(ack.body){
@@ -60,7 +64,7 @@ export class ManageThreadComponent implements OnInit{
 
     async lockThread(thread: Thread){
         let ack:Ack;
-        ack = await lastValueFrom(ThreadService.LockThreadById(thread.id,this.loggedUser));
+        ack = await lastValueFrom(this._threadService.LockThreadById(thread.id,this.loggedUser));
         
         if(ack.code == ACK.OK) {
             alert("Thread locked successfully!");
@@ -75,7 +79,7 @@ export class ManageThreadComponent implements OnInit{
     
     async unlockThread(thread: Thread){
         let ack:Ack;
-        ack = await lastValueFrom(ThreadService.UnlockThreadById(thread.id,this.loggedUser));
+        ack = await lastValueFrom(this._threadService.UnlockThreadById(thread.id,this.loggedUser));
         
         if(ack.code == ACK.OK) {
             alert("Thread unlocked successfully!");
@@ -91,7 +95,7 @@ export class ManageThreadComponent implements OnInit{
 
     async deleteThread(thread: Thread){
         let ack:Ack;
-        ack = await lastValueFrom(ThreadService.DeleteThreadById(thread.id,this.loggedUser));
+        ack = await lastValueFrom(this._threadService.DeleteThreadById(thread.id,this.loggedUser));
 
         if(ack.code == ACK.OK) {
             alert("Thread removed successfully!");
