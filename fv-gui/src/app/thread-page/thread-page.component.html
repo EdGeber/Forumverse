@@ -23,14 +23,8 @@
     <button *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
 
     <blockquote class="quote-header" *ngIf="r.quoteOf">
-        <div *ngIf="isReplyOnArray(r); then showQuoted else removedQuoted"></div>
-        <ng-template #showQuoted>
-            <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
-            <p class="quote-content"> {{r.quoteOf.content}}</p>
-        </ng-template>
-        <ng-template #removedQuoted>
-            <p class="quote-content">Removed reply</p>
-        </ng-template>
+        <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
+        <p class="quote-content"> {{r.quoteOf.content}}</p>
     </blockquote>
 
     <p>{{r.content}} </p>

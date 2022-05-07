@@ -5,10 +5,16 @@ export class Reply{
     author: User;
     timeSent: Date;
     content: string;
+    quoteOf: Reply|null;
 
-    constructor(author:User, content:string){
+    constructor(author:User, content:string, quotedReply:Reply|null = null){
         this.author = author;
         this.content = content;
         this.timeSent = new Date();
+        this.quoteOf = quotedReply;
+    }
+
+    public remove(){
+        this.content = 'This message was removed';
     }
 }
