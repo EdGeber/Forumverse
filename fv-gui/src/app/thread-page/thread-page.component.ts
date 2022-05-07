@@ -18,6 +18,8 @@ export class ThreadPageComponent implements OnInit{
     replyText: string = "";
     loggedUser: User|null = null;
 
+    quotedReply: Reply|null = null;
+
     constructor(private route: ActivatedRoute) { }
 
     ngOnInit(): void {
@@ -48,8 +50,7 @@ export class ThreadPageComponent implements OnInit{
 
     async sendReply(){
         if(this.loggedUser){
-            let reply = new Reply(this.loggedUser,this.replyText)
-            this.replyText = "";
+            let reply = new Reply(this.loggedUser,this.replyText,this.quotedReply)
 
             let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
 
@@ -59,6 +60,9 @@ export class ThreadPageComponent implements OnInit{
                 alert("This thread is locked and don't accept new replies!")
             } else if(replyAck.code == ACK.THREAD.UNEXPECTED_ERROR.code){
                 alert("An unexpect error ocurred");
+            } else if(replyAck.code == ACK.THREAD.OK.code){
+                this.replyText = "";
+                this.quotedReply = null;
             }
         }
         else{
@@ -93,6 +97,26 @@ export class ThreadPageComponent implements OnInit{
             alert("Could not delete reply. Please try again!");
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
             alert("You don't has permission to delete this reply!")
+        } else if(ack.code == ACK.THREAD.OK.code){
+            window.location.reload();
         }
+    }
+
+    //TODO: fix removed quoted message 
+    quoteReply(reply: Reply){
+        this.quotedReply = reply;
+    }
+
+    stopQuoting(){
+        this.quotedReply = null;
+    }
+
+    isQuoting(): Boolean{
+        return this.quotedReply != null;
+    }
+
+    isReplyOnArray(reply: Reply): Boolean{
+        console.log(this.thread.replies.findIndex(r => r == reply))
+        return this.thread.replies.findIndex(r => r == reply) != -1;
     }
 }

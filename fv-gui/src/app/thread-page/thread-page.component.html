@@ -19,12 +19,28 @@
 <div class="reply" *ngFor="let r of thread.replies">
     <br>
     <p class="reply-header"> {{r.author.name}}  on {{r.timeSent}}</p>
+
+    <div class="quote-header" *ngIf="r.quoteOf">
+        <div *ngIf="isReplyOnArray(r); then showQuoted else removedQuoted"></div>
+        <ng-template #showQuoted>
+            <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
+            <p class="quote-content"> {{r.quoteOf.content}}</p>
+        </ng-template>
+        <ng-template #removedQuoted>
+            <p class="quote-content">Removed reply</p>
+        </ng-template>
+    </div>
+
+    <button *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
     <button *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
     <p>{{r.content}} </p>
 </div>
 
 <div id="answer-div">
     <br>
+    <p *ngIf="isQuoting()">Quoting {{quotedReply?.author?.name}}:</p>
+    <p *ngIf="isQuoting()"> {{quotedReply?.content}}</p>
+    <button *ngIf (click)="stopQuoting()">stopQuoting</button>
     <textarea rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
     <button (click)="sendReply()">Send</button>
 </div>
