@@ -1,4 +1,4 @@
-import { lastValueFrom, Observable, Observer, of } from "rxjs";
+import { lastValueFrom, Observable, Observer, of, retry } from "rxjs";
 import { Thread } from "../../../../common/Thread";
 import { ACK, Ack } from "../../../../common/Ack";
 import { User } from "../../../../common/User";
@@ -6,22 +6,22 @@ import { Reply } from "../../../../common/Reply";
 import { UserService } from "./user.service";
 import { ManageThreadComponent } from "../manage-thread-page/manage-thread-page.component"
 import { Injectable } from "@angular/core";
+import { getUrlFor } from "../../../../common/fvUrls";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ThreadService {
     private _createdThreads: Thread[] = [];
+    constructor(private _http: HttpClient) {}
+	private static readonly _headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     public tryCreateThread(thread: Thread): Observable<Ack> {
-        let ack: Ack;
-        if(this._isMissingNameField(thread)) ack = ACK.THREAD.MISSING_NAMEFIELD;
-        else if(this._isMissingTopicField(thread)) ack = ACK.THREAD.MISSING_TOPICFIELD;
-        else if(this._isThreadDuplicate(thread)) ack = ACK.THREAD.DUPLICATE_THREADNAME;
-        else {
-            ack = ACK.THREAD.OK;
-            this._createdThreads.push(thread);
-            Thread.total++;
-        }
-        return of(ack);
+        return this._http
+            .post<Ack>(
+                getUrlFor('thread'),
+                thread,
+                {headers: ThreadService._headers}
+            ).pipe(retry(2));
     }
 
     public trySendReply(reply:Reply, thread:Thread){
@@ -207,19 +207,25 @@ export class ThreadService {
     }
 
     public getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
-        let ack = ACK.GET_THREAD.OK;
-        let thread = this._getThreadByID(id);
-        ack.body = thread;
-        return of(ack);
+        return this._http.
+        get<Ack<Thread|undefined>>(
+            getUrlFor('thread:/'+id),
+            {headers: ThreadService._headers}
+        ).pipe(retry(2));
     }
 
     /* Não é pra retornar todas as threads, mas como vão ter poucas... */
     public getThreadsArray(): Observable<Ack<Thread[]|undefined>>
     {
-        let ack = ACK.GET_THREAD_ARRAY.OK;
-        /* To-do criar função deep copy array[thready] */
-        ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
-        return of(ack);
+        return this._http
+        .get<Ack<Thread[]|undefined>>(
+            getUrlFor('threads'),
+            {headers: ThreadService._headers}
+        ).pipe(retry(2));
+        // let ack = ACK.GET_THREAD_ARRAY.OK;
+        // /* To-do criar função deep copy array[thready] */
+        // ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
+        // return of(ack);
     }
     
     private _isMissingNameField(thread: Thread): boolean {
