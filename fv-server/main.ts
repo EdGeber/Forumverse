@@ -60,11 +60,11 @@ fvServer.put('/new-reply/:thread',(req,res) => {
 });
 
 // DOIS METODOS DELETE
-fvServer.delete('/thread/:thread/:user.name', (req,res) => {
+fvServer.delete('/thread/:thread/:user', (req,res) => {
   let thread_id: number = parseInt(Util.getParameter(req.params.thread));
-  // let usr: User =  ;
+  let user: User = <User>UserService.getUserByName(Util.getParameter(req.params.user));
   
-  let ack: Ack = threadService.DeleteThreadById(thread_id, new User) //usr);
+  let ack: Ack = threadService.DeleteThreadById(thread_id, user);
   res.send(ack);
 });
 

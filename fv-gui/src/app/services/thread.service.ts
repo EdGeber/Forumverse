@@ -51,84 +51,14 @@ export class ThreadService {
                 getUrlFor('thread/:'+thread.id+'/:'+id),
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
-        /* let ack: Ack;
-
-        if(!user){
-            ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
-            return of(ack)
-        }
-
-        let threadOnArray = this._getThreadByID(thread.id);
-
-        if (threadOnArray != undefined){
-            let replies = threadOnArray.replies;
-            let removed = null;
-
-            for (let i = 0; i < replies.length; i++) {
-                if(replies[i].id == id){
-                    if((user != replies[i].author) && (!user.isAdmin)){
-                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
-                        return of(ack)
-                    }
-
-                    removed = replies.splice(i,1) 
-                    break;
-                }
-            }
-            if(removed){
-                ack = ACK.THREAD.OK;
-            } else {
-                ack = ACK.THREAD.UNEXPECTED_ERROR;
-            }
-
-        } else{
-            ack = ACK.THREAD.UNEXPECTED_ERROR;
-        }
-        return of(ack); */
     }
 
     public DeleteThreadById(id: number, user:User|null): Observable<Ack>{
         return this._http
             .delete<Ack>(
-                getUrlFor('thread/:'+id +"/:"+ user.name),
+                getUrlFor('thread/:'+id +"/:"+ user?.name),
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
-        
-        /* let ack: Ack;
-        
-        if(!user){
-            ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
-            return of(ack)
-        }
-        
-        console.log(this._getThreadByID(id))
-        let threadOnArray = this._getThreadByID(id);
-
-        if (threadOnArray != undefined){
-            let threads = this._createdThreads;
-            let removed = null;
-
-            for (let i = 0; i < threads.length; i++) {
-                if(threads[i].id == id){
-                    if((user != threads[i].author) && (!user.isAdmin)){
-                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
-                        return of(ack)
-                    }
-
-                    removed = threads.splice(i,1) 
-                    break;
-                }
-            }
-            if(removed){
-                ack = ACK.THREAD.OK;
-            } else {
-                ack = ACK.THREAD.UNEXPECTED_ERROR;
-            }
-
-        } else{
-            ack = ACK.THREAD.MISSING_THREAD;
-        }
-        return of(ack); */
     }
 
     public toggleLockThreadById(id: number, user: User|null, wannaLock: string)
@@ -161,10 +91,6 @@ export class ThreadService {
             getUrlFor('threads'),
             {headers: ThreadService._headers}
         ).pipe(retry(2));
-        // let ack = ACK.GET_THREAD_ARRAY.OK;
-        // /* To-do criar função deep copy array[thready] */
-        // ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
-        // return of(ack);
     }
     
     private _isMissingNameField(thread: Thread): boolean {

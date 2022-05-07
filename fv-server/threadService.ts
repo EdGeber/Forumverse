@@ -2,8 +2,10 @@ import { ACK, Ack } from "../common/Ack";
 import { Thread } from "../common/Thread";
 import { User } from "../common/User";
 import { Reply } from "../common/Reply";
+import { UserService } from "./UserService";
 
-export class ThreadService {
+export class ThreadService{
+
     private threads: Thread[] = [];
     
     public getThreads():Ack<Thread[]|undefined> {

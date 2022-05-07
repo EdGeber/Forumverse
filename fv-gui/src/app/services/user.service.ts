@@ -27,13 +27,16 @@ export class UserService {
     //     ack.body = this._loggedUser;
     //     return of(ack);  // observable that returns ack
     // };
-
+    
     
     public get loggedUser(): User|null {
         return this._loggedUser;
     };
 
-
+    public getUserByName( name : string ): User|undefined{
+        return this._registeredUsers.find(usr => usr.name == name);
+    }
+    
     public tryRegisterUser(user: User): Observable<Ack> {
         return this._http
 			.post<Ack>(

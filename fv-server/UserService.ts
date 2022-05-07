@@ -3,6 +3,10 @@ import { ACK, Ack } from "../common/Ack";
 
 export class UserService {
     private static _registeredUsers: User[] = [];
+    
+    public static getUserByName( name : string ): User|undefined{
+        return this._registeredUsers.find(usr => usr.name == name);
+    }
 
     // TODO: change to '_availableTokens'
     private static _tokens: string[] = ["123", "456"]; // never remove "123" or "456"
