@@ -22,7 +22,8 @@ export class TopBarComponent implements OnInit {
   constructor(
 	private route: ActivatedRoute,
 	private homecomp: HomeDiscussionsComponent,
-	private _userService: UserService){ 
+	private _userService: UserService,
+	private _threadService: ThreadService){ 
   };
   loggedUser: User | null = null;
   threads: Thread[] = [];
@@ -36,7 +37,7 @@ export class TopBarComponent implements OnInit {
   }
 
   public async setThreads(){
-    let ack = await lastValueFrom(ThreadService.getThreadsArray());
+    let ack = await lastValueFrom(this._threadService.getThreadsArray());
     this.threads = <Thread[]>ack.body;
   }
   

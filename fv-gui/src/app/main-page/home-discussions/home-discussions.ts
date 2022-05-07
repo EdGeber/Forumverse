@@ -33,7 +33,10 @@ export class HomeDiscussionsComponent implements OnInit{
 
   selected: string = '';
 
-  constructor(private route: ActivatedRoute, private _userService: UserService){ }
+  constructor(
+	private route: ActivatedRoute,
+	private _userService: UserService,
+	private _threadService: ThreadService){ }
 
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
@@ -41,7 +44,7 @@ export class HomeDiscussionsComponent implements OnInit{
   }
 
   public async setThreads(){
-    let ack = await lastValueFrom(ThreadService.getThreadsArray());
+    let ack = await lastValueFrom(this._threadService.getThreadsArray());
     this.threads = <Thread[]>ack.body;
   }
   

@@ -5,13 +5,13 @@ import { User } from "../../../../common/User";
 import { Reply } from "../../../../common/Reply";
 import { UserService } from "./user.service";
 import { ManageThreadComponent } from "../manage-thread-page/manage-thread-page.component"
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class ThreadService {
-    private static _createdThreads: Thread[] = [];
+    private _createdThreads: Thread[] = [];
 
-    public static arrayThreads: ManageThreadComponent;
-
-    public static tryCreateThread(thread: Thread): Observable<Ack> {
+    public tryCreateThread(thread: Thread): Observable<Ack> {
         let ack: Ack;
         if(this._isMissingNameField(thread)) ack = ACK.THREAD.MISSING_NAMEFIELD;
         else if(this._isMissingTopicField(thread)) ack = ACK.THREAD.MISSING_TOPICFIELD;
@@ -24,7 +24,7 @@ export class ThreadService {
         return of(ack);
     }
 
-    public static trySendReply(reply:Reply, thread:Thread){
+    public trySendReply(reply:Reply, thread:Thread){
         let ack: Ack;
         if(this._emptyReplyText(reply)){
             ack = ACK.THREAD.EMPTY_REPLY_MSG;
@@ -45,7 +45,7 @@ export class ThreadService {
         return of(ack);
     }
 
-    public static DeleteReplyById(id: number, thread: Thread, user:User|null){
+    public DeleteReplyById(id: number, thread: Thread, user:User|null){
         let ack: Ack;
 
         if(!user){
@@ -82,7 +82,7 @@ export class ThreadService {
         return of(ack);
     }
 
-    public static DeleteThreadById(id: number, user:User|null){
+    public DeleteThreadById(id: number, user:User|null){
         let ack: Ack;
 
         if(!user){
@@ -94,7 +94,7 @@ export class ThreadService {
         let threadOnArray = this._getThreadByID(id);
 
         if (threadOnArray != undefined){
-            let threads = ThreadService._createdThreads;
+            let threads = this._createdThreads;
             let removed = null;
 
             for (let i = 0; i < threads.length; i++) {
@@ -120,7 +120,7 @@ export class ThreadService {
         return of(ack);
     }
 
-    public static LockThreadById(id: number, user:User|null){
+    public LockThreadById(id: number, user:User|null){
         let ack: Ack;
 
         if(!user){
@@ -131,7 +131,7 @@ export class ThreadService {
         let threadOnArray = this._getThreadByID(id);
 
         if (threadOnArray != undefined){
-            let threads = ThreadService._createdThreads;
+            let threads = this._createdThreads;
             let locked = null;
 
             for (let i = 0; i < threads.length; i++) {
@@ -161,7 +161,7 @@ export class ThreadService {
         return of(ack);
     }
     
-    public static UnlockThreadById(id: number, user:User|null){
+    public UnlockThreadById(id: number, user:User|null){
         let ack: Ack;
 
         if(!user){
@@ -172,7 +172,7 @@ export class ThreadService {
         let threadOnArray = this._getThreadByID(id);
 
         if (threadOnArray != undefined){
-            let threads = ThreadService._createdThreads;
+            let threads = this._createdThreads;
             let unlocked = null;
 
             for (let i = 0; i < threads.length; i++) {
@@ -202,19 +202,19 @@ export class ThreadService {
         return of(ack);
     }
 
-    private static _getThreadByID(id:number): Thread|undefined{
-        return ThreadService._createdThreads.find(t => t.id == id);
+    private _getThreadByID(id:number): Thread|undefined{
+        return this._createdThreads.find(t => t.id == id);
     }
 
-    public static getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
+    public getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
         let ack = ACK.GET_THREAD.OK;
-        let thread = ThreadService._getThreadByID(id);
+        let thread = this._getThreadByID(id);
         ack.body = thread;
         return of(ack);
     }
 
     /* Não é pra retornar todas as threads, mas como vão ter poucas... */
-    public static getThreadsArray(): Observable<Ack<Thread[]|undefined>>
+    public getThreadsArray(): Observable<Ack<Thread[]|undefined>>
     {
         let ack = ACK.GET_THREAD_ARRAY.OK;
         /* To-do criar função deep copy array[thready] */
@@ -222,19 +222,19 @@ export class ThreadService {
         return of(ack);
     }
     
-    private static _isMissingNameField(thread: Thread): boolean {
+    private _isMissingNameField(thread: Thread): boolean {
         return thread.name == ""
     }
 
-    private static _isMissingTopicField(thread: Thread): boolean {
+    private _isMissingTopicField(thread: Thread): boolean {
         return !thread.topic1 && !thread.topic2 && !thread.topic3;
     }
 
-    private static _isThreadDuplicate(thread: Thread): boolean {
+    private _isThreadDuplicate(thread: Thread): boolean {
         return this._createdThreads.find(u => u.name == thread.name) != undefined;
     }
 
-    private static _emptyReplyText(reply:Reply): boolean {
+    private _emptyReplyText(reply:Reply): boolean {
         return reply.content == "";
     }
 }

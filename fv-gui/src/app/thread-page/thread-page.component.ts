@@ -18,7 +18,10 @@ export class ThreadPageComponent implements OnInit{
     replyText: string = "";
     loggedUser: User|null = null;
 
-    constructor(private route: ActivatedRoute, private _userService: UserService) { }
+    constructor(
+		private route: ActivatedRoute,
+		private _userService: UserService,
+		private _threadService: ThreadService) { }
 
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
@@ -32,7 +35,7 @@ export class ThreadPageComponent implements OnInit{
     }
 
     async setThread(id:number){
-        let ack = await lastValueFrom(ThreadService.getThreadsByID(id));
+        let ack = await lastValueFrom(this._threadService.getThreadsByID(id));
         this.thread = <Thread>ack.body;
     }
 
@@ -51,7 +54,7 @@ export class ThreadPageComponent implements OnInit{
             let reply = new Reply(this.loggedUser,this.replyText)
             this.replyText = "";
 
-            let replyAck = await lastValueFrom(ThreadService.trySendReply(reply,this.thread))
+            let replyAck = await lastValueFrom(this._threadService.trySendReply(reply,this.thread))
 
             if(replyAck.code == ACK.THREAD.EMPTY_REPLY_MSG.code){
                 alert("Reply cannot be empty!");
@@ -87,7 +90,7 @@ export class ThreadPageComponent implements OnInit{
 
     async deleteReply(reply: Reply){
         let ack:Ack;
-        ack = await lastValueFrom(ThreadService.DeleteReplyById(reply.id,this.thread,this.loggedUser));
+        ack = await lastValueFrom(this._threadService.DeleteReplyById(reply.id,this.thread,this.loggedUser));
 
         if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
             alert("Could not delete reply. Please try again!");

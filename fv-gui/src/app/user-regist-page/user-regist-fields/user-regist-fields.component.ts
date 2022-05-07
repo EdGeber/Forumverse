@@ -30,7 +30,9 @@ export class UserRegistFieldsComponent {
     }
 
     // public methods
-    constructor(private _router: Router, private _userService: UserService) {
+    constructor(
+		private _router: Router,
+		private _userService: UserService) {
 
         this._ERROR_HANDLING[ACK.REGISTER_USER.MISSING_FIELD.code] =
             () => this.isMissingField = true;
