@@ -1,6 +1,6 @@
-import { UserService } from '../../src/app/services/user.service'
-import { ACK, Ack } from '../../../common/Ack'
-import { User } from '../../../common/User';
+import { UserService } from '../../../UserService'
+import { ACK, Ack } from '../../../../common/Ack'
+import { User } from '../../../../common/User';
 import { lastValueFrom, of } from 'rxjs';
 
 // test writing is mostly driven by the possible ack error
@@ -19,13 +19,13 @@ describe("UserService's tryRegisterUser", () => {
         let admin6 = new User('email6', 'name6', 'pass6', true, '123'); // full
         let admin7 = new User('email7', 'name7', 'pass7', true);  // missing
 
-        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
-        let ack2 = await lastValueFrom(UserService.tryRegisterUser(user2));
-        let ack3 = await lastValueFrom(UserService.tryRegisterUser(user3));
-        let ack4 = await lastValueFrom(UserService.tryRegisterUser(user4));
-        let ack5 = await lastValueFrom(UserService.tryRegisterUser(user5));
-        let ack6 = await lastValueFrom(UserService.tryRegisterUser(admin6));
-        let ack7 = await lastValueFrom(UserService.tryRegisterUser(admin7));
+        let ack1 = (UserService.tryRegisterUser(user1));
+        let ack2 = (UserService.tryRegisterUser(user2));
+        let ack3 = (UserService.tryRegisterUser(user3));
+        let ack4 = (UserService.tryRegisterUser(user4));
+        let ack5 = (UserService.tryRegisterUser(user5));
+        let ack6 = (UserService.tryRegisterUser(admin6));
+        let ack7 = (UserService.tryRegisterUser(admin7));
 
         expect(ack1).toEqual(ACK.REGISTER_USER.MISSING_FIELD);
         expect(ack2).toEqual(ACK.REGISTER_USER.OK);
@@ -45,12 +45,12 @@ describe("UserService's tryRegisterUser", () => {
         let admin5 = new User('email6', 'john', 'pass5', true, '456'); // not duplicate
         let user6  = new User('email7', 'john', 'pass6');              // duplicate
 
-        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
-        let ack2 = await lastValueFrom(UserService.tryRegisterUser(user2));
-        let ack3 = await lastValueFrom(UserService.tryRegisterUser(admin3));
-        let ack4 = await lastValueFrom(UserService.tryRegisterUser(admin4));
-        let ack5 = await lastValueFrom(UserService.tryRegisterUser(admin5));
-        let ack6 = await lastValueFrom(UserService.tryRegisterUser(user6));
+        let ack1 = (UserService.tryRegisterUser(user1));
+        let ack2 = (UserService.tryRegisterUser(user2));
+        let ack3 = (UserService.tryRegisterUser(admin3));
+        let ack4 = (UserService.tryRegisterUser(admin4));
+        let ack5 = (UserService.tryRegisterUser(admin5));
+        let ack6 = (UserService.tryRegisterUser(user6));
 
         expect(ack1).toEqual(ACK.REGISTER_USER.OK);
         expect(ack2).toEqual(ACK.REGISTER_USER.DUPLICATE_USERNAME);
@@ -67,11 +67,11 @@ describe("UserService's tryRegisterUser", () => {
         let user4  = new User('email1', 'name4', 'pass1');  // duplicate
         let admin5 = new User('email1', 'name5', 'pass1', true, '123'); // duplicate
 
-        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
-        let ack2 = await lastValueFrom(UserService.tryRegisterUser(user2));
-        let ack3 = await lastValueFrom(UserService.tryRegisterUser(user3));
-        let ack4 = await lastValueFrom(UserService.tryRegisterUser(user4));
-        let ack5 = await lastValueFrom(UserService.tryRegisterUser(admin5));
+        let ack1 = (UserService.tryRegisterUser(user1));
+        let ack2 = (UserService.tryRegisterUser(user2));
+        let ack3 = (UserService.tryRegisterUser(user3));
+        let ack4 = (UserService.tryRegisterUser(user4));
+        let ack5 = (UserService.tryRegisterUser(admin5));
 
         expect(ack1).toEqual(ACK.REGISTER_USER.OK);
         expect(ack2).toEqual(ACK.REGISTER_USER.OK);
@@ -85,9 +85,9 @@ describe("UserService's tryRegisterUser", () => {
         let admin2 = new User('email2', 'name2', 'pass2', true, '123');  // ok
         let admin3 = new User('email3', 'name3', 'pass3', true, '789');  // invalid
 
-        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
-        let ack2 = await lastValueFrom(UserService.tryRegisterUser(admin2));
-        let ack3 = await lastValueFrom(UserService.tryRegisterUser(admin3));
+        let ack1 = (UserService.tryRegisterUser(user1));
+        let ack2 = (UserService.tryRegisterUser(admin2));
+        let ack3 = (UserService.tryRegisterUser(admin3));
 
         expect(ack1).toEqual(ACK.REGISTER_USER.OK);
         expect(ack2).toEqual(ACK.REGISTER_USER.OK);
@@ -104,9 +104,9 @@ describe("UserService's login and logout services", () => {
         let user2 = new User('', '', 'pass2');        // missing
         let user3 = new User('email3', '', 'pass3');  // missing
 
-        let ack1 = await lastValueFrom(UserService.tryLoginUser(user1));
-        let ack2 = await lastValueFrom(UserService.tryLoginUser(user2));
-        let ack3 = await lastValueFrom(UserService.tryLoginUser(user3));
+        let ack1 = (UserService.tryLoginUser(user1));
+        let ack2 = (UserService.tryLoginUser(user2));
+        let ack3 = (UserService.tryLoginUser(user3));
 
         expect(ack1).toEqual(ACK.LOGIN.USER_NOT_FOUND);
         expect(ack2).toEqual(ACK.LOGIN.MISSING_FIELD);
@@ -119,34 +119,26 @@ describe("UserService's login and logout services", () => {
         let userLogin1  = new User('email1', '', 'pass1');   // login ok, return user1
         let adminLogin2 = new User('email2', '', 'pass2');   // login ok, return admin2
 
-        let ack1 = await lastValueFrom(UserService.tryRegisterUser(user1));
+        let ack1 = (UserService.tryRegisterUser(user1));
         expect(ack1).toEqual(ACK.REGISTER_USER.OK);
 
-        let ack2 = await lastValueFrom(UserService.tryRegisterUser(admin2));
+        let ack2 = (UserService.tryRegisterUser(admin2));
         expect(ack2).toEqual(ACK.REGISTER_USER.OK);
 
-        let ack3 = await lastValueFrom(UserService.tryLoginUser(userLogin1));
+        let ack3 = (UserService.tryLoginUser(userLogin1));
         expect(ack3).toEqual(ACK.LOGIN.OK);
 
-        let expectedAck4 = ACK.GET_LOGGED_USER.OK;
-        expectedAck4.body = user1;
-        let ack4 = await lastValueFrom(UserService.loggedUser);
-        expect(ack4).toEqual(expectedAck4);
-
-        let ack5 = await lastValueFrom(UserService.tryLogoutUser());
-        expect(ack5).toEqual(ACK.LOGOUT.OK);
+        let expectedUser1 = user1;
+        let actualUser1 = ack3.body;
+        expect(actualUser1).toEqual(expectedUser1);
 
 
-        let ack6 = await lastValueFrom(UserService.tryLoginUser(adminLogin2));
+        let ack6 = (UserService.tryLoginUser(adminLogin2));
         expect(ack6).toEqual(ACK.LOGIN.OK);
 
-        let expectedAck7 = ACK.GET_LOGGED_USER.OK;
-        expectedAck7.body = admin2;
-        let ack7 = await lastValueFrom(UserService.loggedUser);
-        expect(ack7).toEqual(expectedAck7);
-
-        let ack8 = await lastValueFrom(UserService.tryLogoutUser());
-        expect(ack8).toEqual(ACK.LOGOUT.OK);
+        let expectedUser2 = admin2;
+        let actualUser2 = ack6.body;
+        expect(actualUser2).toEqual(expectedUser2);
 
     })
 })
