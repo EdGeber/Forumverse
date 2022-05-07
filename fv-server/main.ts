@@ -1,7 +1,9 @@
 import express from "express";
+import { User } from "../common/User";
+import { UserService } from "./UserService";
 
 const fvServer = express();
-const PORT = 3000;
+const PORT = 3000;  // don't change, that's used in common/fvUrls
 
 var allowCrossDomain = function(req: any, res: any, next: any) {
     res.header('Access-Control-Allow-Origin', "*");
@@ -13,9 +15,17 @@ fvServer.use(allowCrossDomain);
 
 fvServer.use(express.json());
 
-fvServer.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// PUT: modify existing resource
+// POST: add new resource
+fvServer.post('/register', (req, res) => {
+	let ack = UserService.tryRegisterUser(User.fromAny(req.body));
+	res.send(ack);
+})
+
+fvServer.put('/login', (req, res) => {
+	let ack = UserService.tryLoginUser(User.fromAny(req.body));
+	res.send(ack);
+})
 
 fvServer.listen(PORT, () => {
   console.log(`Forumverse Server listening on port ${PORT}!`)

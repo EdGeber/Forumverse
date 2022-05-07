@@ -23,7 +23,7 @@ export class LoginFieldsComponent {
     public isUserNotFound = false;
 
     // private methods
-    private _handleError(ack: Ack) {
+    private _handleError(ack: any) {
         this._ERROR_HANDLING[ack.code]();
     }
 
@@ -52,8 +52,7 @@ export class LoginFieldsComponent {
     public async loginUser() {
         this.removeAllWarnings();
         
-        var ack = await
-            lastValueFrom(this._userService.tryLoginUser(this.user));
+        var ack = await this._userService.tryLoginUser(this.user);
         
         if(ack.code == ACK.OK) {
             this.user = new User();

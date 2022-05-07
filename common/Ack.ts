@@ -49,9 +49,9 @@ export const ACK = {
     },
 
     LOGIN: { // 300 to 399
-        OK:             new Ack("login", 0),
-        MISSING_FIELD:  new Ack("login", 301),
-        USER_NOT_FOUND: new Ack("login", 302)
+        OK:             new Ack<User|null>("login", 0),
+        MISSING_FIELD:  new Ack<User|null>("login", 301, null),
+        USER_NOT_FOUND: new Ack<User|null>("login", 302, null)
     },
 
     LOGOUT: { // 400 to 499
