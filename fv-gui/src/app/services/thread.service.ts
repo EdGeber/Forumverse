@@ -24,25 +24,13 @@ export class ThreadService {
             ).pipe(retry(2));
     }
 
-    public trySendReply(reply:Reply, thread:Thread){
-        let ack: Ack;
-        if(this._emptyReplyText(reply)){
-            ack = ACK.THREAD.EMPTY_REPLY_MSG;
-        }
-        else{
-            let threadOnArray = this._getThreadByID(thread.id)
-            if(threadOnArray != undefined){
-                if(threadOnArray.isLocked){
-                    ack = ACK.THREAD.LOCKED_THREAD;
-                } else {
-                    threadOnArray.addReply(reply);
-                    ack = ACK.THREAD.OK;
-                }
-            } else {
-                ack = ACK.THREAD.UNEXPECTED_ERROR;
-            }
-        }
-        return of(ack);
+    public trySendReply(reply:Reply, thread:Thread): Observable<Ack>{
+        return this._http.
+            put<Ack>(
+                getUrlFor('newreply/:'+thread.id),
+                reply,
+                {headers: ThreadService._headers}
+            ).pipe(retry(2));
     }
 
     public DeleteReplyById(id: number, thread: Thread, user:User|null){

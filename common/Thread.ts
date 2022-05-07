@@ -20,10 +20,5 @@ export class Thread{
         public topic3 = false,
         public text = "",
     ) { }
-    addReply(reply: Reply){
-        reply.id = this.replies.length;
-        this.replies.push(reply);
-        this.relevantRatio = this.lastReply-new Date().getSeconds();
-        this.lastReply = Math.min(this.lastReply,new Date().getSeconds());
-    }
+    
 }

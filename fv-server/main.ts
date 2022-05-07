@@ -51,7 +51,8 @@ fvServer.post('/thread',(req,res) => {
   res.send(ack);
 });
 
-fvServer.put('/new-reply/:thread',(req,res) => {
+
+fvServer.put('/newreply/:thread',(req,res) => {
   let thread_id: number = parseInt(Util.getParameter(req.params.thread));
   let reply: Reply =  <Reply>req.body;
   

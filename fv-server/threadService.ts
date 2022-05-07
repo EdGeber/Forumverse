@@ -3,6 +3,7 @@ import { Thread } from "../common/Thread";
 import { User } from "../common/User";
 import { Reply } from "../common/Reply";
 import { UserService } from "./UserService";
+import { lastValueFrom, Observable, of } from "rxjs";
 
 export class ThreadService{
 
@@ -39,12 +40,12 @@ export class ThreadService{
             ack = ACK.THREAD.EMPTY_REPLY_MSG;
         }
         else{
-            let threadOnArray = this._getThreadByID(thread_id)
+            let threadOnArray = this._getThreadByID(thread_id);
             if(threadOnArray != undefined){
                 if(threadOnArray.isLocked){
                     ack = ACK.THREAD.LOCKED_THREAD;
                 } else {
-                    threadOnArray.addReply(reply);
+                    this._addReply(threadOnArray,reply);
                     ack = ACK.THREAD.OK;
                 }
             } else {
@@ -161,6 +162,12 @@ export class ThreadService{
         //If threadOnArray is not defined or Thread is not on thread on array
         // Raise unexpected error
         return ACK.THREAD.UNEXPECTED_ERROR;
+    }
+
+    private _addReply(thread: Thread, reply: Reply){
+        thread.replies.push(reply);
+        thread.relevantRatio = thread.lastReply-new Date().getSeconds();
+        thread.lastReply = Math.min(thread.lastReply,new Date().getSeconds());
     }
 
     private _getThreadByID(id:number): Thread|undefined{

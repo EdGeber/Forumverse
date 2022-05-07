@@ -67,6 +67,8 @@ export class ThreadPageComponent implements OnInit{
                 this.errorMsg = ''
                 this.replyText = "";
                 this.quotedReply = null;
+
+                this.setThread(this.thread.id)
             }
         }
         else{
@@ -104,6 +106,7 @@ export class ThreadPageComponent implements OnInit{
             alert("You don't has permission to delete this reply!")
         } else if(ack.code == ACK.THREAD.OK.code){
             reply.remove();
+            this.setThread(this.thread.id);
         }
     }
 
