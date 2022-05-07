@@ -16,7 +16,7 @@ import { UserService } from "../services/user.service";
 export class ManageThreadComponent implements OnInit{
     threads: Thread[] = [];
     thread: Thread = new Thread();
-    loggedUser: User|null = null;
+    // loggedUser: User|null = null;
     
 
     constructor(
@@ -28,7 +28,7 @@ export class ManageThreadComponent implements OnInit{
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
         let threadId = routeParams.get('id');
-        this.setLoggedUser();
+        // this.setLoggedUser();
         this.setThreads();
     }
 
@@ -43,59 +43,53 @@ export class ManageThreadComponent implements OnInit{
     }
 
 
-    async setLoggedUser(){
-        let ack = await lastValueFrom(this._userService.loggedUser);
+    // async setLoggedUser(){
+    //     let ack = await lastValueFrom(this._userService.loggedUser);
 
-        if(ack.code == ACK.OK){
-            if(ack.body){
-                this.loggedUser = <User>ack.body;
-            } else{
-                this.loggedUser = null;
-            }
-        }
-    }
+    //     if(ack.code == ACK.OK){
+    //         if(ack.body){
+    //             this.loggedUser = <User>ack.body;
+    //         } else{
+    //             this.loggedUser = null;
+    //         }
+    //     }
+    // }
 
-    isLoggedUserOrAdmin(user:User) : boolean{
-        if(!this.loggedUser){
-            return false;
-        }
-        return this.loggedUser == user || this.loggedUser.isAdmin;
-    }
-
-    async lockThread(thread: Thread){
-        let ack:Ack;
-        ack = await lastValueFrom(this._threadService.LockThreadById(thread.id,this.loggedUser));
+    async isLoggedUserOrAdmin(user:User){
+        // let ack = await lastValueFrom(this._userService.loggedUser);
         
+        // if(ack.code == ACK.OK && ack.body != null){
+        //     if(ack.body == user || ack.body.isAdmin){
+        //         return true;
+        //     }
+        // }
+        let loggedUser = this._userService.loggedUser;
+        if(!loggedUser){
+            return false;
+        } else {
+            return loggedUser == user || loggedUser.isAdmin;
+        }
+        
+    }
+
+    async toggleLockThread(thread: Thread, wannaLock: string)
+    {
+        let ack: Ack;
+        ack = await lastValueFrom(this._threadService.toggleLockThreadById(thread.id,this._userService.loggedUser, wannaLock));
         if(ack.code == ACK.OK) {
             alert("Thread locked successfully!");
         } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
-            alert("Could not lock the thread. Please try again!");
-        } else if(ack.code == ACK.THREAD.LOCK_PERMISSION_DENIED.code){
-            alert("You don't has permission to lock this thread!");
-        } else if(ack.code == ACK.THREAD.LOCKED_THREAD.code){
-            alert("Thread already locked!")
+            alert("Could not (un)lock the thread. Please try again!");
+        } else if(ack.code == ACK.THREAD.TOGGLE_LOCK_PERMISSION_DENIED.code){
+            alert("You don't has permission to (un)lock this thread!");
+        } else if(ack.code == ACK.THREAD.TOGGLE_LOCK_THREAD.code){
+            alert("Thread already (un)locked")
         }
     }
-    
-    async unlockThread(thread: Thread){
-        let ack:Ack;
-        ack = await lastValueFrom(this._threadService.UnlockThreadById(thread.id,this.loggedUser));
-        
-        if(ack.code == ACK.OK) {
-            alert("Thread unlocked successfully!");
-        } else if(ack.code == ACK.THREAD.UNEXPECTED_ERROR.code){
-            alert("Could not unlock the thread. Please try again!");
-        } else if(ack.code == ACK.THREAD.UNLOCK_PERMISSION_DENIED.code){
-            alert("You don't has permission to unlock this thread!");
-        } else if(ack.code == ACK.THREAD.UNLOCKED_THREAD.code){
-            alert("Thread already unlocked!")
-        }
-    }
-    
 
     async deleteThread(thread: Thread){
         let ack:Ack;
-        ack = await lastValueFrom(this._threadService.DeleteThreadById(thread.id,this.loggedUser));
+        ack = await lastValueFrom(this._threadService.DeleteThreadById(thread.id,this._userService.loggedUser));
 
         if(ack.code == ACK.OK) {
             alert("Thread removed successfully!");

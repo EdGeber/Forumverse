@@ -14,7 +14,7 @@
                     <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Created: </p>
-                        <p id="fkfkLink">{{t.timeCreated.toLocaleDateString()}} {{t.timeCreated.toLocaleTimeString('en-US')}}</p>
+                        <p id="fkfkLink">{{t.timeCreated}}</p>
                     </div>
                     <p class="sp">・</p>
                     <div class="op-wrapper">
@@ -37,8 +37,8 @@
                     <h1>{{t.name}}</h1>
                 </div>
                 <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="deleteThread(t)">Delete</button>
-                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="lockThread(t)">Lock Thread</button>
-                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="unlockThread(t)">Unlock Thread</button>
+                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="toggleLockThread(t,'true')">Lock Thread</button>
+                <button class="donebutton" *ngIf="isLoggedUserOrAdmin(t.author)" (click)="toggleLockThread(t,'false')">Unlock Thread</button>
         </div>
     </div>
 </div>

@@ -84,11 +84,14 @@ export class HomeDiscussionsComponent implements OnInit{
   // 2: Relevant
   // 3: Popular
   public async sortby(){
-    //this.setThreads();
-    console.log(this.sortType);
+    /*  console.log(typeof(this.threads[0].timeCreated))
+    console.log(this.sortType); */
+    
     if(this.sortType == 1){
       this.threads.sort(function comp(a,b){
-        return b.timeCreated.getTime()-a.timeCreated.getTime()
+        let temp1 = new Date(a.timeCreated);
+        let temp2 = new Date(b.timeCreated);
+        return temp2.getTime()-temp1.getTime()
       });
     }else if(this.sortType == 2){
       this.threads.sort(function compRelevant(a,b){
@@ -104,9 +107,9 @@ export class HomeDiscussionsComponent implements OnInit{
   // 2: mine
   // fazer loop while
   public async filterby(){
-    let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
-    let user: User | null = ack.body as (User|null);
-    
+    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
+    // let user: User | null = ack.body as (User|null);
+    let user = this._userService.loggedUser;
 
     if(user && this.filterType==2)
     {
@@ -123,8 +126,9 @@ export class HomeDiscussionsComponent implements OnInit{
   }
 
   public async isLogged(){
-    let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
-    let user: User | null = ack.body as (User|null);
+    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
+    // let user: User | null = ack.body as (User|null);
+    let user = this._userService.loggedUser;
     if(user){
       return true;
     }

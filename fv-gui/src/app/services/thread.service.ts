@@ -46,7 +46,12 @@ export class ThreadService {
     }
 
     public DeleteReplyById(id: number, thread: Thread, user:User|null){
-        let ack: Ack;
+        return this._http
+            .delete<Ack>(
+                getUrlFor('thread/:'+thread.id+'/:'+id),
+                {headers: ThreadService._headers}
+            ).pipe(retry(2));
+        /* let ack: Ack;
 
         if(!user){
             ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
@@ -79,12 +84,18 @@ export class ThreadService {
         } else{
             ack = ACK.THREAD.UNEXPECTED_ERROR;
         }
-        return of(ack);
+        return of(ack); */
     }
 
-    public DeleteThreadById(id: number, user:User|null){
-        let ack: Ack;
-
+    public DeleteThreadById(id: number, user:User|null): Observable<Ack>{
+        return this._http
+            .delete<Ack>(
+                getUrlFor('thread/:'+id +"/:"+ user.name),
+                {headers: ThreadService._headers}
+            ).pipe(retry(2));
+        
+        /* let ack: Ack;
+        
         if(!user){
             ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
             return of(ack)
@@ -117,89 +128,17 @@ export class ThreadService {
         } else{
             ack = ACK.THREAD.MISSING_THREAD;
         }
-        return of(ack);
+        return of(ack); */
     }
 
-    public LockThreadById(id: number, user:User|null){
-        let ack: Ack;
-
-        if(!user){
-            ack = ACK.THREAD.LOCKED_THREAD;
-            return of(ack)
-        }
-        
-        let threadOnArray = this._getThreadByID(id);
-
-        if (threadOnArray != undefined){
-            let threads = this._createdThreads;
-            let locked = null;
-
-            for (let i = 0; i < threads.length; i++) {
-                if(threads[i].id == id){
-                    if((user != threads[i].author) && (!user.isAdmin)){
-                        ack = ACK.THREAD.LOCK_PERMISSION_DENIED
-                        return of(ack)
-                    }
-                    if (threadOnArray.isLocked) {
-                        ack = ACK.THREAD.LOCKED_THREAD
-                        return of(ack)
-                    }
-                    locked = true;
-                    threadOnArray.isLocked = true;
-                    break;
-                }
-            }
-            if(locked){
-                ack = ACK.THREAD.OK;
-            } else {
-                ack = ACK.THREAD.UNEXPECTED_ERROR;
-            }
-
-        } else{
-            ack = ACK.THREAD.UNEXPECTED_ERROR;
-        }
-        return of(ack);
-    }
-    
-    public UnlockThreadById(id: number, user:User|null){
-        let ack: Ack;
-
-        if(!user){
-            ack = ACK.THREAD.UNLOCKED_THREAD;
-            return of(ack)
-        }
-        
-        let threadOnArray = this._getThreadByID(id);
-
-        if (threadOnArray != undefined){
-            let threads = this._createdThreads;
-            let unlocked = null;
-
-            for (let i = 0; i < threads.length; i++) {
-                if(threads[i].id == id){
-                    if((user != threads[i].author) && (!user.isAdmin)){
-                        ack = ACK.THREAD.UNLOCK_PERMISSION_DENIED
-                        return of(ack)
-                    }
-                    if (!threadOnArray.isLocked) {
-                        ack = ACK.THREAD.UNLOCKED_THREAD
-                        return of(ack)
-                    }
-                    unlocked = true;
-                    threadOnArray.isLocked = false;
-                    break;
-                }
-            }
-            if(unlocked){
-                ack = ACK.THREAD.OK;
-            } else {
-                ack = ACK.THREAD.UNEXPECTED_ERROR;
-            }
-
-        } else{
-            ack = ACK.THREAD.UNEXPECTED_ERROR;
-        }
-        return of(ack);
+    public toggleLockThreadById(id: number, user: User|null, wannaLock: string)
+    {
+        return this._http
+        .put<Ack>(
+            getUrlFor('thread/:' + id + '/:' + wannaLock),
+            user,
+            {headers: ThreadService._headers}
+        ).pipe(retry(2));
     }
 
     private _getThreadByID(id:number): Thread|undefined{
@@ -209,7 +148,7 @@ export class ThreadService {
     public getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
         return this._http.
         get<Ack<Thread|undefined>>(
-            getUrlFor('thread:/'+id),
+            getUrlFor('thread/:'+id),
             {headers: ThreadService._headers}
         ).pipe(retry(2));
     }

@@ -43,15 +43,16 @@ export class TopBarComponent implements OnInit {
   
 
   public async islogged(){
-    let ack = await lastValueFrom(this._userService.loggedUser);
+    // let ack = await lastValueFrom(this._userService.loggedUser);
 
-    if(ack.code == ACK.OK){
-        if(ack.body){
-          this.loggedUser = <User>ack.body;
-        } else{
-          this.loggedUser = null;
-        }
-    }
+    // if(ack.code == ACK.OK){
+    //     if(ack.body){
+    //       this.loggedUser = <User>ack.body;
+    //     } else{
+    //       this.loggedUser = null;
+    //     }
+    // }
+    this.loggedUser = this._userService.loggedUser;
   }
 
   public async search(){

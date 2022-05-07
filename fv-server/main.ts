@@ -5,6 +5,7 @@ import { Ack } from "../common/Ack";
 import { Reply } from "../common/Reply";
 import { Thread } from "../common/Thread";
 import { ThreadService } from "./threadService";
+import { Util } from "./util";
 
 const fvServer = express();
 const PORT = 3000;  // don't change, that's used in common/fvUrls
@@ -38,8 +39,10 @@ fvServer.get('/threads', (req, res) => {
 });
 
 fvServer.get('/thread/:thread', (req, res) => {
-  let thread_id = parseInt(req.params.thread);
-  res.send(JSON.stringify(threadService.getThreadByID(thread_id)));
+  let thread_id = req.params.thread;
+  thread_id = Util.getParameter(thread_id);
+
+  res.send(JSON.stringify(threadService.getThreadByID(parseInt(thread_id))));
 });
 
 fvServer.post('/thread',(req,res) => {
@@ -48,15 +51,41 @@ fvServer.post('/thread',(req,res) => {
   res.send(ack);
 });
 
-fvServer.put('/thread/:thread',(req,res) => {
-  let thread_id: number = parseInt(req.params.thread);
+fvServer.put('/new-reply/:thread',(req,res) => {
+  let thread_id: number = parseInt(Util.getParameter(req.params.thread));
   let reply: Reply =  <Reply>req.body;
   
   let ack: Ack = threadService.trySendReply(reply, thread_id);
   res.send(ack);
 });
 
+// DOIS METODOS DELETE
+fvServer.delete('/thread/:thread/:user.name', (req,res) => {
+  let thread_id: number = parseInt(Util.getParameter(req.params.thread));
+  // let usr: User =  ;
+  
+  let ack: Ack = threadService.DeleteThreadById(thread_id, new User) //usr);
+  res.send(ack);
+});
 
+fvServer.delete('/thread/:thread/:reply', (req,res) => {
+  let thread_id: number = parseInt(req.params.thread);
+  let reply_id: number = parseInt(req.params.reply);
+  let usr: User =  <User>req.body;
+  
+  let ack: Ack = threadService.DeleteReplyById(reply_id, thread_id, usr);
+  res.send(ack);
+});
+
+// Lock and unlock threads
+fvServer.put('/thread/:thread/:wannaLock',(req,res) => {
+  let thread_id: number = parseInt(Util.getParameter(req.params.thread));
+  let wannaLock: boolean = (Util.getParameter(req.params.wannaLock) == 'true');
+  let user: User =  <User>req.body;
+  
+  let ack: Ack = threadService.toggleLockThreadById(thread_id, user, wannaLock);
+  res.send(ack);
+});
 
 // for tests
 fvServer.get('/clear_users', (req, res) => {
