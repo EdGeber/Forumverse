@@ -57,6 +57,12 @@ fvServer.put('/thread/:thread',(req,res) => {
 
 
 
+// for tests
+fvServer.get('/clear_users', (req, res) => {
+	let code = UserService._clearRegisteredUsers();
+	res.send(code);
+})
+
 fvServer.listen(PORT, () => {
   console.log(`Forumverse Server listening on port ${PORT}!`)
 })

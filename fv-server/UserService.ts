@@ -79,7 +79,8 @@ export class UserService {
     }
 
     // ONLY USED FOR TESTING
-    public static _clearRegisteredUsers(): void {
+    public static _clearRegisteredUsers(): number {
         this._registeredUsers.length = 0;
+		return ACK.OK;
     }
 }

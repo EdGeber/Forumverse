@@ -50,7 +50,6 @@ export class UserService {
 		return ack_promise;
     }
 
-    // not implemented by the server
     public tryLogoutUser() {
         if(this.loggedUser == null) throw Error("Logout is not possible because the user is not logged in");
 
