@@ -36,7 +36,7 @@ export class ThreadService {
             ack = ACK.THREAD.EMPTY_REPLY_MSG;
         }
         else{
-            let threadOnArray = this.getThreadByID(thread_id)
+            let threadOnArray = this._getThreadByID(thread_id)
             if(threadOnArray != undefined){
                 if(threadOnArray.isLocked){
                     ack = ACK.THREAD.LOCKED_THREAD;
@@ -51,8 +51,16 @@ export class ThreadService {
         return ack;
     }
 
-    public getThreadByID(id:number): Thread|undefined{
+    
+    private _getThreadByID(id:number): Thread|undefined{
         return this.threads.find(t => t.id == id);
+    }
+
+
+    public getThreadByID(id:number): Ack<Thread|undefined>{
+        let ack = ACK.GET_THREAD.OK;
+        ack.body = this.threads.find(t => t.id == id);
+        return ack;
     }
 
     private _isMissingNameField(thread: Thread): boolean {

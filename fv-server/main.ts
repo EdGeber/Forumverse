@@ -26,12 +26,13 @@ fvServer.use(express.json());
 fvServer.post('/register', (req, res) => {
 	let ack = UserService.tryRegisterUser(User.fromAny(req.body));
 	res.send(ack);
-})
+});
 
 fvServer.put('/login', (req, res) => {
 	let ack = UserService.tryLoginUser(User.fromAny(req.body));
 	res.send(ack);
-})
+});
+
 fvServer.get('/threads', (req, res) => {
   res.send(JSON.stringify(threadService.getThreads()));
 });

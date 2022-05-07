@@ -207,19 +207,25 @@ export class ThreadService {
     }
 
     public getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
-        let ack = ACK.GET_THREAD.OK;
-        let thread = this._getThreadByID(id);
-        ack.body = thread;
-        return of(ack);
+        return this._http.
+        get<Ack<Thread|undefined>>(
+            getUrlFor('thread:/'+id),
+            {headers: ThreadService._headers}
+        ).pipe(retry(2));
     }
 
     /* Não é pra retornar todas as threads, mas como vão ter poucas... */
     public getThreadsArray(): Observable<Ack<Thread[]|undefined>>
     {
-        let ack = ACK.GET_THREAD_ARRAY.OK;
-        /* To-do criar função deep copy array[thready] */
-        ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
-        return of(ack);
+        return this._http
+        .get<Ack<Thread[]|undefined>>(
+            getUrlFor('threads'),
+            {headers: ThreadService._headers}
+        ).pipe(retry(2));
+        // let ack = ACK.GET_THREAD_ARRAY.OK;
+        // /* To-do criar função deep copy array[thready] */
+        // ack.body = <Array<Thread>>this._createdThreads.map(a => {return {...a}});
+        // return of(ack);
     }
     
     private _isMissingNameField(thread: Thread): boolean {

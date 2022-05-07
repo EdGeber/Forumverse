@@ -59,7 +59,7 @@ export class HomeDiscussionsComponent implements OnInit{
     this.threads = this.allThreads;
     this.sortby();
   }
-  
+   
   private shuffle(): Thread[]{
     let currentIndex = this.threads.length,  randomIndex;
 
