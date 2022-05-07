@@ -1,4 +1,4 @@
-import { lastValueFrom, Observable, Observer, of } from "rxjs";
+import { lastValueFrom, Observable, Observer, of, retry } from "rxjs";
 import { Thread } from "../../../../common/Thread";
 import { ACK, Ack } from "../../../../common/Ack";
 import { User } from "../../../../common/User";
@@ -6,22 +6,22 @@ import { Reply } from "../../../../common/Reply";
 import { UserService } from "./user.service";
 import { ManageThreadComponent } from "../manage-thread-page/manage-thread-page.component"
 import { Injectable } from "@angular/core";
+import { getUrlFor } from "../../../../common/fvUrls";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ThreadService {
     private _createdThreads: Thread[] = [];
+    constructor(private _http: HttpClient) {}
+	private static readonly _headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     public tryCreateThread(thread: Thread): Observable<Ack> {
-        let ack: Ack;
-        if(this._isMissingNameField(thread)) ack = ACK.THREAD.MISSING_NAMEFIELD;
-        else if(this._isMissingTopicField(thread)) ack = ACK.THREAD.MISSING_TOPICFIELD;
-        else if(this._isThreadDuplicate(thread)) ack = ACK.THREAD.DUPLICATE_THREADNAME;
-        else {
-            ack = ACK.THREAD.OK;
-            this._createdThreads.push(thread);
-            Thread.total++;
-        }
-        return of(ack);
+        return this._http
+            .post<Ack>(
+                getUrlFor('thread'),
+                thread,
+                {headers: ThreadService._headers}
+            ).pipe(retry(2));
     }
 
     public trySendReply(reply:Reply, thread:Thread){
