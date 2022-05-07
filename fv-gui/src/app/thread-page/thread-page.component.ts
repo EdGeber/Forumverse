@@ -97,9 +97,7 @@ export class ThreadPageComponent implements OnInit{
             alert("Could not delete reply. Please try again!");
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
             alert("You don't has permission to delete this reply!")
-        } else if(ack.code == ACK.THREAD.OK.code){
-            window.location.reload();
-        }
+        } 
     }
 
     //TODO: fix removed quoted message 

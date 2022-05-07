@@ -32,6 +32,14 @@ hr{
     white-space: pre-wrap;
 }
 
+.quote-header {
+    margin: 0;
+    border-color:cyan;
+    padding: 1em;
+    border-left: 0.125em solid; 
+    box-sizing: inherit;
+  }
+
 .reply-header, h2{
     color: cyan;
 }

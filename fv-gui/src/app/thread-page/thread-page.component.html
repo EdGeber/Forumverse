@@ -19,8 +19,10 @@
 <div class="reply" *ngFor="let r of thread.replies">
     <br>
     <p class="reply-header"> {{r.author.name}}  on {{r.timeSent}}</p>
+    <button *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
+    <button *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
 
-    <div class="quote-header" *ngIf="r.quoteOf">
+    <blockquote class="quote-header" *ngIf="r.quoteOf">
         <div *ngIf="isReplyOnArray(r); then showQuoted else removedQuoted"></div>
         <ng-template #showQuoted>
             <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
@@ -29,18 +31,20 @@
         <ng-template #removedQuoted>
             <p class="quote-content">Removed reply</p>
         </ng-template>
-    </div>
+    </blockquote>
 
-    <button *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
-    <button *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
     <p>{{r.content}} </p>
 </div>
 
 <div id="answer-div">
     <br>
-    <p *ngIf="isQuoting()">Quoting {{quotedReply?.author?.name}}:</p>
-    <p *ngIf="isQuoting()"> {{quotedReply?.content}}</p>
-    <button *ngIf (click)="stopQuoting()">stopQuoting</button>
+    <blockquote class='quote-header' *ngIf="isQuoting()">
+        <p >Quoting {{quotedReply?.author?.name}}:</p>
+        <p> {{quotedReply?.content}}</p>
+    </blockquote>
+    <button *ngIf="isQuoting()" (click)="stopQuoting()">stopQuoting</button>
+    <br>
+
     <textarea rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
     <button (click)="sendReply()">Send</button>
 </div>
