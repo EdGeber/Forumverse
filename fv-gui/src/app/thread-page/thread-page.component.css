@@ -94,3 +94,6 @@ button{
 button:hover{
     background-color: #3f0f86;
 }
+.error-send-answer{
+    color:#deac1e;
+}

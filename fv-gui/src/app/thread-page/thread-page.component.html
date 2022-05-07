@@ -51,6 +51,8 @@
 
     <textarea class="inputReg" rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
     <button (click)="sendReply()">Send</button>
+    <br>
+    <p *ngIf="errorOcurred()" class="error-send-answer">{{errorMsg}}</p>
 </div>
 
 </html>
