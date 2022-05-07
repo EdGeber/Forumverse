@@ -95,11 +95,11 @@ describe("UserService's tryRegisterUser", () => {
     })
 });
 
-describe("UserService's login and logout services", () => {
+describe("UserService's login service", () => {
 
     afterEach(() => UserService._clearRegisteredUsers());
 
-    it("tell when a field is missing (login)", async () => {
+    it("tells when a field is missing (login)", async () => {
         let user1 = new User('email1', '', 'pass1');  // user not found (ok)
         let user2 = new User('', '', 'pass2');        // missing
         let user3 = new User('email3', '', 'pass3');  // missing
@@ -113,7 +113,7 @@ describe("UserService's login and logout services", () => {
         expect(ack3).toEqual(ACK.LOGIN.USER_NOT_FOUND);
     });
 
-    it("log the correct user from email and password information, and enable logout -> login", async () => {
+    it("logs the correct user from email and password information", async () => {
         let user1  = new User('email1', 'name1', 'pass1');  // register ok
         let admin2 = new User('email2', 'name2', 'pass2', true, '123');  // register ok
         let userLogin1  = new User('email1', '', 'pass1');   // login ok, return user1
@@ -131,7 +131,6 @@ describe("UserService's login and logout services", () => {
         let expectedUser1 = user1;
         let actualUser1 = ack3.body;
         expect(actualUser1).toEqual(expectedUser1);
-
 
         let ack6 = (UserService.tryLoginUser(adminLogin2));
         expect(ack6).toEqual(ACK.LOGIN.OK);
