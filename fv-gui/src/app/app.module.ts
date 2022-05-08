@@ -34,7 +34,7 @@ import { CreateThreadComponent } from './create-thread-page/create-thread-page.c
 
 // thread-page
 import { ThreadPageComponent } from './thread-page/thread-page.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HomeDiscussionsComponent } from './main-page/home-discussions/home-discussions';
 
 // manage-thread-page
@@ -124,7 +124,7 @@ import { ThreadService } from './services/thread.service';
         ])
     ],
     // don't change
-    providers: [HomeDiscussionsComponent, UserService, ThreadService],
+    providers: [DatePipe, UserService, ThreadService],
     bootstrap: [Page]
 })
 
