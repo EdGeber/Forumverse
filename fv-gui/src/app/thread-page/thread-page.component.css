@@ -27,6 +27,8 @@ ul{
 hr{
     margin-left: 0rem;
     width: 100%;
+    float:none;
+    clear:both;
 }
 
 .reply, #answer-div, #thread-title, #thread-text, .thread-info:first-child{

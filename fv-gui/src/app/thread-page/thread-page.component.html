@@ -45,7 +45,8 @@
     <div class="answer-quote-div">
         <blockquote class='quote-header' *ngIf="isQuoting()">
             <p class="quote-author"> Quoting {{quotedReply?.author?.name}}:</p>
-            <p class="quote-content"> {{quotedReply?.content}}</p>
+            <p *ngIf="isReplyOnArray(quotedReply)" class="quote-content"> {{quotedReply?.content}}</p>
+            <p *ngIf="isReplyOnArray(quotedReply)==false" class="quote-content"> This reply was removed!</p>
         </blockquote>
         <button *ngIf="isQuoting()" (click)="stopQuoting()">stopQuoting</button>
     </div>
