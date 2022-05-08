@@ -134,4 +134,9 @@ export class HomeDiscussionsComponent implements OnInit{
     }
     return false;
   }
+
+  public formatTime(time:Date):string{
+    time = new Date(time)
+    return time.toLocaleDateString() + " " + time.toLocaleTimeString('en-US')
+}
 }
