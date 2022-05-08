@@ -1,7 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
-import { find, lastValueFrom } from "rxjs";
+import { find, lastValueFrom, Subscription } from "rxjs";
 import { Ack, ACK } from "../../../../../common/Ack";
 import { Reply } from "../../../../../common/Reply";
 import { Thread } from "../../../../../common/Thread"; 
@@ -15,35 +15,39 @@ import { UserService } from "../../services/user.service";
   styleUrls: ['./home-discussions.css']
 })
 
-@Injectable({providedIn: 'root'})
 export class HomeDiscussionsComponent implements OnInit{ 
 
   public threads: Thread[] = [];
   public allThreads: Thread[] = [];
   public onlyUserThread: Thread[] = [];
-  id: number = 0;
-  name: string = '';
-  author: User = new User();
-  timeCreated: Date = new Date();
-  topic1: string = '';
-  topic2: string = '';
-  topic3: string = '';
-  length: number = 0;
   
   public sortType: number = 1;
   public filterType: number = 1;
-
+  private threadsub: Subscription;
   selected: string = '';
 
   constructor(
 	private route: ActivatedRoute,
 	private _userService: UserService,
-	private _threadService: ThreadService){ }
-
+  private _threadService: ThreadService){ 
+    this.sovai();
+    this.threadsub= this._threadService.getUpdate().subscribe
+    (threads => { //message contains the data sent from service
+      this.threads = threads;
+    });
+  }
+  
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
-    this.setThreads();
   }
+
+  public async sovai()
+  {
+    let ack = await lastValueFrom(this._threadService.getThreadsArray());
+    let threadss = <Thread[]>ack.body;
+    this._threadService.sendUpdate(threadss);
+  }
+
 
   selectFilterBy (event: any) {
     //update the ui
@@ -53,33 +57,35 @@ export class HomeDiscussionsComponent implements OnInit{
     //update the ui
     this.sortType = event.target.value;
   }
-  public async setThreads(){
-    let ack = await lastValueFrom(this._threadService.getThreadsArray());
-    this.allThreads = <Thread[]>ack.body;
-    this.threads = this.allThreads;
-    this.sortby();
+  
+  public async setThreads(){  
+    //await this._threadService.uptTDC();
+    this.allThreads = this.threads
+    //this.threads = await this._threadService.getTDC();
   }
-   
+
   private shuffle(): Thread[]{
     let currentIndex = this.threads.length,  randomIndex;
 
     // While there remain elements to shuffle.
     while (currentIndex != 0) {
-  
+      
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
   
       // And swap it with the current element.
       [this.threads[currentIndex], this.threads[randomIndex]] = [
-        this.threads[randomIndex], this.threads[currentIndex]];
+        this.threads[randomIndex],this.threads[currentIndex]];
     }
   
     return this.threads;
   };
-  public updatethreads(t: Thread[]){
-    this.threads = t;
-  }
+/*   
+  public async updatethreads(){
+    this.threads = await this._threadService.getTDC();
+  } */
+
   // 1: Latest
   // 2: Relevant
   // 3: Popular
@@ -110,17 +116,20 @@ export class HomeDiscussionsComponent implements OnInit{
     // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
     // let user: User | null = ack.body as (User|null);
     let user = this._userService.loggedUser;
-
-    if(user && this.filterType==2)
+    let ack = await lastValueFrom(this._threadService.getThreadsArray());
+    //this.allThreads = <Thread[]>ack.body;
+    if(User && this.filterType==2)
     {
       this.onlyUserThread = [];
+      
       this.allThreads.forEach(t => {
-        if(t.author==user){
+        if(t.author?.name==user?.name){
           this.onlyUserThread.push(t);
         };
       })
       this.threads = this.onlyUserThread;
     }else{
+      console.log("poirra")
       this.threads = this.allThreads;
     }
   }
