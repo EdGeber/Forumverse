@@ -6,7 +6,7 @@ import { Reply } from "../../../../common/Reply";
 import { UserService } from "./user.service";
 import { ManageThreadComponent } from "../manage-thread-page/manage-thread-page.component"
 import { Injectable } from "@angular/core";
-import { getUrlFor } from "../../../../common/fvUrls";
+import { GetServerUrlFor } from "../../../../common/fvUrls";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
@@ -86,7 +86,7 @@ export class ThreadService {
     public tryCreateThread(thread: Thread): Observable<Ack> {
         return this._http
             .post<Ack>(
-                getUrlFor('thread'),
+                GetServerUrlFor('thread'),
                 thread,
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
@@ -95,7 +95,7 @@ export class ThreadService {
     public trySendReply(reply:Reply, thread:Thread): Observable<Ack>{
         return this._http.
             put<Ack>(
-                getUrlFor('newreply/:'+thread.id),
+                GetServerUrlFor('newreply/:'+thread.id),
                 reply,
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
@@ -104,7 +104,7 @@ export class ThreadService {
     public DeleteReplyById(id: number, thread: Thread, user:User|null){
         return this._http
             .delete<Ack>(
-                getUrlFor('deletereply/:'+thread.id+'/:'+id+'/:'+ user?.name),
+                GetServerUrlFor('deletereply/:'+thread.id+'/:'+id+'/:'+ user?.name),
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
     }
@@ -112,7 +112,7 @@ export class ThreadService {
     public DeleteThreadById(id: number, user:User|null): Observable<Ack>{
         return this._http
             .delete<Ack>(
-                getUrlFor('thread/:'+id +"/:"+ user?.name),
+                GetServerUrlFor('thread/:'+id +"/:"+ user?.name),
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
     }
@@ -121,7 +121,7 @@ export class ThreadService {
     {
         return this._http
         .put<Ack>(
-            getUrlFor('thread/:' + id + '/:' + wannaLock),
+            GetServerUrlFor('thread/:' + id + '/:' + wannaLock),
             user,
             {headers: ThreadService._headers}
         ).pipe(retry(2));
@@ -134,7 +134,7 @@ export class ThreadService {
     public getThreadsByID(id:number): Observable<Ack<Thread|undefined>>{
         return this._http.
         get<Ack<Thread|undefined>>(
-            getUrlFor('thread/:'+id),
+            GetServerUrlFor('thread/:'+id),
             {headers: ThreadService._headers}
         ).pipe(retry(2));
     }
@@ -144,7 +144,7 @@ export class ThreadService {
     {
         return this._http
         .get<Ack<Thread[]|undefined>>(
-            getUrlFor('threads'),
+            GetServerUrlFor('threads'),
             {headers: ThreadService._headers}
         ).pipe(retry(2));
     }
