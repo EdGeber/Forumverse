@@ -7,10 +7,10 @@ let expect = chai.expect;
 
 defineSupportCode(({ Given, When, Then }) => {
 	Given(
-	"There is no registered user in the forum with username Fred, be it admin or non-admin",
+	`There is no registered user in the forum with username "Fred", be it admin or non-admin`,
 	async () => {
 		await Setup(browser);
-		expect(browser.getTitle()).toEqual('Forumverse');
+		await expect(browser.getTitle()).eventually.equal('Forumverse');
 	});
 
 	Given("I am at the sign in page", async () => {
