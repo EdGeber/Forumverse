@@ -39,6 +39,15 @@ export class ThreadPageComponent implements OnInit{
     async setThread(id:number){
         let ack = await lastValueFrom(this._threadService.getThreadsByID(id));
         this.thread = <Thread>ack.body;
+
+        this.thread.replies.forEach(r => console.log(r));
+    }
+
+    isReplyOnArray(reply: Reply){
+        console.log("----------------")
+        console.log(this.thread.replies)
+        console.log("----------------")
+        return this.thread.replies.find(r => r.id == reply.id) != undefined;
     }
 
     get LastActivity(){
@@ -93,7 +102,7 @@ export class ThreadPageComponent implements OnInit{
         if(!this.loggedUser){
             return false;
         }
-        return this.loggedUser == user || this.loggedUser.isAdmin;
+        return this.loggedUser.name == user.name || this.loggedUser.isAdmin;
     }
 
     async deleteReply(reply: Reply){
@@ -105,7 +114,6 @@ export class ThreadPageComponent implements OnInit{
         } else if(ack.code == ACK.THREAD.DELETE_PERMISSION_DENIED.code){
             alert("You don't has permission to delete this reply!")
         } else if(ack.code == ACK.THREAD.OK.code){
-            reply.remove();
             this.setThread(this.thread.id);
         }
     }

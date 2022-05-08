@@ -36,7 +36,7 @@ export class ThreadService {
     public DeleteReplyById(id: number, thread: Thread, user:User|null){
         return this._http
             .delete<Ack>(
-                getUrlFor('thread/:'+thread.id+'/:'+id),
+                getUrlFor('deletereply/:'+thread.id+'/:'+id+'/:'+ user?.name),
                 {headers: ThreadService._headers}
             ).pipe(retry(2));
     }

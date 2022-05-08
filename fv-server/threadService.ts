@@ -33,7 +33,6 @@ export class ThreadService{
         return ack;
     }
 
-    // Falta testar
     public trySendReply(reply:Reply, thread_id:number): Ack{
         let ack: Ack;
         if(this._emptyReplyText(reply)){
@@ -55,7 +54,6 @@ export class ThreadService{
         return ack;
     }
 
-    // FALTA ADAPTAR
     public DeleteReplyById(id: number, thread_id: number, user:User|null): Ack{
         let ack: Ack;
 
@@ -63,7 +61,7 @@ export class ThreadService{
 
         if(!user){
             ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
-            return ack
+            return ack;
         }
 
         //let threadOnArray = this._getThreadByID(thread.id);
@@ -75,11 +73,11 @@ export class ThreadService{
             for (let i = 0; i < replies.length; i++) {
                 if(replies[i].id == id){
                     if((user.name != replies[i].author.name) && (!user.isAdmin)){
-                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
-                        return ack
+                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
+                        return ack;
                     }
-
-                    removed = replies.splice(i,1) 
+                    replies[i].content = "This reply was removed";
+                    removed = replies.splice(i,1); 
                     break;
                 }
             }
@@ -100,7 +98,7 @@ export class ThreadService{
 
         if(!user){
             ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
-            return ack
+            return ack;
         }
         
         let threadOnArray = this._getThreadByID(id);
@@ -112,8 +110,8 @@ export class ThreadService{
             for (let i = 0; i < threads.length; i++) {
                 if(threads[i].id == id){
                     if((user.name != threads[i].author.name) && (!user.isAdmin)){
-                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED
-                        return ack
+                        ack = ACK.THREAD.DELETE_PERMISSION_DENIED;
+                        return ack;
                     }
 
                     removed = threads.splice(i,1) 

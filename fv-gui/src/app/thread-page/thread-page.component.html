@@ -32,7 +32,8 @@
 
     <blockquote class="quote-header" *ngIf="r.quoteOf">
         <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
-        <p class="quote-content"> {{r.quoteOf.content}}</p>
+        <p *ngIf="isReplyOnArray(r.quoteOf) == true"  class="quote-content"> {{r.quoteOf.content}}</p>
+        <p *ngIf="isReplyOnArray(r.quoteOf) == false" class="quote-content"> This reply was removed!</p>
     </blockquote>
 
     <p>{{r.content}} </p>
