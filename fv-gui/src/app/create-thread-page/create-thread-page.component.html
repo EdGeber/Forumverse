@@ -5,7 +5,7 @@
 <table>
     <tr>
         <h2 class="inputTitle">Discussion Name:</h2>
-        <input class="inputReg" (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
+        <input class="inputReg-name" (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
     </tr>
     <div>
         <p class="inputTitle">Topics Selection:</p>
@@ -23,7 +23,11 @@
         </div>
     </div>
     <br>
-    <textarea class="inputReg" rows=10 cols= 50 [(ngModel)]="threadCreate.text"></textarea>
+    <h2 class="inputTitle">Discussion text:</h2>
+</table>
+
+<table>
+    <textarea class="inputReg-text" rows=10 cols= 50 [(ngModel)]="threadCreate.text"></textarea>
 </table>
 
 <button class="donebutton" (click)="removeMissingFieldWarning(); createThread()">Done!</button>
