@@ -24,49 +24,25 @@ export class TopBarComponent implements OnInit {
 	private _threadService: ThreadService){ 
   };
   loggedUser: User | null = null;
-  threads: Thread[] = [];
   public que: string = "";
 
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
     this.islogged();
-    this.setThreads();
-  }
-
-  public async setThreads(){
-    let ack = await lastValueFrom(this._threadService.getThreadsArray());
-    this.threads = <Thread[]>ack.body;
   }
   
-
   public async islogged(){
-    // let ack = await lastValueFrom(this._userService.loggedUser);
-
-    // if(ack.code == ACK.OK){
-    //     if(ack.body){
-    //       this.loggedUser = <User>ack.body;
-    //     } else{
-    //       this.loggedUser = null;
-    //     }
-    // }
     this.loggedUser = this._userService.loggedUser;
   }
 
   public async search(){
-    this.setThreads();
-    var i = this.threads.length;
-    while(i--)
-    {
-      if(!this.threads[i].name.includes(this.que.trim())){
-        this.threads.splice(i, 1);
-      };
-    }
+    await this._threadService.search(this.que);
+    this.que = "";
   }
 
   public async logout()
   {
     let ack = await lastValueFrom(this._userService.tryLogoutUser());
-
   }
 
 }
