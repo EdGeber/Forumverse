@@ -17,7 +17,10 @@ import { HomeDiscussionsComponent } from '../home-discussions/home-discussions';
 })
 
 export class HomeRightBarComponent implements OnInit {
-  constructor(private route: ActivatedRoute,  private homecomp: HomeDiscussionsComponent){ };
+  constructor
+  	(private route: ActivatedRoute,
+	private homecomp: HomeDiscussionsComponent,
+	private _userService: UserService){ };
   loggedUser: User | null = null;
   threads: Thread[] = [];
   public que: string = "";
@@ -31,15 +34,16 @@ export class HomeRightBarComponent implements OnInit {
 
 
   public async islogged(){
-    let ack = await lastValueFrom(UserService.loggedUser);
+    // let ack = await lastValueFrom(this._userService.loggedUser);
 
-    if(ack.code == ACK.OK){
-        if(ack.body){
-          this.loggedUser = <User>ack.body;
-        } else{
-          this.loggedUser = null;
-        }
-    }
+    // if(ack.code == ACK.OK){
+    //     if(ack.body){
+    //       this.loggedUser = <User>ack.body;
+    //     } else{
+    //       this.loggedUser = null;
+    //     }
+    // }
+    this.loggedUser = this._userService.loggedUser;
   }
 
   private removeallbut()

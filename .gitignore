@@ -68,3 +68,5 @@ typeScript/
 .env
 
 ta-server/response.html
+
+compiledCode

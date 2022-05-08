@@ -9,7 +9,7 @@
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="filter-text">Filter by:</p>
-                            <select name="filter-options" id="filter-options" [(ngModel)]="filterType" (change)="filterby()">
+                            <select (change)="selectFilterBy($event)" name="filter-options" id="filter-options" [(ngModel)]="filterType" (change)="filterby()">
                                 <option value=1>All Posts</option>
                                 <option value=2>My Posts</option>
                             </select>    
@@ -18,7 +18,7 @@
                     <div class="wrapper-by">
                         <div class="box-by">
                             <p id="sort-text">Sort by:</p>
-                            <select name="sort-options" id="sort-options" [(ngModel)]="sortType" (change)="sortby()">
+                            <select (change)="selectSortBy($event)" name="sort-options" id="sort-options" [(ngModel)]="sortType" (change)="sortby()">
                                   <option value=1>Latest</option>
                                   <option value=2>Relevant</option>
                                   <option value=3>Popular</option>
@@ -38,7 +38,11 @@
                                 <p class="sp">・</p>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Created: </p>
-                                    <p id="fkfkLink">{{t.timeCreated.toLocaleDateString()}} {{t.timeCreated.toLocaleTimeString('en-US')}}</p>
+                                    <!--TODO: Format shown date: 
+                                        mm/dd/yyyy hh:mm:ss.mmmm -> dd/mm/yy hh:mm:ss
+                                    -->
+                                    <p id="fkfkLink">{{t.timeCreated}}</p>
+                                    <!-- <p id="fkfkLink">{{t.timeCreated}}}</p>  -->
                                 </div>
                                 <p class="sp">・</p>
                                 <div class="op-wrapper">

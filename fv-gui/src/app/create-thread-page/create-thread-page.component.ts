@@ -33,7 +33,10 @@ export class CreateThreadComponent {
     }
 
     // public methods
-    constructor(private _router: Router) {
+    constructor(
+		private _router: Router,
+		private _userService: UserService,
+		private _threadService: ThreadService) {
 
         this._ERROR_HANDLING[ACK.THREAD.MISSING_NAMEFIELD.code] =
             () => this.isMissingNameField = true;
@@ -56,21 +59,31 @@ export class CreateThreadComponent {
     }
 
     public async createThread() {
-        var userAck = await
-            lastValueFrom(UserService.loggedUser);
+        // var userAck = await
+        //     lastValueFrom(this._userService.loggedUser);
 
-        if(userAck.code == ACK.OK){
-            if(userAck.body){
-                this.threadCreate.author = <User>userAck.body;
+        // if(userAck.code == ACK.OK){
+        //     if(userAck.body){
+        //         this.threadCreate.author = <User>userAck.body;
 
-                var ack = await
-                lastValueFrom(ThreadService.tryCreateThread(this.threadCreate));
+        //         var ack = await
+        //         lastValueFrom(this._threadService.tryCreateThread(this.threadCreate));
             
+        //         if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
+        //         else this._handleError(ack);
+        //     } else {
+        //         this.isNotLoggedIn = true;
+        //     }
+        // }
+        let loggedUser = this._userService.loggedUser;
+        if (loggedUser){
+            this.threadCreate.author = loggedUser;
+            var ack = await
+                lastValueFrom(this._threadService.tryCreateThread(this.threadCreate));
                 if(ack.code == ACK.OK) this._router.navigateByUrl("/home");
-                else this._handleError(ack);
-            } else {
-                this.isNotLoggedIn = true;
-            }
+                    else this._handleError(ack);
+        } else {
+            this.isNotLoggedIn = true;
         }
     }
 }

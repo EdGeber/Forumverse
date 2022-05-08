@@ -23,12 +23,12 @@ export class LoginFieldsComponent {
     public isUserNotFound = false;
 
     // private methods
-    private _handleError(ack: Ack) {
+    private _handleError(ack: any) {
         this._ERROR_HANDLING[ack.code]();
     }
 
     // public methods
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _userService: UserService) {
 
         this._ERROR_HANDLING[ACK.LOGIN.MISSING_FIELD.code] =
             () => this.isMissingField = true;
@@ -52,8 +52,7 @@ export class LoginFieldsComponent {
     public async loginUser() {
         this.removeAllWarnings();
         
-        var ack = await
-            lastValueFrom(UserService.tryLoginUser(this.user));
+        var ack = await this._userService.tryLoginUser(this.user);
         
         if(ack.code == ACK.OK) {
             this.user = new User();

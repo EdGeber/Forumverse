@@ -8,8 +8,8 @@
 
 .thread-component
 {
-    height: fit-content;
-    width: fit-content;
+    height:auto;
+    width:auto;
 }
 
 .thread-component-topbar
@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: row;
     color: #12CDD4;
+    width:auto;
 }
 
 #thread-component-topbar-left{
@@ -24,9 +25,12 @@
     font-size: 150%;
 }
 
+#thread-componen-topbar-name{
+    font-size: 3.5vw;
+}
+
 #thread-component-topbar-right
 {
-    width: max-content;
     width: fit-content;
     padding-top: 2%;
     padding-right: 4%;
@@ -36,8 +40,12 @@
 }
 
 .wrapper-by{
-    height: max-content;
-    width: max-content;
+    height: fit-content;
+    width: fit-content;
+}
+
+#filter-text, #sort-text, #filter-options, #sort-options{
+    font-size: 1vw;
 }
 
 .box-by{
@@ -92,16 +100,19 @@ select{
     padding-right: 5px;
     width: max-content;
     display: flex;
+    font-size:1vw;
 }
 
 .fktxt{
     padding-left: 3px;
     padding-right: 3px;
+    font-size: 1em;
 }
 
 #fkLink{
     color: #12CDD4;
     text-decoration: underline;
+    font-size: 1em;
 }
 
 #fkfkLink{

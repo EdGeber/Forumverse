@@ -42,16 +42,15 @@ export const ACK = {
         UNEXPECTED_ERROR:           new Ack('Thread',251),
         DELETE_PERMISSION_DENIED:   new Ack('Thread',252),
         LOCKED_THREAD:              new Ack('Thread',253),
-        LOCK_PERMISSION_DENIED:     new Ack('Thread',254),
-        UNLOCKED_THREAD:              new Ack('Thread',255),
-        UNLOCK_PERMISSION_DENIED:     new Ack('Thread',256)
-
+        
+        TOGGLE_LOCK_PERMISSION_DENIED: new Ack('Thread', 257),
+        TOGGLE_LOCK_THREAD: new Ack('Thread', 258),
     },
 
     LOGIN: { // 300 to 399
-        OK:             new Ack("login", 0),
-        MISSING_FIELD:  new Ack("login", 301),
-        USER_NOT_FOUND: new Ack("login", 302)
+        OK:             new Ack<User|null>("login", 0),
+        MISSING_FIELD:  new Ack<User|null>("login", 301, null),
+        USER_NOT_FOUND: new Ack<User|null>("login", 302, null)
     },
 
     LOGOUT: { // 400 to 499

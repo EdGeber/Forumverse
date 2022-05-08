@@ -19,6 +19,8 @@ import { UserService } from "../../services/user.service";
 export class HomeDiscussionsComponent implements OnInit{ 
 
   public threads: Thread[] = [];
+  public allThreads: Thread[] = [];
+  public onlyUserThread: Thread[] = [];
   id: number = 0;
   name: string = '';
   author: User = new User();
@@ -33,18 +35,31 @@ export class HomeDiscussionsComponent implements OnInit{
 
   selected: string = '';
 
-  constructor(private route: ActivatedRoute){ }
+  constructor(
+	private route: ActivatedRoute,
+	private _userService: UserService,
+	private _threadService: ThreadService){ }
 
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
     this.setThreads();
   }
 
-  public async setThreads(){
-    let ack = await lastValueFrom(ThreadService.getThreadsArray());
-    this.threads = <Thread[]>ack.body;
+  selectFilterBy (event: any) {
+    //update the ui
+    this.filterType = event.target.value;
   }
-  
+  selectSortBy (event: any) {
+    //update the ui
+    this.sortType = event.target.value;
+  }
+  public async setThreads(){
+    let ack = await lastValueFrom(this._threadService.getThreadsArray());
+    this.allThreads = <Thread[]>ack.body;
+    this.threads = this.allThreads;
+    this.sortby();
+  }
+   
   private shuffle(): Thread[]{
     let currentIndex = this.threads.length,  randomIndex;
 
@@ -65,43 +80,55 @@ export class HomeDiscussionsComponent implements OnInit{
   public updatethreads(t: Thread[]){
     this.threads = t;
   }
-  // 0: Latest
-  // 1: Relevant
-  // 2: Popular
+  // 1: Latest
+  // 2: Relevant
+  // 3: Popular
   public async sortby(){
-    this.setThreads();
-
-    if(this.sortType == 1)
-    {
-      this.threads.sort((a,b)=>b.timeCreated.getTime()-a.timeCreated.getTime());
-    } 
-    else if (this.sortType == 2) {
-      this.shuffle();
-    } else {
-      this.shuffle();
+    /*  console.log(typeof(this.threads[0].timeCreated))
+    console.log(this.sortType); */
+    
+    if(this.sortType == 1){
+      this.threads.sort(function comp(a,b){
+        let temp1 = new Date(a.timeCreated);
+        let temp2 = new Date(b.timeCreated);
+        return temp2.getTime()-temp1.getTime()
+      });
+    }else if(this.sortType == 2){
+      this.threads.sort(function compRelevant(a,b){
+        return b.replies.length-a.replies.length;
+      });
+    }else{
+      this.threads.sort(function compPopular(a,b){
+        return -(a.relevantRatio-b.relevantRatio);
+      });
     }
   };
-  // 0: all
-  // 1: mine
+  // 1: all
+  // 2: mine
   // fazer loop while
   public async filterby(){
-    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
-    let user: User | null = ack.body as (User|null);
-    
+    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
+    // let user: User | null = ack.body as (User|null);
+    let user = this._userService.loggedUser;
 
     if(user && this.filterType==2)
     {
-      this.threads.forEach(t => {
-        if(t.author!=user){
-          this.threads.splice(this.threads.indexOf(t), 1);
+      this.onlyUserThread = [];
+      this.allThreads.forEach(t => {
+        if(t.author==user){
+          this.onlyUserThread.push(t);
         };
       })
+      this.threads = this.onlyUserThread;
+    }else{
+      this.threads = this.allThreads;
     }
   }
 
   public async isLogged(){
-    let ack: Ack<User|null> = await lastValueFrom(UserService.loggedUser);
-    let user: User | null = ack.body as (User|null);
+    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
+    // let user: User | null = ack.body as (User|null);
+    let user = this._userService.loggedUser;
     if(user){
       return true;
     }
