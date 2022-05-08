@@ -35,25 +35,23 @@
                                     <p class="fktxt">By: </p>
                                     <p id="fkLink">{{t.author.name}} </p>
                                 </div>
-                                <p class="sp">・</p>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Created: </p>
                                     <p id="fkfkLink">{{formatTime(t.timeCreated)}}</p>
                                 </div>
-                                <p class="sp">・</p>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Last Activity: </p>
                                     <p class="fktxt" id="fkfkLink">Less than 1hr ago</p>
                                 </div>
-                                <p class="sp">・</p>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Replies: </p>
                                     <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                                 </div>
-                                <p class="sp">・</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic2;">C++</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                                <div class="op-wrapper">
+                                    <p id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
+                                    <p id="fkLinkk" *ngIf="t.topic2;">C++</p>
+                                    <p id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                                </div>
                             </div>
                             <hr>
                             <div class="thread-bot" [routerLink]="'../thread/:' + t.id.toString()">
