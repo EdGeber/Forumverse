@@ -27,7 +27,6 @@ export class ThreadService{
         else {
             ack = ACK.THREAD.OK;
             this.threads.push(thread);
-            Thread.total++;
         }
         
         return ack;

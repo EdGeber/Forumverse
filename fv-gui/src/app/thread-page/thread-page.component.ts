@@ -44,9 +44,6 @@ export class ThreadPageComponent implements OnInit{
     }
 
     isReplyOnArray(reply: Reply){
-        console.log("----------------")
-        console.log(this.thread.replies)
-        console.log("----------------")
         return this.thread.replies.find(r => r.id == reply.id) != undefined;
     }
 

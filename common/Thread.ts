@@ -19,6 +19,8 @@ export class Thread{
         public topic2 = false,
         public topic3 = false,
         public text = "",
-    ) { }
-    
+    ) { 
+        this.id = Thread.total;
+        Thread.total++;
+    }   
 }
