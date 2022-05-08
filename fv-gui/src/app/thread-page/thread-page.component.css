@@ -7,6 +7,199 @@ ul{
     padding-left: 0.5rem;
 }
 
+#thread-title
+{
+    font-size:calc(250%);
+}
+
+#text-div
+{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items:flex-start;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2%;
+}
+
+#text-div-left
+{
+    width: 100%;
+}
+#text-div-right
+{
+    justify-content: end;
+    width:5%;
+    height: auto;
+}
+
+.centerlize
+{
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 5%;
+    padding-bottom: 20%;
+}
+
+.wrapper
+{
+    padding-top: 5%;
+    padding-left: 4%;
+    padding-right: 10%;
+}
+
+.thread-component
+{
+    height:auto;
+    width:auto;
+}
+
+.thread-component-topbar
+{
+    display: flex;
+    flex-direction: row;
+    color: #12CDD4;
+    width:auto;
+}
+
+#thread-component-topbar-left{
+    max-width: 50%;
+    font-size: 150%;
+}
+
+#thread-componen-topbar-name{
+    font-size: 3.5vw;
+}
+
+#thread-component-topbar-right
+{
+    width: fit-content;
+    padding-top: 2%;
+    padding-right: 4%;
+    display: flex;
+    flex-direction: row;
+    color: #12CDD4;
+}
+
+.wrapper-by{
+    height: fit-content;
+    width: fit-content;
+}
+
+#filter-text, #sort-text, #filter-options, #sort-options{
+    font-size: 1vw;
+}
+
+.box-by{
+    border: 1px solid #DB00B6;
+    border-radius: 10px;   
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+select{
+    padding: 5px;
+    color: #FAC710;
+  }
+  select option { color: white; }
+  select option:first-child{
+    color: #FAC710;
+}
+
+.thread-component-blob{
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+}
+
+.thread-box-wrapper{
+    padding-bottom: 2%;
+}
+
+.thread-box{
+    color:white;
+    border: 4px solid #DB00B6;
+    border-radius: 8px;
+    min-height: 100px;
+}
+
+#repl-box
+{
+    margin-top: calc(3%);
+    margin-right: calc(3%);
+    width: fit-content;
+
+}
+
+#repl-top
+{
+    flex-grow: 1;
+    justify-content: flex-end;
+
+}
+#reply-top
+{
+    justify-content: flex-end;
+}
+
+.thread-top{
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 3px;
+}
+
+.sp{
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.op-wrapper{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: max-content;
+    display: flex;
+    font-size:1vw;
+}
+
+.fktxt{
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 1em;
+}
+
+#fkLink{
+    color: #12CDD4;
+    text-decoration: underline;
+    font-size: 1em;
+}
+
+#fkfkLink{
+    color: #FAC710;
+}
+
+#fkLinkk{
+    color: #12CDD4;
+    text-decoration: underline;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.thread-bot{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2%;
+    min-height: 100%;
+    flex-grow: 3;
+}
+
+
 /* Hides the first dot */
 .thread-info-fields:first-child{
     list-style-type: none;
@@ -33,6 +226,7 @@ hr{
 
 .reply, #answer-div, #thread-title, #thread-text, .thread-info:first-child{
     margin-left: 1rem;
+
 }
 
 .reply{
@@ -49,6 +243,18 @@ hr{
     box-sizing: inherit;
 }
 
+
+.thread-tray {
+    margin-left: calc(3%);
+    color:#DB00B6;
+    padding: 1em;
+    left: 50px;
+    border-left: 0.125em solid; 
+    box-sizing: inherit;
+    
+}
+
+
 .quote-author{
     color: #deac1e;
 }
@@ -62,7 +268,9 @@ hr{
 }
 
 textarea, #thread-text{
+    flex: 1;
     white-space: pre-wrap;
+    resize: none;
 }
 
 textarea{
@@ -72,8 +280,7 @@ textarea{
 }
 
 .inputReg{
-    min-width: 450px;
-    width: 50%;
+    min-width: 10%;
     border: none;
     background-color: rgb(81, 19, 138);
     border-radius: 5px;

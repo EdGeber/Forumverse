@@ -5,6 +5,7 @@ body{
 }
 .table-fields{
     margin: 0;
+    margin-left: 5%;
     width: 60%;
     align-items: center;
     display: flex;
@@ -14,6 +15,8 @@ body{
 .container{
     margin: 0;
     height: 100vh;
+    margin-left: 5%;
+
     background-color:#380b7a;
     display: flex;
     justify-content: center;
@@ -29,6 +32,7 @@ body{
     font-size: 2rem;
     color: white;
     font-family: sans-serif;
+    margin-left: 10%;
 }
 .inputTitle{
     font-weight: 300;
@@ -40,9 +44,9 @@ body{
 }
 .inputs{
     margin-bottom: 40px;
+    width: 80%;
 }
 .inputReg{
-    min-width: 450px;
     width: 80%;
     border: none;
     background-color: rgb(81, 19, 138);
@@ -61,7 +65,24 @@ body{
     border: #db00b6 solid 2px;
     color: #deac1e;
     cursor: pointer;
+    margin-right: 7%;
 }
 .donebutton:hover{
     background-color: #3f0f86;
+}
+
+.hints{
+    color: white;
+    margin-right: 7%;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.hints a{
+    color: #deac1e;
+}
+
+.hints a:visited{
+    color: #a07b15;
 }
