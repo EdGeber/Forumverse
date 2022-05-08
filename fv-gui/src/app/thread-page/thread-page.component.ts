@@ -7,6 +7,7 @@ import { Thread } from "../../../../common/Thread";
 import { User }   from "../../../../common/User"; 
 import { ThreadService } from "../services/thread.service";
 import { UserService } from "../services/user.service";
+import { Util } from "../Util";
 
 @Component({
     selector: 'thread-page',
@@ -43,7 +44,10 @@ export class ThreadPageComponent implements OnInit{
         this.thread.replies.forEach(r => console.log(r));
     }
 
-    isReplyOnArray(reply: Reply){
+    isReplyOnArray(reply: Reply|null){
+        if (!reply){
+            return false
+        } 
         return this.thread.replies.find(r => r.id == reply.id) != undefined;
     }
 
@@ -130,5 +134,9 @@ export class ThreadPageComponent implements OnInit{
 
     errorOcurred():Boolean{
         return this.errorMsg !='';
+    }
+
+    formatTime(time:Date):string{
+        return Util.formatTime(time);
     }
 }

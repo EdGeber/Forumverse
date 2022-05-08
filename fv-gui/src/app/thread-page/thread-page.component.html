@@ -6,10 +6,10 @@
         <li class="thread-info"> {{thread.author.name}}</li>
 
         <li class="thread-info-fields">In</li>
-        <li class="thread-info">{{thread.timeCreated}}</li>
+        <li class="thread-info">{{formatTime(thread.timeCreated)}}</li>
 
         <li class="thread-info-fields">Last activity:</li>
-        <li class="thread-info">{{LastActivity}}</li>   
+        <li class="thread-info">{{formatTime(LastActivity)}}</li>   
 
         <li class="thread-info-fields">Replies:</li>
         <li class="thread-info">{{thread.replies.length}}</li>
@@ -45,7 +45,8 @@
     <div class="answer-quote-div">
         <blockquote class='quote-header' *ngIf="isQuoting()">
             <p class="quote-author"> Quoting {{quotedReply?.author?.name}}:</p>
-            <p class="quote-content"> {{quotedReply?.content}}</p>
+            <p *ngIf="isReplyOnArray(quotedReply)" class="quote-content"> {{quotedReply?.content}}</p>
+            <p *ngIf="isReplyOnArray(quotedReply)==false" class="quote-content"> This reply was removed!</p>
         </blockquote>
         <button *ngIf="isQuoting()" (click)="stopQuoting()">stopQuoting</button>
     </div>

@@ -8,6 +8,7 @@ import { Thread } from "../../../../../common/Thread";
 import { User }   from "../../../../../common/User"; 
 import { ThreadService } from "../../services/thread.service";
 import { UserService } from "../../services/user.service";
+import { Util } from '../../Util';
 
 @Component({
   selector: 'home-discussions',
@@ -143,5 +144,9 @@ export class HomeDiscussionsComponent implements OnInit{
       return true;
     }
     return false;
+  }
+
+  public formatTime(time:Date):string{
+    return Util.formatTime(time);
   }
 }
