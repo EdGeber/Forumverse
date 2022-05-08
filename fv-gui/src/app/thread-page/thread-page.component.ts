@@ -7,6 +7,7 @@ import { Thread } from "../../../../common/Thread";
 import { User }   from "../../../../common/User"; 
 import { ThreadService } from "../services/thread.service";
 import { UserService } from "../services/user.service";
+import { Util } from "../Util";
 
 @Component({
     selector: 'thread-page',
@@ -136,8 +137,6 @@ export class ThreadPageComponent implements OnInit{
     }
 
     formatTime(time:Date):string{
-        time = new Date(time)
-        console.log(time,typeof(time))
-        return time.toLocaleDateString() + " " + time.toLocaleTimeString('en-US')
+        return Util.formatTime(time);
     }
 }
