@@ -29,5 +29,25 @@ defineSupportCode(({ Given, When, Then }) => {
 
 	Then(`The system acknowledges successful account creation`, async () => {
 		await ExpectElementExistsWithName('main-top-bar');
-	})
+	});
+
+	When(`I go to the log in page`, async () => {
+		await browser.get(GetGuiUrlFor('login'));
+		await ExpectElementExistsWithName('login-top-bar');
+	});
+
+	When(
+	`I input "{email}" for the email and "{pass}" for the password`,
+	async (email: string, pass: string) => {
+		await element(by.name("emailBox")).sendKeys(email);
+		await element(by.name("passBox")).sendKeys(pass);
+	});
+
+	Then(`Then  I am able to authenticate successfully`, async () => {
+		await ExpectElementExistsWithName('main-top-bar');
+	});
+
+	Then(`I am at the forum's initial page`, async () => {
+		await ExpectElementExistsWithName('main-top-bar');
+	});
 });
