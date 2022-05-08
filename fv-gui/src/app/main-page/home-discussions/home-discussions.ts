@@ -117,7 +117,8 @@ export class HomeDiscussionsComponent implements OnInit{
     // let user: User | null = ack.body as (User|null);
     let user = this._userService.loggedUser;
     let ack = await lastValueFrom(this._threadService.getThreadsArray());
-    //this.allThreads = <Thread[]>ack.body;
+    
+    this.allThreads = <Thread[]>ack.body;
     if(User && this.filterType==2)
     {
       this.onlyUserThread = [];
