@@ -35,6 +35,24 @@ export class ThreadService {
     public async getTDC(){
         return this.threadsDiscComp;
     }
+
+    public async search(que: string){
+        let ack = await lastValueFrom(this.getThreadsArray());
+        this.threadsDiscComp = <Thread[]>ack.body;
+
+        if(!(que.trim() === ''))
+        {
+            var i = this.threadsDiscComp.length;
+            while(i--)
+            {
+              if(!this.threadsDiscComp[i].name.includes(que.trim())){
+                this.threadsDiscComp.splice(i, 1);
+              };
+            }
+        }
+        this.sendUpdate(this.threadsDiscComp);
+    }
+
     public async updatethreadsByTag(tag: boolean[])
     {
         let ack = await lastValueFrom(this.getThreadsArray());
@@ -58,11 +76,11 @@ export class ThreadService {
                     this.threadsDiscComp.splice(i, 1);
                 };
         };
-        console.log("entrou");
-        console.log(this.threadsDiscComp);
         this.sendUpdate(this.threadsDiscComp);
         return
     };
+
+
     
     // fim
     public tryCreateThread(thread: Thread): Observable<Ack> {
