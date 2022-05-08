@@ -1,4 +1,4 @@
-import { lastValueFrom, Observable, Observer, of, retry } from "rxjs";
+import { lastValueFrom, Observable, Observer, of, retry, Subject } from "rxjs";
 import { Thread } from "../../../../common/Thread";
 import { ACK, Ack } from "../../../../common/Ack";
 import { User } from "../../../../common/User";
@@ -12,9 +12,59 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 @Injectable()
 export class ThreadService {
     private _createdThreads: Thread[] = [];
-    constructor(private _http: HttpClient) {}
+    constructor(private _http: HttpClient) {
+    }
 	private static readonly _headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    // thread array não usa 
+    private subTDC = new Subject<Thread[]>();
+    public threadsDiscComp: Thread[] = [];
+    public async uptTDC(){
+        let ack = await lastValueFrom(this.getThreadsArray());
+        this.threadsDiscComp = <Thread[]>ack.body;
+    }
 
+    sendUpdate(threads: Thread[]) { //the component that wants to update something, calls this fn
+        this.subTDC.next(threads); //next() will feed the value in Subject
+    }
+
+    getUpdate(): Observable<Thread[]> { //the receiver component calls this function 
+        return this.subTDC.asObservable(); //it returns as an observable to which the receiver funtion will subscribe
+    }
+
+    public async getTDC(){
+        return this.threadsDiscComp;
+    }
+    public async updatethreadsByTag(tag: boolean[])
+    {
+        let ack = await lastValueFrom(this.getThreadsArray());
+        this.threadsDiscComp = <Thread[]>ack.body;
+        if(!tag[0] && !tag[1] && !tag[2])
+        {
+            console.log("entrou");
+            console.log(this.threadsDiscComp);
+            this.sendUpdate(this.threadsDiscComp);
+            return
+        }
+    
+        let i =  this.threadsDiscComp.length;
+        while(i--)
+        {
+            if(!(
+                ( this.threadsDiscComp[i].topic1==tag[0]  && tag[0]) || 
+                ( this.threadsDiscComp[i].topic2==tag[1]  && tag[1]) || 
+                ( this.threadsDiscComp[i].topic3==tag[2]  && tag[2]))
+                ){
+                    this.threadsDiscComp.splice(i, 1);
+                };
+        };
+        console.log("entrou");
+        console.log(this.threadsDiscComp);
+        this.sendUpdate(this.threadsDiscComp);
+        return
+    };
+    
+    // fim
     public tryCreateThread(thread: Thread): Observable<Ack> {
         return this._http
             .post<Ack>(
