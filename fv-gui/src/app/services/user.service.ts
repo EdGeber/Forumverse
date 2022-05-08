@@ -2,7 +2,7 @@ import { lastValueFrom, Observable, Observer, of, retry } from "rxjs";
 import { User } from "../../../../common/User";
 import { ACK, Ack } from "../../../../common/Ack";
 import { Injectable } from "@angular/core";
-import { getUrlFor } from "../../../../common/fvUrls";
+import { GetServerUrlFor } from "../../../../common/fvUrls";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
@@ -40,7 +40,7 @@ export class UserService {
     public tryRegisterUser(user: User): Observable<Ack> {
         return this._http
 			.post<Ack>(
-				getUrlFor('register'),
+				GetServerUrlFor('register'),
 				user,
 				{headers: UserService._headers})
 			.pipe(retry(2));
@@ -49,7 +49,7 @@ export class UserService {
     public async tryLoginUser(user: User): Promise<Ack<User|null>> {
         let response: Observable<Ack<User|null>> = this._http
 			.put<Ack<User|null>>(
-				getUrlFor('login'),
+				GetServerUrlFor('login'),
 				user,
 				{headers: UserService._headers})
 			.pipe(retry(2));

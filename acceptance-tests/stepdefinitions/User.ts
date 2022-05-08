@@ -1,5 +1,5 @@
 import { Setup } from '../setup';
-import { getUrlFor } from '../../common/fvUrls'
+import { GetGuiUrlFor } from '../../common/fvUrls'
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by } from 'protractor';
 let chai = require('chai').use(require('chai-as-promised'));
@@ -11,7 +11,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	async () => await Setup(browser));
 
 	Given("I am at the sign in page", async () => {
-		await browser.get(getUrlFor('register'));
+		await browser.get(GetGuiUrlFor('register'));
 	})
 
 	

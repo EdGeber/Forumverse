@@ -6,9 +6,9 @@ import { Reply } from "../common/Reply";
 import { Thread } from "../common/Thread";
 import { ThreadService } from "./threadService";
 import { Util } from "./util";
+import { SERVER_PORT } from "../common/fvUrls"
 
 const fvServer = express();
-const PORT = 3000;  // don't change, that's used in common/fvUrls
 
 let threadService = new ThreadService();
 
@@ -93,6 +93,6 @@ fvServer.get('/clear_users', (req, res) => {
 	res.send(code);
 })
 
-fvServer.listen(PORT, () => {
-  console.log(`Forumverse Server listening on port ${PORT}!`)
+fvServer.listen(SERVER_PORT, () => {
+  console.log(`Forumverse Server listening on port ${SERVER_PORT}!`)
 })
