@@ -1,4 +1,4 @@
-import { ExpectElementExistsWithName, Setup } from '../utils';
+import { ExpectButtonExistsWithText, ExpectElementExistsWithName, Setup } from '../utils';
 import { GetGuiUrlFor } from '../../common/fvUrls'
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
@@ -45,6 +45,7 @@ defineSupportCode(({ Given, When, Then }) => {
 
 	Then(`Then  I am able to authenticate successfully`, async () => {
 		await ExpectElementExistsWithName('main-top-bar');
+		await ExpectButtonExistsWithText('Log out');
 	});
 
 	Then(`I am at the forum's initial page`, async () => {

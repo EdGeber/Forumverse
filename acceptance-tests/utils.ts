@@ -14,3 +14,7 @@ export async function Setup(browser: any) {
 export async function ExpectElementExistsWithName(name: string) {
 	await expect(element(by.name(name)).isPresent()).eventually.equal(true);
 }
+
+export async function ExpectButtonExistsWithText(text: string) {
+	await expect(element(by.buttonText(text)).isPresent()).eventually.equal(true);
+}
