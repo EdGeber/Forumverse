@@ -134,4 +134,10 @@ export class ThreadPageComponent implements OnInit{
     errorOcurred():Boolean{
         return this.errorMsg !='';
     }
+
+    formatTime(time:Date):string{
+        time = new Date(time)
+        console.log(time,typeof(time))
+        return time.toLocaleDateString() + " " + time.toLocaleTimeString('en-US')
+    }
 }
