@@ -38,7 +38,7 @@ defineSupportCode(({ Given, When, Then }) => {
 		await LoginUser(email, pass);
 	});
 
-	Then(`Then  I am able to authenticate successfully`, async () => {
+	Then(`I am able to authenticate successfully`, async () => {
 		await ExpectElementExistsWithName('main-top-bar');
 		await ExpectButtonExistsWithText('Log out');
 	});
