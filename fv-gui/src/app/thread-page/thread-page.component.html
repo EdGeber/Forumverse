@@ -1,59 +1,92 @@
 <html>
 
-<div>
-    <ul>
-        <li class="thread-info-fields">By</li>
-        <li class="thread-info"> {{thread.author.name}}</li>
+<div class="centerlize">
+<div class="thread-component-blob">
+        <div class="thread-box">
+                <div class="thread-top">
+                    <div class="op-wrapper">
+                        <p class="fktxt">By: </p>
+                        <p id="fkLink">{{thread.author.name}} </p>
+                    </div>
+                    <p class="sp">・</p>
+                    <div class="op-wrapper">
+                        <p class="fktxt">Created: </p>
+                        <p id="fkfkLink">{{formatTime(thread.timeCreated)}}</p>
+                    </div>
+                    <p class="sp">・</p>
+                    <div class="op-wrapper">
+                        <p class="fktxt">Last Activity: </p>
+                        <p class="fktxt" id="fkfkLink">{{formatTime(LastActivity)}}</p>
+                    </div>
+                    <p class="sp">・</p>
+                    <div class="op-wrapper">
+                        <p class="fktxt">Replies: </p>
+                        <p class="fktxt" id="fkfkLink">{{thread.replies.length}}</p>
+                    </div>
 
-        <li class="thread-info-fields">In</li>
-        <li class="thread-info">{{formatTime(thread.timeCreated)}}</li>
-
-        <li class="thread-info-fields">Last activity:</li>
-        <li class="thread-info">{{formatTime(LastActivity)}}</li>   
-
-        <li class="thread-info-fields">Replies:</li>
-        <li class="thread-info">{{thread.replies.length}}</li>
-
-        <li class="thread-info-fields" *ngIf="thread.isLocked">LOCKED</li>
-    </ul>
-    <br>
+                    <p class="sp">・</p>
+                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic1;">PYTHON</p>
+                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic2;">C++</p>
+                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic3;">HTML</p>
+                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.isLocked">LOCKED</p>
+                </div>
+                <hr>
+                <div class="thread-bot">
+                    <h1 id="thread-title">{{thread.name}}</h1>
+                    <br>
+                    <p id="thread-text"> {{thread.text}}</p>
+                    <br>
+                    <br>
+                </div>
+        </div>
 </div>
 
-<hr>
-<br>
-
-<h2 id="thread-title">{{thread.name}}</h2>
-<p  id="thread-text">{{thread.text}}</p>
-
-<div class="reply" *ngFor="let r of thread.replies">
-    <br>
-    <p class="reply-header"> {{r.author.name}}  on {{r.timeSent}}</p>
-    <button class="reply-buttons" *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
-    <button class="reply-buttons" *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
-
-    <blockquote class="quote-header" *ngIf="r.quoteOf">
-        <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
-        <p *ngIf="isReplyOnArray(r.quoteOf) == true"  class="quote-content"> {{r.quoteOf.content}}</p>
-        <p *ngIf="isReplyOnArray(r.quoteOf) == false" class="quote-content"> This reply was removed!</p>
-    </blockquote>
-
-    <p>{{r.content}} </p>
+<div class="thread-tray">
+    <div class="thread-box" id="repl-box" *ngFor="let r of thread.replies">
+        <div class="thread-top" id="reply-top">
+            <div class="op-wrapper">
+            <p id="fkLink"> {{r.author.name}} </p>
+            <p class="fktxt"> on </p>
+            <p id="fkfkLink">{{r.timeSent}}</p>
+            </div>
+            <div class="op-wrapper" id="repl-top">
+                <button class="reply-buttons" id="fkLinkk" *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
+                <button class="reply-buttons" id="fkLinkk" *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
+            </div>
+        </div>
+        <hr>
+        <div class="thread-bot">
+            
+            <blockquote class="quote-header" *ngIf="r.quoteOf">
+                <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
+                <p *ngIf="isReplyOnArray(r.quoteOf) == true"  class="quote-content"> {{r.quoteOf.content}}</p>
+                <p *ngIf="isReplyOnArray(r.quoteOf) == false" class="quote-content"> This reply was removed!</p>
+            </blockquote>
+            <p>{{r.content}} </p>
+     </div>
+</div>
+</div>
 </div>
 
-<div id="answer-div">
-    <br>
-    <div class="answer-quote-div">
-        <blockquote class='quote-header' *ngIf="isQuoting()">
-            <p class="quote-author"> Quoting {{quotedReply?.author?.name}}:</p>
-            <p *ngIf="isReplyOnArray(quotedReply)" class="quote-content"> {{quotedReply?.content}}</p>
-            <p *ngIf="isReplyOnArray(quotedReply)==false" class="quote-content"> This reply was removed!</p>
-        </blockquote>
-        <button *ngIf="isQuoting()" (click)="stopQuoting()">stopQuoting</button>
+<div id="text-div">
+    <div id="answer-div">
+        <br>
+        <div class="answer-quote-div">
+            <blockquote class='quote-header' *ngIf="isQuoting()">
+                <p class="quote-author"> Quoting {{quotedReply?.author?.name}}:</p>
+                <p *ngIf="isReplyOnArray(quotedReply)" class="quote-content"> {{quotedReply?.content}}</p>
+                <p *ngIf="isReplyOnArray(quotedReply)==false" class="quote-content"> This reply was removed!</p>
+            </blockquote>
+            <button *ngIf="isQuoting()" (click)="stopQuoting()">stopQuoting</button>
+        </div>
+        <br>
     </div>
-    <br>
-
-    <textarea class="inputReg" rows=10 cols= 50 [(ngModel)]="replyText"></textarea>
+    <div id="text-div-left">
+    <textarea class="inputReg" cols="20" rows="4" style="width:100%;" [(ngModel)]="replyText"></textarea>
+    </div>
+    <div id="text-div-right">
     <button (click)="sendReply()">Send</button>
+    </div>
     <br>
     <p *ngIf="errorOcurred()" class="error-send-answer">{{errorMsg}}</p>
 </div>
