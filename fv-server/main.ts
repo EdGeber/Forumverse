@@ -90,9 +90,14 @@ fvServer.put('/thread/:thread/:wannaLock',(req,res) => {
 // for tests
 fvServer.get('/clear_users', (req, res) => {
 	let code = UserService._clearRegisteredUsers();
-	res.send(code);
-})
+	res.sendStatus(code);
+});
+
+fvServer.get('/clear_threads', (req, res) => {
+	let code = threadService._clearThreads();
+	res.sendStatus(code);
+});
 
 fvServer.listen(SERVER_PORT, () => {
   console.log(`Forumverse Server listening on port ${SERVER_PORT}!`)
-})
+});

@@ -1,4 +1,8 @@
+import { GetGuiUrlFor, GetServerUrlFor } from "../common/fvUrls"
+
 export async function Setup(browser: any) {
-	return browser.get('http://localhost:3000/clear_users')
-	// TODO: get clear_threads
+	browser.get(GetServerUrlFor("clear_users"));
+	browser.get(GetServerUrlFor("clear_threads"));
+	browser.get(GetGuiUrlFor("home"));
+	browser.refresh();
 }
