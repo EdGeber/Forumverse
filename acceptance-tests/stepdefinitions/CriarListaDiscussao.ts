@@ -32,12 +32,12 @@ defineSupportCode(({ Given, When, Then }) => {
 	Then(
 	`recebo uma confirmação de que a lista de discussão foi criada`,
 	async () => {
-		ExpectAtPage('home');
+		await ExpectAtPage('home');
 	});
 
 	Then(
 	`eu vejo que foi criada a lista de discussão de nome "{threadName}" no tópico "{topicName}"`,
 	async(threadName: string, topicName: string) => {
-		ExpectThreadExists(threadName, testUserName, [topicName]);
+		await ExpectThreadExists(threadName, testUserName, [topicName]);
 	});
 });

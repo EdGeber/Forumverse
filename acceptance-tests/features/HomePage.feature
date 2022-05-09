@@ -3,11 +3,20 @@
     I want to be able to see the posts titles in a specific order, expand these posts and search for topics/posts on the  "main" page.
     So that I can have a smoother experience while using the "Forum".
 
+	Scenario: Filter threads by name
+		Given I am at the "Home" page.
+		Given I see a discussion with title "How to print in Python" and topic "python"
+		Given I see a discussion with title "How to create concurrent programs in C++" and topic "c++"
+		Given I see a discussion with title "Why isn't HTML a programming language?" and topic "html"
+		When  I filter the threads by name "How to"
+		Then  I see a discussion with title "How to print in Python"
+		Then  I see a discussion with title "How to create concurrent programs in C++"
+		Then  I don't see any discussion with title "Why isn't HTML a programming language?"
+
  	Scenario: GUI - Filtrar posts no menu inicial por múltiplos tópicos.
  		Given I am at the "Home" page.
  		Given I can see the "Topic filter". 
- 		Given There aren't any selected topics in the "Topic filter".
- 		When I select the "Topic filter".
+ 		Given There are no selected topics in the "Topic filter".
  		When I request to filter by the topics: "Futebol", "Anime".
  		Then I can now see only the threads related to the topics: "Futebol" or "Anime"
  		Then I'm still at the "Home" page.

@@ -3,14 +3,20 @@ import { GetGuiUrlFor, GetServerUrlFor } from "../common/fvUrls";
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
-export const testUserEmail    = "Naomi@Japan.co"
-export const testUserName     = "Naomi"
-export const testUserPassword = "111"
+export const topicNames = ["python", "c++", "html"];
+
+export const testUserEmail    = "Naomi@Japan.co";
+export const testUserName     = "Naomi";
+export const testUserPassword = "111";
 
 /*
 Clear server data and asserts being at the home page.
 */
 export async function Setup(browser: any) {
+	var waitTime = 50;
+	await browser.wait(new Promise(function(resolve, reject) {
+		setTimeout(() => resolve(true), waitTime);
+	}));
 	await browser.get(GetServerUrlFor("clear_users"));
 	await browser.get(GetServerUrlFor("clear_threads"));
 	await browser.get(GetGuiUrlFor("home"));
@@ -123,7 +129,7 @@ export async function SetupTestUser(browser) {
 	await LoginTestUser();
 }
 
-async function AsyncHoldsForEach(array, predicate): Promise<boolean> {
+export async function AsyncHoldsForEach(array, predicate): Promise<boolean> {
 	for(let x of array) if(!(await predicate(x))) return false;
 	return true;
 }
