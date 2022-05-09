@@ -1,4 +1,4 @@
-import { ExpectButtonExistsWithText, ExpectElementExistsWithName, Setup } from '../utils';
+import { ExpectButtonExistsWithText, ExpectElementExistsWithName, Setup, SetupTestUser, SuccessfulGoToPage } from '../utils';
 import { GetGuiUrlFor } from '../../common/fvUrls'
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
@@ -14,7 +14,7 @@ let expect = chai.expect;
 
 // 	Given(
 // 	`eu estou na página "Criação de lista de discussão"`, async () => {
-// 		await GoToPage('login', browser);
-// 		await LoginUser()
+// 		await SetupTestUser(browser);
+// 		await SuccessfulGoToPage('create-thread')
 // 	});
 // });

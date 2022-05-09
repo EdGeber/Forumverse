@@ -26,14 +26,27 @@ export async function ExpectButtonExistsWithText(text: string) {
 	await expect(element(by.buttonText(text)).isPresent()).eventually.equal(true);
 }
 
-export async function SuccessfulGoToPage(pageName: string, browser) {
+export async function ExpectAtPage(pageName: string) {
 	var nameOfExpectedExistingElement = {
 		'register': 'user-regist-top-bar',
 		'login': 'login-top-bar'
 	}
 
-	await browser.get(GetGuiUrlFor(pageName));
 	await ExpectElementExistsWithName(nameOfExpectedExistingElement[pageName]);
+}
+
+export async function Click(buttonText: string) {
+	await element(by.buttonText(buttonText)).click();
+}
+
+export async function SuccessfulGoToPage(pageName: string, browser) {
+	await browser.get(GetGuiUrlFor(pageName));
+	await ExpectAtPage(pageName);
+}
+
+export async function SuccessfulGoToPageByClicking(buttonText: string, pageName: string) {
+	await Click(buttonText);
+	await ExpectAtPage(pageName);
 }
 
 /*
@@ -45,7 +58,7 @@ export async function TryRegisterUser(email: string, username: string, password:
 	await element(by.name("nameBox")).sendKeys(username);
 	await element(by.name("passBox")).sendKeys(password);
 
-	await element(by.buttonText("Done!")).click();
+	await Click("Done!");
 }
 
 /*
@@ -53,7 +66,7 @@ Assumes browser is at the register page.
 Leads the browser to the home page.
 */
 export async function SuccessfulRegisterUser(email: string, username: string, password: string) {
-	TryRegisterUser(email, username, password);
+	await TryRegisterUser(email, username, password);
 
 	await ExpectElementExistsWithName('main-top-bar');
 }
@@ -66,7 +79,11 @@ export async function TryLoginUser(email: string, password: string) {
 	await element(by.name("emailBox")).sendKeys(email);
 	await element(by.name("passBox")).sendKeys(password);
 
-	await element(by.buttonText("Done!")).click();
+	await Click("Done!");
+}
+
+export async function ExpectLoggedAs(username: string) {
+	await expect(element(by.name('logged-user-name')).getText()).eventually.equal(username);
 }
 
 /*
@@ -74,11 +91,11 @@ Assumes browser is at the login page.
 Leads the browser to the home page.
 */
 export async function SuccessfulLoginUser(email: string, username: string, password: string) {
-	TryLoginUser(email, password);
+	await TryLoginUser(email, password);
 
 	await ExpectElementExistsWithName('main-top-bar');
 	await ExpectButtonExistsWithText('Log out');
-	await expect(element(by.name('logged-user-name')).getText()).eventually.equal(username);
+	await ExpectLoggedAs(username);
 }
 
 /*
@@ -102,8 +119,8 @@ Doesn't assume any initial page.
 Leads the browser to the home page.
 */
 export async function SetupTestUser(browser) {
-	await SuccessfulGoToPage('register', browser);
+	await SuccessfulGoToPageByClicking('Sign up', 'register');
 	await RegisterTestUser();
-	await SuccessfulGoToPage('login', browser);
+	await SuccessfulGoToPageByClicking('Log in', 'login');
 	await LoginTestUser();
 }
