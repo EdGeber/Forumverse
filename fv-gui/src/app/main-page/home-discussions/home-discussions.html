@@ -39,7 +39,7 @@
                                     <p class="fktxt">Created: </p>
                                     <p id="fkfkLink">{{formatTime(t.timeCreated)}}</p>
                                 </div>
-                                <div class="op-wrapper">
+                                <div class="op-wrapper" *ngIf="mobile">
                                     <p class="fktxt">Last Activity: </p>
                                     <p class="fktxt" id="fkfkLink"> {{getLastActivity(t)}} </p>
                                 </div>

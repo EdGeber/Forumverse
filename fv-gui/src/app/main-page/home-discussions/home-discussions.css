@@ -18,15 +18,17 @@
     flex-direction: row;
     color: #12CDD4;
     width:auto;
+    align-items:center;
+    justify-content: flex-start;
 }
 
 #thread-component-topbar-left{
-    max-width: 50%;
-    font-size: 150%;
+    max-width: 60%;
+    font-size: 1rem;
 }
 
 #thread-componen-topbar-name{
-    font-size: 3.5vw;
+    font-size: 3rem;
 }
 
 #thread-component-topbar-right
@@ -35,8 +37,11 @@
     padding-top: 2%;
     padding-right: 4%;
     display: flex;
+    align-items:flex-end;
     flex-direction: row;
     color: #12CDD4;
+    align-items: flex-end;
+
 }
 
 .wrapper-by{
@@ -45,7 +50,7 @@
 }
 
 #filter-text, #sort-text, #filter-options, #sort-options{
-    font-size: 1vw;
+    font-size: 1rem;
 }
 
 .box-by{
@@ -100,19 +105,19 @@ select{
     padding-right: 5px;
     width: max-content;
     display: flex;
-    font-size:1vw;
+    font-size: 1rem;
 }
 
 .fktxt{
-    padding-left: 3px;
-    padding-right: 3px;
-    font-size: 1em;
+    padding-left: 0.1vw;
+    padding-right: 0.05vw;
+    font-size: 1rem;
 }
 
 #fkLink{
     color: #12CDD4;
     text-decoration: underline;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #fkfkLink{
@@ -122,12 +127,12 @@ select{
 #fkLinkk{
     color: #12CDD4;
     text-decoration: underline;
-    padding-right: 10px;
+    padding-right: 1vw;
     font-weight: bold;
 }
 
 .thread-bot{
-    padding-left: 10px;
+    padding-left: 2vw;
     padding-top: 2%;
     align-items: center;
     min-height: 100%;
@@ -144,4 +149,17 @@ select{
 #filter-options{
     border:0px;
     outline:0px;
+}
+
+@media screen and (max-width: 900px) {
+    .thread-component-topbar
+    {
+        flex-direction: column;
+    }
+    .wrapper
+    {
+        padding: 1rem;
+        margin: 0;
+        align-content: center;
+    }
 }

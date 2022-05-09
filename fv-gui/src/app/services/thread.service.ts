@@ -11,17 +11,36 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ThreadService {
+
+    public mobile: boolean = false;
     private _createdThreads: Thread[] = [];
-    constructor(private _http: HttpClient) {
+
+    constructor(private _http: HttpClient) { 
     }
 	private static readonly _headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
+
+
     // thread array não usa 
     private subTDC = new Subject<Thread[]>();
+    private subw = new Subject<boolean>();
+
     public threadsDiscComp: Thread[] = [];
     public async uptTDC(){
         let ack = await lastValueFrom(this.getThreadsArray());
         this.threadsDiscComp = <Thread[]>ack.body;
+    }
+    
+    public async manda(w: boolean)
+    {
+        await this.sendWidth(w);
+    }
+
+    sendWidth(w: boolean) { //the component that wants to update something, calls this fn
+        this.subw.next(w); //next() will feed the value in Subject
+    }
+    getWidth(): Observable<boolean> { //the receiver component calls this function 
+        return this.subw.asObservable(); //it returns as an observable to which the receiver funtion will subscribe
     }
 
     sendUpdate(threads: Thread[]) { //the component that wants to update something, calls this fn

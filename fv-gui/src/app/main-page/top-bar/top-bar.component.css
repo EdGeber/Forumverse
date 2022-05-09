@@ -44,6 +44,16 @@ body{
     opacity: 1;
 }
 
+.top-bar-cr-container 
+{
+    background-color: transparent;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
 .top-bar-center-container{
     width: 60%;
     background-color: transparent;
@@ -226,18 +236,33 @@ body{
     .top-bar{
         flex-direction: column;
     }
+    .top-bar-cr-container 
+    {
+        flex-direction: row;
+    }
     .top-bar-left-container{
         padding-left: 45%;
     }
+
     .topbar-search-bar-button{
-        width: 20%;
+        width: fit-content;
     }
+    .inputSearch
+    {
+        width: 1rem;
+    }
+
     .top-bar-center-container{
         width: 100%;
-        height: 3rem;
+        height: 2rem;
+        margin-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
     .top-bar-right-container{
-        padding-left: 14%;
+        justify-content: flex-end;
+        align-items: flex-end;
         width: 100%;
         height: 3rem;
         align-content: center;
@@ -251,13 +276,20 @@ body{
     .top-bar-button{
         width: 70%;
     }
+
     .login-container,.signup-container{
         width: 30%;
-        justify-content: end;
+        justify-content: center;
+        margin-right: 0;
+        margin-left: 0;
     }
     .logout-container{
         width: 30%;
         justify-content: center;
+    }
+    .top-bar-center-container
+    {
+        height: fit-content;
     }
 
 }

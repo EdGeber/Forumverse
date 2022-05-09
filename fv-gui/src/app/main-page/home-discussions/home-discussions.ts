@@ -24,9 +24,10 @@ export class HomeDiscussionsComponent implements OnInit{
   
   public sortType: number = 1;
   public filterType: number = 1;
-  private threadsub: Subscription;
+  private threadsub: Subscription; 
+  private mobilesub: Subscription;
   selected: string = '';
-
+  mobile: boolean = true;
   constructor(
 	private route: ActivatedRoute,
 	private _userService: UserService,
@@ -36,10 +37,15 @@ export class HomeDiscussionsComponent implements OnInit{
     (threads => { //message contains the data sent from service
       this.threads = threads;
     });
+    this.mobilesub = this._threadService.getWidth().subscribe
+    (bool => { //message contains the data sent from service
+      this.mobile = bool;
+    });
   }
   
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
+    //window.onresize = () => this.mobile = window.innerWidth >= 920
   }
 
   public async sovai()

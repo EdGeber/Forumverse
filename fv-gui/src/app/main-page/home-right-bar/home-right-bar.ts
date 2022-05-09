@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
-import { find, lastValueFrom } from "rxjs";
+import { find, lastValueFrom, subscribeOn, Subscription } from "rxjs";
 import { Ack, ACK } from "../../../../../common/Ack";
 import { Reply } from "../../../../../common/Reply";
 import { Thread } from "../../../../../common/Thread"; 
@@ -16,11 +16,18 @@ import { UserService } from "../../services/user.service";
 })
 
 export class HomeRightBarComponent implements OnInit {
+  private mobilesub: Subscription;
+  mobillle: boolean =true;
+  
   constructor
   	(private route: ActivatedRoute,
 	  private _userService: UserService,
     private _threadService: ThreadService)
     { 
+      this.mobilesub= this._threadService.getWidth().subscribe
+      (bool => { //message contains the data sent from service
+        this.mobillle = bool;
+      });
     };
   loggedUser: User | null = null;
   threads: Thread[] = [];

@@ -30,7 +30,6 @@ export class ThreadPageComponent implements OnInit{
         let routeParams = this.route.snapshot.paramMap;
         let threadId = routeParams.get('id');
         this.setLoggedUser();
-
         if(threadId){
             threadId = threadId.substring(1)
             this.setThread(parseInt(threadId));

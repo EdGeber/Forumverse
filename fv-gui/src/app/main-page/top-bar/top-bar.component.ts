@@ -25,10 +25,21 @@ export class TopBarComponent implements OnInit {
   };
   loggedUser: User | null = null;
   public que: string = "";
-
+  mobille: boolean = true;
+  
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
     this.islogged();
+    window.onresize = () => {
+      if(window.innerWidth < 920){
+        this.mobille = false;
+        this._threadService.manda(false)
+      }  else
+      {
+        this._threadService.manda(true)
+        this.mobille = true;
+      }
+  }
   }
   
   public async islogged(){

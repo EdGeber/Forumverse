@@ -9,33 +9,34 @@
             <img class="LogoName" src="assets/images/Forumverse3.png" alt="forumverse" id="forumverse">
         </button>
     </div>
-
-    <div class="top-bar-center-container">
-        <form id="top-bar-form"> 
-            <input class="inputSearch" type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new..."
-            [(ngModel)]="que">
-            <button class="topbar-search-bar-button" (click)='search()'><i class="material-icons" id="search-button-icon">search</i></button>
-        </form>
-    </div>
-
-
-        <div class="top-bar-right-container" *ngIf="!loggedUser">
-                <div class="login-container">
-                    <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
-                </div>
-        
-                <div class="signup-container">
-                        <button class="top-bar-button" [routerLink]="'/register'">
-                        Sign up
-                        </button>
-            </div>
+    <div class="top-bar-cr-container">
+        <div class="top-bar-center-container">
+            <form id="top-bar-form"> 
+                <input class="inputSearch" type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new..."
+                [(ngModel)]="que">
+                <button class="topbar-search-bar-button" (click)='search()'><i class="material-icons" id="search-button-icon">search</i></button>
+            </form>
         </div>
 
-            <div class="top-bar-fright-container" *ngIf="loggedUser">
-                <div class="logout-container">
-                    <button class="top-bar-button" (click)="logout()" [routerLink]="'/login'">Log out</button>
+
+            <div class="top-bar-right-container" *ngIf="!loggedUser && mobille">
+                    <div class="login-container">
+                        <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
+                    </div>
+            
+                    <div class="signup-container">
+                            <button class="top-bar-button" [routerLink]="'/register'">
+                            Sign Up
+                            </button>
                 </div>
-             </div>
+            </div>
+
+                <div class="top-bar-fright-container" *ngIf="loggedUser && mobille">
+                    <div class="logout-container">
+                        <button class="top-bar-button" (click)="logout()" [routerLink]="'/login'">Log out</button>
+                    </div>
+                </div>
+    </div>
 </div>
 
 </html>
