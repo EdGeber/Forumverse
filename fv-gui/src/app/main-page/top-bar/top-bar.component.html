@@ -1,6 +1,6 @@
 <html>
     
-<div class="top-bar">
+<div class="top-bar" name="main-top-bar">
     <div class="top-bar-left-container">
         <!-- Mudar para a logo do Forumverse -->
         <!-- Forum verse Logo-->
@@ -9,7 +9,7 @@
 
     <div class="top-bar-center-container">
         <form id="top-bar-form"> 
-            <input type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new..."
+            <input class="inputSearch" type="search" autocomplete="off" id="topbar-search-bar" name="q" placeholder="Time to find something new..."
             [(ngModel)]="que">
             <button class="topbar-search-bar-button" (click)='search()'><i class="material-icons" id="search-button-icon">search</i></button>
         </form>

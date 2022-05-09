@@ -33,7 +33,7 @@
                             <div class="thread-top">
                                 <div class="op-wrapper">
                                     <p class="fktxt">By: </p>
-                                    <p id="fkLink">{{t.author.name}} </p>
+                                    <p id="fkLink" name="thread-author-name">{{t.author.name}} </p>
                                 </div>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Created: </p>
@@ -41,20 +41,20 @@
                                 </div>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Last Activity: </p>
-                                    <p class="fktxt" id="fkfkLink">Less than 1hr ago</p>
+                                    <p class="fktxt" id="fkfkLink"> {{getLastActivity(t)}} </p>
                                 </div>
                                 <div class="op-wrapper">
                                     <p class="fktxt">Replies: </p>
                                     <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                                 </div>
                                 <div class="op-wrapper">
-                                    <p id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
-                                    <p id="fkLinkk" *ngIf="t.topic2;">C++</p>
-                                    <p id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                                    <p id="fkLinkk" name="python-topic" *ngIf="t.topic1;">PYTHON</p>
+                                    <p id="fkLinkk" name="c++-topic" *ngIf="t.topic2;">C++</p>
+                                    <p id="fkLinkk" name="html-topic" *ngIf="t.topic3;">HTML</p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="thread-bot" [routerLink]="'../thread/:' + t.id.toString()">
+                            <div class="thread-bot" name="thread-name" [routerLink]="'../thread/:' + t.id.toString()">
                                 <h1>{{t.name}}</h1>
                             </div>
                     </div>

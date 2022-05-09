@@ -149,4 +149,9 @@ export class HomeDiscussionsComponent implements OnInit{
   public formatTime(time:Date):string{
     return Util.formatTime(time);
   }
+
+  public getLastActivity(thread:Thread):string{
+    let time = Util.getThreadLastActivity(thread);
+    return this.formatTime(time);
+  }
 }
