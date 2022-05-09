@@ -1,4 +1,4 @@
-import { ExpectButtonExistsWithText, ExpectElementExistsWithName, GoToPage, LoginUser, RegisterUser, Setup } from '../utils';
+import { ExpectButtonExistsWithText, ExpectElementExistsWithName, Setup, SuccessfulGoToPage, TryLoginUser, TryRegisterUser } from '../utils';
 import { GetGuiUrlFor } from '../../common/fvUrls'
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
@@ -13,14 +13,13 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	Given(`I am at the sign in page`, async () => {
-		await GoToPage('register', browser);
-		await ExpectElementExistsWithName('user-regist-top-bar');
+		await SuccessfulGoToPage('register', browser);
 	});
 
 	When(
 	`I try to create an account with username "{username}", email "{email}" and password "{pass}"`,
 	async (username: string, email: string, pass: string) => {
-		await RegisterUser(email, username, pass);
+		await TryRegisterUser(email, username, pass);
 	});
 
 	Then(`The system acknowledges successful account creation`, async () => {
@@ -28,14 +27,13 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	When(`I go to the log in page`, async () => {
-		await GoToPage('login', browser);
-		await ExpectElementExistsWithName('login-top-bar');
+		await SuccessfulGoToPage('login', browser);
 	});
 
 	When(
 	`I input "{email}" for the email and "{pass}" for the password`,
 	async (email: string, pass: string) => {
-		await LoginUser(email, pass);
+		await TryLoginUser(email, pass);
 	});
 
 	Then(`I am able to authenticate successfully`, async () => {
