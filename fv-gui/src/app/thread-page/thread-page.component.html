@@ -1,6 +1,9 @@
 <html>
 
+
+    
 <div class="centerlize">
+    <h1 class="tittle">Manage Discussions</h1>
 <div class="thread-component-blob">
         <div class="thread-box">
                 <div class="thread-top">
@@ -40,30 +43,31 @@
                 </div>
         </div>
 </div>
-
-<div class="thread-tray">
-    <div class="thread-box" id="repl-box" *ngFor="let r of thread.replies">
-        <div class="thread-top" id="reply-top">
-            <div class="op-wrapper">
-            <p id="fkLink"> {{r.author.name}} </p>
-            <p class="fktxt"> on </p>
-            <p id="fkfkLink">{{r.timeSent}}</p>
+<div *ngIf="thread.replies.length > 0">
+    <div class="thread-tray">
+        <div class="thread-box" id="repl-box" *ngFor="let r of thread.replies">
+            <div class="thread-top" id="reply-top">
+                <div class="op-wrapper">
+                <p id="fkLink"> {{r.author.name}} </p>
+                <p class="fktxt"> on </p>
+                <p id="fkfkLink">{{r.timeSent}}</p>
+                </div>
+                <div class="op-wrapper" id="repl-top">
+                    <button class="reply-buttons" id="fkLinkk" *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
+                    <button class="reply-buttons" id="fkLinkk" *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
+                </div>
             </div>
-            <div class="op-wrapper" id="repl-top">
-                <button class="reply-buttons" id="fkLinkk" *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>
-                <button class="reply-buttons" id="fkLinkk" *ngIf="isLoggedUserOrAdmin(r.author)" (click)="deleteReply(r)">Delete</button>
-            </div>
+            <hr>
+            <div class="thread-bot">
+                
+                <blockquote class="quote-header" *ngIf="r.quoteOf">
+                    <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
+                    <p *ngIf="isReplyOnArray(r.quoteOf) == true"  class="quote-content"> {{r.quoteOf.content}}</p>
+                    <p *ngIf="isReplyOnArray(r.quoteOf) == false" class="quote-content"> This reply was removed!</p>
+                </blockquote>
+                <p>{{r.content}} </p>
         </div>
-        <hr>
-        <div class="thread-bot">
-            
-            <blockquote class="quote-header" *ngIf="r.quoteOf">
-                <p class="quote-author">Quoting {{r.quoteOf.author.name}}:</p>
-                <p *ngIf="isReplyOnArray(r.quoteOf) == true"  class="quote-content"> {{r.quoteOf.content}}</p>
-                <p *ngIf="isReplyOnArray(r.quoteOf) == false" class="quote-content"> This reply was removed!</p>
-            </blockquote>
-            <p>{{r.content}} </p>
-     </div>
+    </div>
 </div>
 </div>
 </div>

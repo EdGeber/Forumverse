@@ -12,6 +12,13 @@ ul{
     font-size:calc(250%);
 }
 
+.tittle{
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+}
+
 #text-div
 {
     display: flex;
@@ -41,7 +48,6 @@ ul{
 {
     padding-left: 20%;
     padding-right: 20%;
-    padding-top: 5%;
     padding-bottom: 20%;
 }
 

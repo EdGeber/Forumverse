@@ -34,13 +34,13 @@
 
     <button (click)="registerUser()" class="donebutton" name="confirmInput">Done!</button>
 
-    <div *ngIf="isMissingField">Please fill in all fields.</div>
+    <div class="errors" *ngIf="isMissingField">Please fill in all fields.</div>
 
-    <div *ngIf="isNameDuplicate">
+    <div class="errors" *ngIf="isNameDuplicate">
         This username is already taken. Please choose another one.
     </div>
 
-    <div *ngIf="isEmailPassDuplicate">
+    <div class="errors" *ngIf="isEmailPassDuplicate">
         An account with this email and password already exists.
         Would you like to <a routerLink="/login">log in</a>?
     </div>

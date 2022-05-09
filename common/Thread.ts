@@ -3,9 +3,7 @@ import { User } from "./User";
 
 export class Thread{
     
-    static total: number = 0;
-
-    public id = Thread.total;
+    public id = -1;
     public timeCreated = new Date();
     public lastReply = this.timeCreated.getSeconds();
     public replies: Reply[] = [];
@@ -19,8 +17,5 @@ export class Thread{
         public topic2 = false,
         public topic3 = false,
         public text = "",
-    ) { 
-        this.id = Thread.total;
-        Thread.total++;
-    }   
+    ) { }   
 }

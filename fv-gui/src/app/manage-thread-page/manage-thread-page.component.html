@@ -1,7 +1,8 @@
 <html class="container">
 
-<h1 class="title">Remove Discussions</h1>
-
+<div class="he">
+    <h1 class="title">Manage Discussions</h1>
+</div>
 
 <div class="thread-component-blob">
     <div class="thread-box-wrapper" *ngFor="let t of threads">
@@ -11,23 +12,18 @@
                         <p class="fktxt">By: </p>
                         <p id="fkLink">{{t.author.name}} </p>
                     </div>
-                    <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Created: </p>
-                        <p id="fkfkLink">{{t.timeCreated}}</p>
+                        <p id="fkfkLink">{{formatTime(t.timeCreated)}}</p>
                     </div>
-                    <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Last Activity: </p>
-                        <p class="fktxt" id="fkfkLink">Less than 1hr ago</p>
-                        <!-- <p class="fktxt" id="fkfkLink">{{t.replies.at(-1).timeSent.toLocaleDateString()}} {{t.replies.at(-1).timeSent.toLocaleTimeString('en-US')}}</p> -->
+                        <p class="fktxt" id="fkfkLink"> {{getLastActivity(t)}} </p>
                     </div>
-                    <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Replies: </p>
                         <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                     </div>
-                    <p class="sp">・</p>
                     <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
                     <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic2;">C++</p>
                     <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3;">HTML</p>
@@ -42,7 +38,8 @@
         </div>
     </div>
 </div>
-<div>
+
+<div class="bott">
     <button class="donebutton" [routerLink]="'/home'">Return</button>
 </div>
 </html>

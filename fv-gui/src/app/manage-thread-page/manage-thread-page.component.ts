@@ -6,7 +6,7 @@ import { Thread } from "../../../../common/Thread";
 import { User }   from "../../../../common/User"; 
 import { ThreadService } from "../services/thread.service";
 import { UserService } from "../services/user.service";
-
+import { Util } from '../Util';
 
 @Component({
     selector: 'manage-thread-page',
@@ -102,5 +102,14 @@ export class ManageThreadComponent implements OnInit{
             alert("Thread doesn't exist!")
         }
          
+    }
+    
+    public formatTime(time:Date):string{
+        return Util.formatTime(time);
+      }
+    
+      public getLastActivity(thread:Thread):string{
+        let time = Util.getThreadLastActivity(thread);
+        return this.formatTime(time);
     }
 }
