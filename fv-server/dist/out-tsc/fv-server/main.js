@@ -73,7 +73,7 @@ fvServer.get('/clear_users', function (req, res) {
     res.sendStatus(code);
 });
 fvServer.get('/clear_threads', function (req, res) {
-    var code = threadService._clearThreads();
+    var code = threadService._clear();
     res.sendStatus(code);
 });
 fvServer.listen(fvUrls_1.SERVER_PORT, function () {
