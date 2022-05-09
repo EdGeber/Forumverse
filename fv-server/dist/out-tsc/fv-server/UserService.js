@@ -5,6 +5,9 @@ var Ack_1 = require("../common/Ack");
 var UserService = /** @class */ (function () {
     function UserService() {
     }
+    UserService.getUserByName = function (name) {
+        return this._registeredUsers.find(function (usr) { return usr.name == name; });
+    };
     UserService.tryRegisterUser = function (user) {
         var ack;
         if (this._isMissingFieldRegister(user))
@@ -65,7 +68,7 @@ var UserService = /** @class */ (function () {
     // ONLY USED FOR TESTING
     UserService._clearRegisteredUsers = function () {
         this._registeredUsers.length = 0;
-        return Ack_1.ACK.OK;
+        return 200;
     };
     UserService._registeredUsers = [];
     // TODO: change to '_availableTokens'

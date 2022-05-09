@@ -94,7 +94,7 @@ fvServer.get('/clear_users', (req, res) => {
 });
 
 fvServer.get('/clear_threads', (req, res) => {
-	let code = threadService._clearThreads();
+	let code = threadService._clear();
 	res.sendStatus(code);
 });
 

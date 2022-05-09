@@ -10,9 +10,6 @@ var Reply = /** @class */ (function () {
         this.timeSent = new Date();
         this.quoteOf = quotedReply;
     }
-    Reply.prototype.remove = function () {
-        this.content = 'This message was removed';
-    };
     return Reply;
 }());
 exports.Reply = Reply;

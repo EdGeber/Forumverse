@@ -178,7 +178,6 @@ export class ThreadService{
         return this.threads.find(t => t.id == id);
     }
 
-
     public getThreadByID(id:number): Ack<Thread|undefined>{
         let ack = ACK.GET_THREAD.OK;
         ack.body = this.threads.find(t => t.id == id);
@@ -202,8 +201,10 @@ export class ThreadService{
     }
 
 	// ONLY USED FOR TESTING
-    public _clearThreads(): number {
+    public _clear(): number {
         this.threads.length = 0;
+		this.replyCount = 0;
+		this.threadCount = 0;
 		return 200;
     }
 }   

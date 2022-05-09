@@ -18,19 +18,12 @@ var Thread = /** @class */ (function () {
         this.topic2 = topic2;
         this.topic3 = topic3;
         this.text = text;
-        this.id = Thread.total;
+        this.id = -1;
         this.timeCreated = new Date();
         this.lastReply = this.timeCreated.getSeconds();
         this.replies = [];
         this.isLocked = false;
     }
-    Thread.prototype.addReply = function (reply) {
-        reply.id = this.replies.length;
-        this.replies.push(reply);
-        this.relevantRatio = this.lastReply - new Date().getSeconds();
-        this.lastReply = Math.min(this.lastReply, new Date().getSeconds());
-    };
-    Thread.total = 0;
     return Thread;
 }());
 exports.Thread = Thread;

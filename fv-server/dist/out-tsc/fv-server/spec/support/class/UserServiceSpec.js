@@ -96,9 +96,9 @@ describe("UserService's tryRegisterUser", function () {
         });
     }); });
 });
-describe("UserService's login and logout services", function () {
+describe("UserService's login service", function () {
     afterEach(function () { return UserService_1.UserService._clearRegisteredUsers(); });
-    it("tell when a field is missing (login)", function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+    it("tells when a field is missing (login)", function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
         var user1, user2, user3, ack1, ack2, ack3;
         return tslib_1.__generator(this, function (_a) {
             user1 = new User_1.User('email1', '', 'pass1');
@@ -113,7 +113,7 @@ describe("UserService's login and logout services", function () {
             return [2 /*return*/];
         });
     }); });
-    it("log the correct user from email and password information, and enable logout -> login", function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+    it("logs the correct user from email and password information", function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
         var user1, admin2, userLogin1, adminLogin2, ack1, ack2, ack3, expectedUser1, actualUser1, ack6, expectedUser2, actualUser2;
         return tslib_1.__generator(this, function (_a) {
             user1 = new User_1.User('email1', 'name1', 'pass1');

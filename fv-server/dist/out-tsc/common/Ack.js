@@ -39,9 +39,8 @@ exports.ACK = {
         UNEXPECTED_ERROR: new Ack('Thread', 251),
         DELETE_PERMISSION_DENIED: new Ack('Thread', 252),
         LOCKED_THREAD: new Ack('Thread', 253),
-        LOCK_PERMISSION_DENIED: new Ack('Thread', 254),
-        UNLOCKED_THREAD: new Ack('Thread', 255),
-        UNLOCK_PERMISSION_DENIED: new Ack('Thread', 256)
+        TOGGLE_LOCK_PERMISSION_DENIED: new Ack('Thread', 257),
+        TOGGLE_LOCK_THREAD: new Ack('Thread', 258),
     },
     LOGIN: {
         OK: new Ack("login", 0),
