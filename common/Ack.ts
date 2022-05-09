@@ -4,6 +4,12 @@ import { Thread } from "./Thread";
 export interface ErrorHandlers { [index: number]: () => void }
 
 export class Ack<T = void> {  // the void makes the type parameter optional
+	static fromAny(from: any): Ack {
+		let a = new Ack("", 0);
+		for(let key in from) (a as any)[key] = from[key];
+		return a;
+	}
+
     constructor(public src: string, public code: number, public body?: T) {}
 }
 

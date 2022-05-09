@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/EdGeber/Forumverse#readme",
   "dependencies": {
+    "@types/node-fetch": "^2.6.1",
     "express": "^4.17.3",
+    "node-fetch": "^2.6.1",
     "rxjs": "^7.5.5"
   },
   "devDependencies": {

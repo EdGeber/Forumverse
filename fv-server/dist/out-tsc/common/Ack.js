@@ -7,6 +7,12 @@ var Ack = /** @class */ (function () {
         this.code = code;
         this.body = body;
     }
+    Ack.fromAny = function (from) {
+        var a = new Ack("", 0);
+        for (var key in from)
+            a[key] = from[key];
+        return a;
+    };
     return Ack;
 }());
 exports.Ack = Ack;
