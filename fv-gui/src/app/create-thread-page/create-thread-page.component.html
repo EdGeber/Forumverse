@@ -1,11 +1,11 @@
 <html class="container">
 
-<h1 class="title">Create Discussion</h1>
+<h1 class="title" name="create-thread-header">Create Discussion</h1>
 
 <table>
     <tr>
         <h2 class="inputTitle">Discussion Name:</h2>
-        <input class="inputReg" (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
+        <input class="inputReg" name="threadNameBox" (change)="removeDuplicateThreadWarning()" [(ngModel)]="threadCreate.name">
     </tr>
     <div>
         <p class="inputTitle">Topics Selection:</p>

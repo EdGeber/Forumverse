@@ -33,7 +33,7 @@
                             <div class="thread-top">
                                 <div class="op-wrapper">
                                     <p class="fktxt">By: </p>
-                                    <p id="fkLink">{{t.author.name}} </p>
+                                    <p id="fkLink" name="thread-author-name">{{t.author.name}} </p>
                                 </div>
                                 <p class="sp">・</p>
                                 <div class="op-wrapper">
@@ -51,12 +51,12 @@
                                     <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                                 </div>
                                 <p class="sp">・</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic2;">C++</p>
-                                <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                                <p class="op-wrapper" id="fkLinkk" name="python-topic" *ngIf="t.topic1;">PYTHON</p>
+                                <p class="op-wrapper" id="fkLinkk" name="c++-topic" *ngIf="t.topic2;">C++</p>
+                                <p class="op-wrapper" id="fkLinkk" name="html-topic" *ngIf="t.topic3;">HTML</p>
                             </div>
                             <hr>
-                            <div class="thread-bot" [routerLink]="'../thread/:' + t.id.toString()">
+                            <div class="thread-bot" name="thread-name" [routerLink]="'../thread/:' + t.id.toString()">
                                 <h1>{{t.name}}</h1>
                             </div>
                     </div>

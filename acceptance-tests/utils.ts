@@ -3,9 +3,9 @@ import { GetGuiUrlFor, GetServerUrlFor } from "../common/fvUrls";
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
-const testUserEmail    = "Naomi@Japan.co"
-const testUserName     = "Naomi"
-const testUserPassword = "111"
+export const testUserEmail    = "Naomi@Japan.co"
+export const testUserName     = "Naomi"
+export const testUserPassword = "111"
 
 /*
 Clear server data and asserts being at the home page.
@@ -28,20 +28,22 @@ export async function ExpectButtonExistsWithText(text: string) {
 
 export async function ExpectAtPage(pageName: string) {
 	var nameOfExpectedExistingElement = {
+		'home': 'main-top-bar',
 		'register': 'user-regist-top-bar',
-		'login': 'login-top-bar'
+		'login': 'login-top-bar',
+		'create-thread': 'create-thread-header'
 	}
 
 	await ExpectElementExistsWithName(nameOfExpectedExistingElement[pageName]);
 }
 
-export async function Click(buttonText: string) {
-	await element(by.buttonText(buttonText)).click();
-}
-
 export async function SuccessfulGoToPage(pageName: string, browser) {
 	await browser.get(GetGuiUrlFor(pageName));
 	await ExpectAtPage(pageName);
+}
+
+export async function Click(buttonText: string) {
+	await element(by.buttonText(buttonText)).click();
 }
 
 export async function SuccessfulGoToPageByClicking(buttonText: string, pageName: string) {
@@ -123,4 +125,24 @@ export async function SetupTestUser(browser) {
 	await RegisterTestUser();
 	await SuccessfulGoToPageByClicking('Log in', 'login');
 	await LoginTestUser();
+}
+
+async function AsyncHoldsForEach(array, predicate): Promise<boolean> {
+	for(let x of array) if(!(await predicate(x))) return false;
+	return true;
+}
+
+/*
+Assumes browser is at the main page.
+*/
+export async function ExpectThreadExists(name: string, author: string, topics: string[]) {
+	let allThreadBoxes = await element.all(by.className("thread-box-wrapper"));
+
+	let expectedSingleton = await allThreadBoxes.filter(async (finder) => {
+		return (await finder.element(by.name("thread-name")).getText()) == name
+		&&     (await finder.element(by.name("thread-author-name")).getText()) == author
+		&&     (await AsyncHoldsForEach(topics, async (topic) => finder.element(by.name(`${topic}-topic`)).isPresent()));
+	});
+
+	await expect(expectedSingleton.length).not.equal(0);
 }
