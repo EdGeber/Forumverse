@@ -18,11 +18,11 @@
 
         <div class="top-bar-right-container" *ngIf="!loggedUser">
                 <div class="login-container">
-                    <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
+                    <button class="top-bar-button" name="login-button" [routerLink]="'/login'">Log in</button>
                 </div>
         
                 <div class="signup-container">
-                        <button class="top-bar-button" [routerLink]="'/register'">
+                        <button class="top-bar-button" name="signup-button" [routerLink]="'/register'">
                         Sign up
                         </button>
             </div>
@@ -30,7 +30,7 @@
 
             <div class="top-bar-fright-container" *ngIf="loggedUser">
                 <div class="logout-container">
-                    <button class="top-bar-button" (click)="logout()" [routerLink]="'/login'">Log out</button>
+                    <button class="top-bar-button" name="logout-button" (click)="logout()" [routerLink]="'/login'">Log out</button>
                 </div>
              </div>
 </div>

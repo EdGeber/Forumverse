@@ -1,4 +1,4 @@
-import { ExpectAtPage, ExpectButtonExistsWithText, ExpectElementExistsWithName, Setup, SuccessfulGoToPage, SuccessfulGoToPageByClicking, TryLoginUser, TryRegisterUser } from '../utils';
+import { ExpectAtPage, ExpectElementExistsWithName, Setup, SuccessfulGoToPage, SuccessfulGoToPageByClicking, TryLoginUser, TryRegisterUser } from '../utils';
 import { GetGuiUrlFor } from '../../common/fvUrls'
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
@@ -13,7 +13,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	Given(`I am at the sign up page`, async () => {
-		await SuccessfulGoToPageByClicking('Sign up', 'register');
+		await SuccessfulGoToPageByClicking('signup-button', 'register');
 	});
 
 	When(
@@ -27,7 +27,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	When(`I go to the log in page`, async () => {
-		await SuccessfulGoToPageByClicking('Log in', 'login');
+		await SuccessfulGoToPageByClicking('login-button', 'login');
 	});
 
 	When(
@@ -38,7 +38,7 @@ defineSupportCode(({ Given, When, Then }) => {
 
 	Then(`I am able to authenticate successfully`, async () => {
 		await ExpectAtPage('home');
-		await ExpectButtonExistsWithText('Log out');
+		await ExpectElementExistsWithName('logout-button');
 	});
 
 	Then(`I am at the forum's initial page`, async () => {

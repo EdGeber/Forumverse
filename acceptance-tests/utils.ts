@@ -22,10 +22,6 @@ export async function ExpectElementExistsWithName(name: string) {
 	await expect(element(by.name(name)).isPresent()).eventually.equal(true);
 }
 
-export async function ExpectButtonExistsWithText(text: string) {
-	await expect(element(by.buttonText(text)).isPresent()).eventually.equal(true);
-}
-
 export async function ExpectAtPage(pageName: string) {
 	var nameOfExpectedExistingElement = {
 		'home': 'main-top-bar',
@@ -42,12 +38,12 @@ export async function SuccessfulGoToPage(pageName: string, browser) {
 	await ExpectAtPage(pageName);
 }
 
-export async function Click(buttonText: string) {
-	await element(by.buttonText(buttonText)).click();
+export async function Click(clickableName: string) {
+	await element(by.name(clickableName)).click();
 }
 
-export async function SuccessfulGoToPageByClicking(buttonText: string, pageName: string) {
-	await Click(buttonText);
+export async function SuccessfulGoToPageByClicking(clickableName: string, pageName: string) {
+	await Click(clickableName);
 	await ExpectAtPage(pageName);
 }
 
@@ -60,7 +56,7 @@ export async function TryRegisterUser(email: string, username: string, password:
 	await element(by.name("nameBox")).sendKeys(username);
 	await element(by.name("passBox")).sendKeys(password);
 
-	await Click("Done!");
+	await Click("confirmInput");
 }
 
 /*
@@ -81,7 +77,7 @@ export async function TryLoginUser(email: string, password: string) {
 	await element(by.name("emailBox")).sendKeys(email);
 	await element(by.name("passBox")).sendKeys(password);
 
-	await Click("Done!");
+	await Click("confirmInput");
 }
 
 export async function ExpectLoggedAs(username: string) {
@@ -96,7 +92,7 @@ export async function SuccessfulLoginUser(email: string, username: string, passw
 	await TryLoginUser(email, password);
 
 	await ExpectElementExistsWithName('main-top-bar');
-	await ExpectButtonExistsWithText('Log out');
+	await ExpectElementExistsWithName('logout-button');
 	await ExpectLoggedAs(username);
 }
 
@@ -121,9 +117,9 @@ Doesn't assume any initial page.
 Leads the browser to the home page.
 */
 export async function SetupTestUser(browser) {
-	await SuccessfulGoToPageByClicking('Sign up', 'register');
+	await SuccessfulGoToPageByClicking('signup-button', 'register');
 	await RegisterTestUser();
-	await SuccessfulGoToPageByClicking('Log in', 'login');
+	await SuccessfulGoToPageByClicking('login-button', 'login');
 	await LoginTestUser();
 }
 

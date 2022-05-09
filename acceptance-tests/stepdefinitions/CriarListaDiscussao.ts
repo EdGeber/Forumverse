@@ -1,7 +1,6 @@
-import { Click, ExpectAtPage, ExpectButtonExistsWithText, ExpectElementExistsWithName, ExpectThreadExists, Setup, SetupTestUser, SuccessfulGoToPage, SuccessfulGoToPageByClicking, testUserName } from '../utils';
-import { GetGuiUrlFor } from '../../common/fvUrls'
+import { Click, ExpectAtPage, ExpectThreadExists, Setup, SetupTestUser, SuccessfulGoToPageByClicking, testUserName } from '../utils';
 import { defineSupportCode } from 'cucumber';
-import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
+import { browser, element, by, } from 'protractor';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
@@ -15,7 +14,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	Given(
 	`eu estou na página "Criação de lista de discussão"`, async () => {
 		await SetupTestUser(browser);
-		await SuccessfulGoToPageByClicking('Create Thread', 'create-thread')
+		await SuccessfulGoToPageByClicking('create-thread-button', 'create-thread')
 	});
 
 	When(`eu insiro o nome "{threadName}"`, async (threadName: string) => {
@@ -27,7 +26,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	When(`eu confirmo a criação da thread`, async () => {
-		await Click("Done!")
+		await Click("confirmInput")
 	})
 
 	Then(
