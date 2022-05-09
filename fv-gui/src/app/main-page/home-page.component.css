@@ -48,3 +48,17 @@ div{
     background-color: #80808033;
 }
 
+@media screen and (max-width: 720px) {
+    .center{
+        flex-direction: column;
+    }
+    .center-left{
+        width: 100%;
+    }
+    .center-center{
+        width: 100%;
+    }
+    .center-right{
+        width: 100%;
+    }
+}
