@@ -9,9 +9,9 @@
 		Given I see a discussion with title "How to create concurrent programs in C++" and topic "c++"
 		Given I see a discussion with title "Why isn't HTML a programming language?" and topic "html"
 		When  I filter the threads by name "How to"
-		Then  I see a discussion with title "How to print in Python"
-		Then  I see a discussion with title "How to create concurrent programs in C++"
-		Then  I don't see any discussion with title "Why isn't HTML a programming language?"
+		Then  I can see a discussion with title "How to print in Python" and topic "python"
+		Then  I can see a discussion with title "How to create concurrent programs in C++" and topic "c++"
+		Then  I can't see any discussion with title "Why isn't HTML a programming language?"
 
  	Scenario: GUI - Filtrar posts no menu inicial por múltiplos tópicos.
  		Given I am at the "Home" page.

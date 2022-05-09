@@ -14,7 +14,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	Given(
 	`eu estou na página "Criação de lista de discussão"`, async () => {
 		await SetupTestUser(browser);
-		await SuccessfulGoToPageByClicking('create-thread-button', 'create-thread')
+		await SuccessfulGoToPageByClicking('create-thread-button', 'create-thread');
 	});
 
 	When(`eu insiro o nome "{threadName}"`, async (threadName: string) => {
@@ -26,7 +26,7 @@ defineSupportCode(({ Given, When, Then }) => {
 	});
 
 	When(`eu confirmo a criação da thread`, async () => {
-		await Click("confirmInput")
+		await Click("confirmInput");
 	})
 
 	Then(

@@ -86,8 +86,20 @@ export async function TryLoginUser(email: string, password: string) {
 	await Click("confirmInput");
 }
 
+/*
+Assumes the browser is at the home page.
+*/
+export async function IsLoggedAs(username: string) {
+	let loggedUserNameElement = element(by.name('logged-user-name'));
+	if(!(await loggedUserNameElement.isPresent())) return false;
+	return (await loggedUserNameElement.getText()) == username;
+}
+
+/*
+Assumes the browser is at the home page.
+*/
 export async function ExpectLoggedAs(username: string) {
-	await expect(element(by.name('logged-user-name')).getText()).eventually.equal(username);
+	await expect(IsLoggedAs(username)).eventually.equal(true);
 }
 
 /*
@@ -119,10 +131,11 @@ export async function LoginTestUser() {
 }
 
 /*
-Doesn't assume any initial page.
-Leads the browser to the home page.
+Assumes browser is at the home page.
+Leaves the browser at the home page.
 */
 export async function SetupTestUser(browser) {
+	if (await IsLoggedAs(testUserName)) return;
 	await SuccessfulGoToPageByClicking('signup-button', 'register');
 	await RegisterTestUser();
 	await SuccessfulGoToPageByClicking('login-button', 'login');
@@ -137,14 +150,54 @@ export async function AsyncHoldsForEach(array, predicate): Promise<boolean> {
 /*
 Assumes browser is at the main page.
 */
-export async function ExpectThreadExists(name: string, author: string, topics: string[]) {
+export async function ThreadExists(name: string, author: string|null, topics: string[] | null) {
 	let allThreadBoxes = await element.all(by.className("thread-box-wrapper"));
 
-	let expectedSingleton = await allThreadBoxes.filter(async (finder) => {
-		return (await finder.element(by.name("thread-name")).getText()) == name
-		&&     (await finder.element(by.name("thread-author-name")).getText()) == author
-		&&     (await AsyncHoldsForEach(topics, async (topic) => finder.element(by.name(`${topic}-topic`)).isPresent()));
-	});
+	let threadExists = false;
+	for(let finder of allThreadBoxes) {
+		threadExists = (((await finder.element(by.name("thread-name")).getText()) == name)
+		&& (author == null || (await finder.element(by.name("thread-author-name")).getText()) == author)
+		&& (topics == null || (await AsyncHoldsForEach(topics, async (topic) => finder.element(by.name(`${topic}-topic`)).isPresent()))));
+		if(threadExists) break;
+	}
 
-	await expect(expectedSingleton.length).not.equal(0);
+	return threadExists;
+}
+
+/*
+Assumes browser is at the main page.
+*/
+export async function ExpectThreadExists(name: string, author: string|null, topics: string[] | null) {
+	await expect(ThreadExists(name, author, topics)).eventually.equal(true);
+}
+
+/*
+Assumes browser is at the main page.
+*/
+export async function ExpectThreadDoesNotExist(name: string, author: string|null, topics: string[] | null) {
+	await expect(ThreadExists(name, author, topics)).eventually.equal(false);
+}
+
+/*
+Assumes browser is logged in and at the main page.
+*/
+export async function SuccessfulCreateThread(author: string, title: string, topics: string[], body: string) {
+	await SuccessfulGoToPageByClicking('create-thread-button', 'create-thread');
+	await element(by.name("threadNameBox")).sendKeys(title);
+	for(let topic of topics) await element(by.id(topic)).click();
+	await element(by.name("threadBodyBox")).sendKeys(body);
+
+	await Click("confirmInput");
+
+	await ExpectAtPage('home');
+
+	await ExpectThreadExists(title, author, topics);
+}
+
+/*
+Assumes browser is at the main page.
+*/
+export async function FilterThreadsByName(name: string) {
+	await element(by.id("topbar-search-bar")).sendKeys(name);
+	await Click("searchByNameButton");
 }
