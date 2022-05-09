@@ -30,5 +30,6 @@ export let config: Config = {
 		directConnect: true,
         format: ['pretty'],
         require: ['../../stepdefinitions/*.ts'],
+		allScriptsTimeout: 10000
     }
 };

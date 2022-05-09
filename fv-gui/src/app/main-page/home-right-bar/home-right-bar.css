@@ -121,3 +121,9 @@ h1{
     font-weight: bold;
     font-size: 3vh;
   }
+
+  @media screen and (max-width: 600px) {
+    .test{
+      flex-direction: row;
+    }
+  }

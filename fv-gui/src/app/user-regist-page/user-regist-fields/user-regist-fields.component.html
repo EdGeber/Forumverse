@@ -6,17 +6,17 @@
     <table class="table-fields">
         <tr class="inputs">
             <h2 class="inputTitle">Email</h2>
-            <input class="inputReg" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.email">
+            <input class="inputReg" name="emailBox" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.email">
         </tr>
     
         <tr class="inputs">
             <h2 class="inputTitle">Username</h2>
-            <input class="inputReg" (change)="removeDuplicateNameWarning()" [(ngModel)]="newUser.name">
+            <input class="inputReg" name="nameBox" (change)="removeDuplicateNameWarning()" [(ngModel)]="newUser.name">
         </tr>
     
         <tr class="inputs">
             <h2 class="inputTitle">Password</h2>
-            <input class="inputReg " type="password" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.password">
+            <input class="inputReg " name="passBox" type="password" (change)="removeDuplicateEmailPassWarning()" [(ngModel)]="newUser.password">
         </tr>
     </table>
 

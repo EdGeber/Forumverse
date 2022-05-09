@@ -193,4 +193,10 @@ export class ThreadService{
     private _emptyReplyText(reply:Reply): boolean {
         return reply.content == "";
     }
+
+	// ONLY USED FOR TESTING
+    public _clearThreads(): number {
+        this.threads.length = 0;
+		return 200;
+    }
 }   
