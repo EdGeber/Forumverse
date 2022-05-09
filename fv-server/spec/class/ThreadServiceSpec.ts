@@ -1,8 +1,8 @@
-import { ThreadService } from '../../../threadService';
-import { ACK } from '../../../../common/Ack';
-import { Thread } from '../../../../common/Thread';
-import { User } from '../../../../common/User';
-import { Reply } from '../../../../common/Reply';
+import { ThreadService } from '../../threadService';
+import { ACK } from '../../../common/Ack';
+import { Thread } from '../../../common/Thread';
+import { User } from '../../../common/User';
+import { Reply } from '../../../common/Reply';
 
 
 describe("ThreadService's tryCreateThread", () => {
