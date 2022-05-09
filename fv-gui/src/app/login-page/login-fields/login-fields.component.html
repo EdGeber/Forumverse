@@ -25,9 +25,9 @@
 
     <button (click)="loginUser()" class="donebutton">Done!</button>
 
-    <div *ngIf="isMissingField">Please fill in all fields.</div>
+    <div class="errors" *ngIf="isMissingField">Please fill in all fields.</div>
 
-    <div *ngIf="isUserNotFound">
+    <div class="errors" *ngIf="isUserNotFound">
         User not found.
     </div>
 
