@@ -11,7 +11,7 @@ body{
 .top-bar{
     display: flex;
     width: 100%;
-    height: 55px;
+    height: 80%;
     margin: 0%;
     padding: 0%;
     background-color: #80808033;
@@ -20,7 +20,7 @@ body{
 .top-bar-left-container{
     width: 20%;
     background-color:  transparent;
-    padding-right: 5%;
+    padding-right: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,6 +34,7 @@ body{
     position: relative;
     font-weight: bolder;
     -webkit-text-stroke: 1px #DB00B6 ; /* width and color */
+    margin-left: 2rem;
 }
 
 .top-bar-center-container{
@@ -42,6 +43,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.inputSearch{
+    width: 2rem;
 }
 
 #top-bar-form
@@ -149,7 +154,7 @@ body{
 .login-container{
     width: 25%;
     height: auto;
-    margin-left: 4px;
+    margin-left: 4%;
     margin-right: 5%;
     display: flex;
     justify-content:end;
@@ -208,4 +213,48 @@ body{
     border: 2px solid  #12CDD4;
     color:#380B7A ;
     transition: 0.2s;
+}
+
+@media screen and (max-width: 600px){
+    .top-bar{
+        flex-direction: column;
+    }
+    .top-bar-left-container{
+        padding-left: 45%;
+    }
+    .topbar-search-bar-button{
+        width: 20%;
+    }
+    .top-bar-center-container{
+        width: 100%;
+    }
+    .top-bar-right-container{
+        margin-left: 8%;
+        padding-left: 0%;
+        padding-right: 0%;
+        width: 100%;
+        height: 4vh;
+        justify-content: end;
+    }
+    .top-bar-fright-container{
+        margin-left: 14%;
+        padding-left: 0%;
+        padding-right: 0%;
+        width: 100%;
+        height: 4vh;
+        justify-content: center;
+    }
+    .top-bar-button{
+        width: 70%;
+    }
+    .login-container,.signup-container{
+        width: 30%;
+        justify-content: end;
+    }
+    .logout-container{
+        width: 30%;
+        justify-content: center;
+    }
+    
+
 }
