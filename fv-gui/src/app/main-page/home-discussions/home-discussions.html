@@ -62,4 +62,17 @@
             </div>
         </div>
     </div>
+
+    <div class="overlay" *ngIf="!mobile">
+        <div class="dropdown">
+            <button class="dropbtn">User</button>
+            <div class="dropdown-content" *ngIf="!loggedUser && !mobile">
+                <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
+                <button class="top-bar-button" [routerLink]="'/login'">Sign up</button>
+            </div>
+            <div class="dropdown-content" *ngIf="loggedUser && !mobile">
+                <button class="top-bar-button" (click)="logout()" [routerLink]="'/login'">Log out</button>
+            </div>
+        </div>
+    </div>  
 </html>

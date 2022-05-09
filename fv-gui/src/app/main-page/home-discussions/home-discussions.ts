@@ -21,7 +21,7 @@ export class HomeDiscussionsComponent implements OnInit{
   public threads: Thread[] = [];
   public allThreads: Thread[] = [];
   public onlyUserThread: Thread[] = [];
-  
+  loggedUser: User | null = null;
   public sortType: number = 1;
   public filterType: number = 1;
   private threadsub: Subscription; 
@@ -33,6 +33,7 @@ export class HomeDiscussionsComponent implements OnInit{
 	private _userService: UserService,
   private _threadService: ThreadService){ 
     this.sovai();
+    this.islogged();
     this.threadsub= this._threadService.getUpdate().subscribe
     (threads => { //message contains the data sent from service
       this.threads = threads;
@@ -141,7 +142,9 @@ export class HomeDiscussionsComponent implements OnInit{
       this.threads = this.allThreads;
     }
   }
-
+  public async islogged(){
+    this.loggedUser = this._userService.loggedUser;
+  }
   public async isLogged(){
     // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
     // let user: User | null = ack.body as (User|null);
@@ -160,4 +163,9 @@ export class HomeDiscussionsComponent implements OnInit{
     let time = Util.getThreadLastActivity(thread);
     return this.formatTime(time);
   }
+  public async logout()
+  {
+    let ack = await lastValueFrom(this._userService.tryLogoutUser());
+  }
+
 }

@@ -151,6 +151,88 @@ select{
     outline:0px;
 }
 
+.overlay
+{
+    position: fixed;
+    right: 0px;
+    top: 10rem;
+}
+
+.top-bar-button{
+    font-size: 110%;
+    min-height: 35px;
+    width: 100%;
+    font-weight: bold;
+    opacity: 0.8;
+    transition: 0.5s;
+    border: none;
+    color: #12CDD4;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid  #DB00B6;
+    background-color: #380B7A;
+
+}
+
+.top-bar-button:hover
+{
+    opacity: 1;
+}
+
+.top-bar-button:active
+{
+    background-color: #DB00B6;
+    border: 2px solid  #12CDD4;
+    color:#380B7A ;
+    transition: 0.2s;
+}
+
+.dropbtn {
+background-color:  #380B7A;
+border: 2px solid #DB00B6;
+border-radius: 8px;
+color: #12CDD4;
+padding: 16px;
+font-size: 1.2rem;
+cursor: pointer;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #380B7A;
+min-width: 100%;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: flex;
+}
+
+.dropdown-content a:hover {background-color:  #FAC710}
+
+.dropdown:hover .dropdown-content {
+display: flex;
+flex-direction: column;
+}
+
+.dropdown:hover .dropbtn {
+background-color: #490fa0;
+}
+
+
 @media screen and (max-width: 900px) {
     .thread-component-topbar
     {
