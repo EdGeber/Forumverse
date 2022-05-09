@@ -15,9 +15,7 @@ import { Util } from '../Util';
 })
 export class ManageThreadComponent implements OnInit{
     threads: Thread[] = [];
-    thread: Thread = new Thread();
-    // loggedUser: User|null = null;
-    
+    thread: Thread = new Thread();    
 
     constructor(
 		private route: ActivatedRoute,
@@ -28,7 +26,6 @@ export class ManageThreadComponent implements OnInit{
     ngOnInit(): void {
         let routeParams = this.route.snapshot.paramMap;
         let threadId = routeParams.get('id');
-        // this.setLoggedUser();
         this.setThreads();
     }
 
@@ -42,27 +39,7 @@ export class ManageThreadComponent implements OnInit{
         this.thread = <Thread>ack.body;
     }
 
-
-    // async setLoggedUser(){
-    //     let ack = await lastValueFrom(this._userService.loggedUser);
-
-    //     if(ack.code == ACK.OK){
-    //         if(ack.body){
-    //             this.loggedUser = <User>ack.body;
-    //         } else{
-    //             this.loggedUser = null;
-    //         }
-    //     }
-    // }
-
     async isLoggedUserOrAdmin(user:User){
-        // let ack = await lastValueFrom(this._userService.loggedUser);
-        
-        // if(ack.code == ACK.OK && ack.body != null){
-        //     if(ack.body == user || ack.body.isAdmin){
-        //         return true;
-        //     }
-        // }
         let loggedUser = this._userService.loggedUser;
         if(!loggedUser){
             return false;

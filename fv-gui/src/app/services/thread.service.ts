@@ -78,8 +78,6 @@ export class ThreadService {
         this.threadsDiscComp = <Thread[]>ack.body;
         if(!tag[0] && !tag[1] && !tag[2])
         {
-            console.log("entrou");
-            console.log(this.threadsDiscComp);
             this.sendUpdate(this.threadsDiscComp);
             return
         }
