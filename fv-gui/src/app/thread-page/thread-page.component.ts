@@ -39,8 +39,6 @@ export class ThreadPageComponent implements OnInit{
     async setThread(id:number){
         let ack = await lastValueFrom(this._threadService.getThreadsByID(id));
         this.thread = <Thread>ack.body;
-
-        this.thread.replies.forEach(r => console.log(r));
     }
 
     isReplyOnArray(reply: Reply|null){
@@ -80,15 +78,6 @@ export class ThreadPageComponent implements OnInit{
     }
 
     async setLoggedUser(){
-        // let ack = await lastValueFrom(this._userService.loggedUser);
-
-        // if(ack.code == ACK.OK){
-        //     if(ack.body){
-        //         this.loggedUser = <User>ack.body;
-        //     } else{
-        //         this.loggedUser = null;
-        //     }
-        // }
         this.loggedUser = this._userService.loggedUser;
     }
 
