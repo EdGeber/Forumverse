@@ -8,6 +8,9 @@ import { lastValueFrom, Observable, of } from "rxjs";
 export class ThreadService{
 
     private threads: Thread[] = [];
+
+    private replyCount: number = 0;
+    private threadCount: number = 0;
     
     public getThreads():Ack<Thread[]|undefined> {
         let ack = ACK.GET_THREAD_ARRAY.OK;
@@ -15,8 +18,7 @@ export class ThreadService{
         return ack;
     }
 
-    public tryCreateThread( thread: Thread): Ack {
-            
+    public tryCreateThread( thread: Thread): Ack {            
         let ack: Ack;
         if(this._isMissingNameField(thread)) 
             ack = ACK.THREAD.MISSING_NAMEFIELD;
@@ -26,9 +28,11 @@ export class ThreadService{
             ack = ACK.THREAD.DUPLICATE_THREADNAME;
         else {
             ack = ACK.THREAD.OK;
+
+            this.threadCount++;
+            thread.id = this.threadCount;
             this.threads.push(thread);
         }
-        
         return ack;
     }
 
@@ -43,8 +47,11 @@ export class ThreadService{
                 if(threadOnArray.isLocked){
                     ack = ACK.THREAD.LOCKED_THREAD;
                 } else {
-                    this._addReply(threadOnArray,reply);
                     ack = ACK.THREAD.OK;
+
+                    this.replyCount++;
+                    reply.id = this.replyCount;
+                    this._addReply(threadOnArray,reply);
                 }
             } else {
                 ack = ACK.THREAD.UNEXPECTED_ERROR;

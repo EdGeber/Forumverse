@@ -52,13 +52,7 @@ export class ThreadPageComponent implements OnInit{
     }
 
     get LastActivity(){
-        let replies = this.thread.replies;
-        if(replies.length > 0){
-            let lastActivity = replies[replies.length-1].timeSent;
-            return lastActivity;
-        } else {
-            return this.thread.timeCreated;
-        }
+        return Util.getThreadLastActivity(this.thread);
     }
 
     async sendReply(){
