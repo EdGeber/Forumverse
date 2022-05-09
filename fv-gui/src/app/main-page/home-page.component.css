@@ -51,6 +51,7 @@ div{
 @media screen and (max-width: 720px) {
     .center{
         flex-direction: column;
+        width: 100%;
     }
     .center-left{
         width: 100%;
