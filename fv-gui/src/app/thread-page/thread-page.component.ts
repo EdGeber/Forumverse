@@ -101,7 +101,6 @@ export class ThreadPageComponent implements OnInit{
         }
     }
 
-    //TODO: fix removed quoted message 
     quoteReply(reply: Reply){
         this.quotedReply = reply;
     }

@@ -46,7 +46,6 @@ export class HomeDiscussionsComponent implements OnInit{
   
   ngOnInit(): void {
     let routeParams = this.route.snapshot.paramMap;
-    //window.onresize = () => this.mobile = window.innerWidth >= 920
   }
 
   public async sovai()
@@ -67,9 +66,7 @@ export class HomeDiscussionsComponent implements OnInit{
   }
   
   public async setThreads(){  
-    //await this._threadService.uptTDC();
     this.allThreads = this.threads
-    //this.threads = await this._threadService.getTDC();
   }
 
   private shuffle(): Thread[]{
@@ -89,18 +86,11 @@ export class HomeDiscussionsComponent implements OnInit{
   
     return this.threads;
   };
-/*   
-  public async updatethreads(){
-    this.threads = await this._threadService.getTDC();
-  } */
 
   // 1: Latest
   // 2: Relevant
   // 3: Popular
   public async sortby(){
-    /*  console.log(typeof(this.threads[0].timeCreated))
-    console.log(this.sortType); */
-    
     if(this.sortType == 1){
       this.threads.sort(function comp(a,b){
         let temp1 = new Date(a.timeCreated);
@@ -121,8 +111,6 @@ export class HomeDiscussionsComponent implements OnInit{
   // 2: mine
   // fazer loop while
   public async filterby(){
-    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
-    // let user: User | null = ack.body as (User|null);
     let user = this._userService.loggedUser;
     let ack = await lastValueFrom(this._threadService.getThreadsArray());
     
@@ -138,7 +126,6 @@ export class HomeDiscussionsComponent implements OnInit{
       })
       this.threads = this.onlyUserThread;
     }else{
-      console.log("poirra")
       this.threads = this.allThreads;
     }
   }
@@ -146,8 +133,6 @@ export class HomeDiscussionsComponent implements OnInit{
     this.loggedUser = this._userService.loggedUser;
   }
   public async isLogged(){
-    // let ack: Ack<User|null> = await lastValueFrom(this._userService.loggedUser);
-    // let user: User | null = ack.body as (User|null);
     let user = this._userService.loggedUser;
     if(user){
       return true;

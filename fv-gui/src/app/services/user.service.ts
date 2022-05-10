@@ -20,14 +20,6 @@ export class UserService {
 
     // TODO: change to '_availableTokens'
     private _tokens: string[] = ["123", "456"]; // never remove "123" or "456"
-
-
-    // public get loggedUser(): Observable<Ack<User|null>> {
-    //     let ack = ACK.GET_LOGGED_USER.OK;
-    //     ack.body = this._loggedUser;
-    //     return of(ack);  // observable that returns ack
-    // };
-    
     
     public get loggedUser(): User|null {
         return this._loggedUser;
