@@ -8,14 +8,22 @@ export let config: Config = {
 
     capabilities: {
         browserName: 'firefox',
-		'marionette': true
+		'marionette': true,
+
+        // Para rodar no WSL, descomente as linhas abaixo:
+        // firefoxOptions: {
+        //   args: ['--headless']
+        // },
+        // 'moz:firefoxOptions': {
+        //   args: ['--headless']
+        // }
     },
 
     framework: 'custom',
     frameworkPath: require.resolve('protractor-cucumber-framework'),
 
     specs: [
-        '../../features/*.feature'
+        '../../../features/*.feature'
     ],
 
     onPrepare: () => {
@@ -29,7 +37,7 @@ export let config: Config = {
         strict: true,
 		directConnect: true,
         format: ['pretty'],
-        require: ['../../stepdefinitions/*.ts'],
-		allScriptsTimeout: 10000
+        require: ['../../../stepdefinitions/*.ts'],
+		allScriptsTimeout: 20000
     }
 };
