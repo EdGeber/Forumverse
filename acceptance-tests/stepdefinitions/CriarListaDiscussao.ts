@@ -4,6 +4,9 @@ import { browser, element, by, } from 'protractor';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
+var {setDefaultTimeout} = require('cucumber');
+setDefaultTimeout(9000);
+
 defineSupportCode(({ Given, When, Then }) => {
 	Given(
 	`não há nenhuma lista de discussão chamada "{threadName}" no tópico "{topicName}"`,

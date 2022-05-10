@@ -2,7 +2,7 @@
 	"name": "acceptance-tests",
 	"scripts": {
 		"tsc": "./node_modules/typescript/bin/tsc",
-		"test": "npm run tsc && protractor compiledCode/config/config.js",
+		"test": "npm run tsc && protractor compiledCode/acceptance-tests/config/config.js",
 		"webdriver-update": "webdriver-manager update",
 		"webdriver-start": "webdriver-manager start"
 	},

@@ -5,6 +5,9 @@ import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
+var {setDefaultTimeout} = require('cucumber');
+setDefaultTimeout(9000);
+
 defineSupportCode(({ Given, When, Then }) => {
 	Given(
 	`There is no registered user in the forum with username "{username}", be it admin or non-admin`,
