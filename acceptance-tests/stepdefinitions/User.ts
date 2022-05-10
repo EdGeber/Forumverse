@@ -6,7 +6,7 @@ let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
 var {setDefaultTimeout} = require('cucumber');
-setDefaultTimeout(9000);
+setDefaultTimeout(18000);
 
 defineSupportCode(({ Given, When, Then }) => {
 	Given(
