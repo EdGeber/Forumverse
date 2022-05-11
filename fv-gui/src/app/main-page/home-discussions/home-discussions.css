@@ -46,7 +46,7 @@
 
 #op-wrapper-topic
 {
-    flex-direction:row;
+    flex-direction:column;
     font-size: 0.8rem;
 
 }
@@ -349,5 +349,11 @@ background-color: #490fa0;
         padding: 1rem;
         margin: 0;
         align-content: center;
+    }
+    .thread-top{
+        flex-direction: column;
+    }
+    #thread-componen-topbar-name{
+        font-size: 2rem;
     }
 }

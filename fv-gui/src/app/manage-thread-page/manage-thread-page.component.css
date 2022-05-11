@@ -97,7 +97,8 @@ select{
 .thread-component-blob{
     display: flex;
     flex-direction: column;
-    padding-top: 5%;
+    padding-top: 5vh;
+    width: 80vw;
 }
 
 .thread-box-wrapper{
@@ -115,6 +116,7 @@ select{
     display: flex;
     padding-top: 5px;
     padding-bottom: 3px;
+
 }
 
 .sp{
@@ -127,6 +129,7 @@ select{
     padding-right: 5px;
     width: max-content;
     display: flex;
+    flex-direction: column;
 }
 
 .fktxt{
@@ -167,4 +170,19 @@ select{
 }
 .donebutton:hover{
     background-color: #3f0f86;
+}
+
+@media screen and (max-width: 720px) {
+    .thread-top{
+        flex-direction: column;
+    }
+    .thread-bot{
+        word-break: break-all;
+    }
+    .thread-component-blob{
+        padding-top: 10vh;
+    }
+    .he{
+        padding-left: 10vw;
+    }
 }

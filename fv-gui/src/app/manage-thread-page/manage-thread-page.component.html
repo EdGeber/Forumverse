@@ -24,9 +24,11 @@
                         <p class="fktxt">Replies: </p>
                         <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                     </div>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic2;">C++</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                    <div class="op-wrapper">
+                        <p id="fkLinkk" *ngIf="t.topic1;">PYTHON</p>
+                        <p id="fkLinkk" *ngIf="t.topic2;">C++</p>
+                        <p id="fkLinkk" *ngIf="t.topic3;">HTML</p>
+                    </div>
                 </div>
                 <hr>
                 <div class="thread-bot">

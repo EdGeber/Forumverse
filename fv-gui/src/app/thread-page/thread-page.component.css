@@ -10,6 +10,7 @@ ul{
 #thread-title
 {
     font-size:calc(250%);
+    word-break: break-all;
 }
 
 .tittle{
@@ -332,5 +333,8 @@ button:hover{
         padding: 1rem;
         margin: 0;
         align-content: center;
+    }
+    .thread-top{
+        flex-direction: column;
     }
 }

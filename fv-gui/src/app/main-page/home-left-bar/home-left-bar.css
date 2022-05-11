@@ -6,6 +6,7 @@
     font-weight: bold;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #hi{
@@ -16,6 +17,8 @@
 #login{
     color: #FAC710;
     font-weight: bold;
+    font-size: 60%;
+    word-break: break-all;
 }
 
 .thread{
