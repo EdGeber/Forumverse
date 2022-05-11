@@ -47,8 +47,8 @@
                                     <p class="fktxt">Replies: </p>
                                     <p class="fktxt" id="fkfkLink">{{t.replies.length}}</p>
                                 </div>
-                                <div class="op-wrapper">
-                                    <p id="fkLinkk" name="python-topic" *ngIf="t.topic1;">PYTHON</p>
+                                <div class="op-wrapper" id="op-wrapper-topic">
+                                    <p id="fkLinkk" name="python-topic" *ngIf="t.topic1;">PY</p>
                                     <p id="fkLinkk" name="c++-topic" *ngIf="t.topic2;">C++</p>
                                     <p id="fkLinkk" name="html-topic" *ngIf="t.topic3;">HTML</p>
                                 </div>
@@ -65,7 +65,7 @@
 
     <div class="overlay" *ngIf="!mobile">
         <div class="dropdown">
-            <button class="dropbtn">User</button>
+            <button class="dropbtn">you</button>
             <div class="dropdown-content" *ngIf="!loggedUser && !mobile">
                 <button class="top-bar-button" [routerLink]="'/login'">Log in</button>
                 <button class="top-bar-button" [routerLink]="'/login'">Sign up</button>
@@ -75,4 +75,28 @@
             </div>
         </div>
     </div>  
+    <div class="overlay-topics" *ngIf="!mobile">
+        <div class="dropdown">
+            <button class="dropbtn">Tags</button>
+            <div class="dropdown-content" *ngIf="!mobile">
+                <div id="topics">
+                    <label class="container">Python
+                        <input type="checkbox" [(ngModel)]="tags[0]" (change)="filterbyTags()">
+                        <span class="checkmark"></span>
+						<div name="python-checkbox" *ngIf="tags[0]"></div>
+                    </label>
+                    <label class="container">C++
+                        <input type="checkbox" [(ngModel)]="tags[1]" (change)="filterbyTags()">
+                        <span class="checkmark"></span>
+						<div name="c++-checkbox" *ngIf="tags[1]"></div>
+                    </label>
+                    <label class="container">Html
+                        <input type="checkbox" [(ngModel)]="tags[2]" (change)="filterbyTags()">
+                        <span class="checkmark"></span>
+						<div name="html-checkbox" *ngIf="tags[2]"></div>
+                    </label>
+                </div>
+            </div>
+        </div> 
+    </div>
 </html>

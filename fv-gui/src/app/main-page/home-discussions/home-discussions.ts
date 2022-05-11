@@ -24,6 +24,7 @@ export class HomeDiscussionsComponent implements OnInit{
   loggedUser: User | null = null;
   public sortType: number = 1;
   public filterType: number = 1;
+  public tags: boolean[] = [false, false, false];
   private threadsub: Subscription; 
   private mobilesub: Subscription;
   selected: string = '';
@@ -153,4 +154,7 @@ export class HomeDiscussionsComponent implements OnInit{
     let ack = await lastValueFrom(this._userService.tryLogoutUser());
   }
 
+  public async filterbyTags(){
+    await this._threadService.updatethreadsByTag(this.tags);
+  }
 }

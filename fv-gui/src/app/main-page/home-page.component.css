@@ -48,6 +48,8 @@ div{
     background-color: #80808033;
 }
 
+
+
 @media screen and (max-width: 720px) {
     .center{
         flex-direction: column;
