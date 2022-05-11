@@ -70,8 +70,6 @@ export class ThreadService{
             return ack;
         }
 
-        //let threadOnArray = this._getThreadByID(thread.id);
-
         if (threadOnArray != undefined){
             let replies = threadOnArray.replies;
             let removed = null;
