@@ -40,6 +40,17 @@ export class TopBarComponent implements OnInit {
         this.mobille = true;
       }
   }
+  window.onload = () => {
+    if(window.innerWidth < 920){
+      this.mobille = false;
+      this._threadService.manda(false)
+    }  else
+    {
+      this._threadService.manda(true)
+      this.mobille = true;
+    }
+}
+
   }
   
   public async islogged(){
