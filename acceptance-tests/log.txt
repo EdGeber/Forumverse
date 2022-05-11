@@ -1,0 +1,2471 @@
+
+> test
+> npm run tsc && protractor compiledCode/acceptance-tests/config/config.js
+
+
+> tsc
+> ./node_modules/typescript/bin/tsc
+
+[21:41:29] I/launcher - Running 1 instances of WebDriver
+[21:41:29] I/hosted - Using the selenium server at http://127.0.0.1:4444/wd/hub
+Feature: Admin account
+
+    As a      forum administrator
+    I want to be able to delete and edit threads, questions and answers of non-admin users, as well as delete non-admin users
+    So that   I can have full control over the forum and make sure that all questions and answers follow the forum's policies and guidelines
+
+  Scenario: Successful creation of admin account
+  [32m✔ Given There is no registered user in the forum with username "Sora", be it admin or non-admin[39m
+  [33m? When I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"[39m
+  [33m? Then The system acknowledges successful admin account creation[39m
+  [33m? When I go to the forum's authentication page[39m
+  [33m? When "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password[39m
+  [36m- Then I am able to authenticate successfully[39m
+  [36m- Then I am at the forum's initial page[39m
+  [33m? Then I can see my account is an admin account[39m
+
+  Scenario: 'Admin' flag on admin answer
+  [33m? Given There is an admin user Junia in the forum with email "JuniaWhoAreYa@gmail.com" and password "IamALiar"[39m
+  [33m? Given I am logged as the admin user Junia[39m
+  [33m? Given I am at the page of the discussion with question "How to print in C?", made by user Johnathan[39m
+  [33m? Given The only answer to the question is "I don't know, let's see what an admin says", made by user Joice[39m
+  [33m? When I answer "I don't know, let's see what a non-admin says"[39m
+  [33m? Then I can see my answer "I don't know, let's see what a non-admin says" below Joice's answer[39m
+  [33m? Then I can see a label along with my answer telling I am an admin[39m
+  [33m? When I log in with a non-admin account[39m
+  [33m? When I go to the page of the discussion with question "How to print in C?", made by user Johnathan[39m
+  [33m? Then The first answer to the question is "I don't know, let's see what an admin says", made by user Joice[39m
+  [33m? Then The second and last answer is "I don't know, let's see what a non-admin says", made by Junia[39m
+  [33m? Then I can see a label along with Junia's answer telling Junia is an admin[39m
+
+  Scenario: Editing of an answer from another user
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[39m
+  [33m? Given The first answer to the question is "No, I live in Recife", made by Anne[39m
+  [33m? Given The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew[39m
+  [33m? When I select the option to edit Mathews's answer[39m
+  [33m? When I edit it to "Yes, I live in South Carolina"[39m
+  [33m? When I confirm the edition[39m
+  [33m? Then I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[39m
+  [33m? Then The first answer to the question is "No, I live in Recife", made by Anne[39m
+  [33m? Then The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew[39m
+  [33m? Then Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin[39m
+  [33m? When I log in with a non-admin account[39m
+  [33m? When I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[39m
+  [33m? Then The first answer to the question is "No, I live in Recife", made by Anne[39m
+  [33m? Then The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew[39m
+  [33m? Then Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin[39m
+
+  Scenario: Removal of an answer from an existing thread
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "How to print in JavaScript?", made by user John[39m
+  [33m? Given The only answer to the question is "I don't know", made by Mary[39m
+  [33m? When I select the option to delete Mary's answer[39m
+  [33m? When I confirm my intention to delete[39m
+  [33m? Then I'm still at the page of the discussion with question "How to print in JavaScript?", made by user John[39m
+  [33m? Then I see a confirmation message of the deletion[39m
+  [33m? Then In the place of Mary's former answer, I see a message telling that the answer was deleted by an admin[39m
+  [33m? When I log in with a non-admin account[39m
+  [33m? When I go to the page of the discussion with question "How to print in JavaScript?", made by user John[39m
+  [33m? Then In the place of an answer by Mary, I see a message telling that Mary's answer was deleted by an admin[39m
+
+  Scenario: Removal of an existing discussion thread
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "How to print in C#?", made by user Johnathan[39m
+  [33m? Given The only answer to the question is "Just check the docs…", made by Maryanne[39m
+  [33m? When I select the option to delete the discussion[39m
+  [33m? When I confirm my intention to delete[39m
+  [33m? Then I am redirected to the start page of the forum[39m
+  [33m? When I see a confirmation message of the deletion[39m
+  [33m? When I search for a discussion with question "How to print in C#?"[39m
+  [33m? Then A discussion with that name does not show up as a result[39m
+
+  Scenario: Exclusion of a non-admin user
+  [33m? Given I am logged as an admin[39m
+  [33m? Given There is a user Julius in the forum whose registered email is "julius12345@gmail.com"[39m
+  [33m? Given I am at the page of the discussion with question "How to print in Ruby?", made by Julius[39m
+  [33m? Given The only answer to the question is "This guy is asking "How to print in" questions for every language! He is trolling", made by Madeline[39m
+  [33m? When I select the option to exclude user Julius[39m
+  [33m? When I confirm my intention to exclude[39m
+  [33m? Then I am redirected to the start page[39m
+  [33m? Then I see a confirmation message of the deletion[39m
+  [33m? When I search for a discussion with question "How to print in Ruby?"[39m
+  [33m? Then A discussion with that name does not show up as a result[39m
+  [33m? When I try to create a new user account using the email "julius12345@gmail.com"[39m
+  [33m? Then The forum will not allow me to do so[39m
+
+  Scenario: Fail to exclude an admin user
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "How to print in Python?", made by user Williams[39m
+  [33m? Given The only answer to the question is "Use the print function.", made by Kaori, an admin user[39m
+  [33m? When I try to exclude Kaori[39m
+  [33m? Then I can't exclude because Kaori is an admin user[39m
+  [33m? Then The only answer to the question is still "Use the print function.", made by Kaori[39m
+
+  Scenario: Fail to edit another admin's answer
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "How to print in Python?", made by user Williams[39m
+  [33m? Given The only answer to the question is "Use the print function.", made by Kaori, an admin user[39m
+  [33m? When I try to edit Kaori's answer[39m
+  [33m? Then I can't edit because Kaori is an admin user[39m
+  [33m? Then The only answer to the question is still "Use the print function.", made by Kaori[39m
+
+  Scenario: Fail to delete another admin's answer
+  [33m? Given I am logged as an admin[39m
+  [33m? Given I am at the page of the discussion with question "How to print in Python?", made by user Williams[39m
+  [33m? Given The only answer to the question is "Use the print function.", made by Kaori, an admin user[39m
+  [33m? When I try to delete Kaori's answer[39m
+  [33m? Then I can't delete because Kaori is an admin user[39m
+  [33m? Then The only answer to the question is still "Use the print function.", made by Kaori[39m
+
+  Scenario: Fail to create admin account with an existing username
+  [33m? Given There is a registered user in the forum with username "Naomi", email "IamNaomi@gmail.com" and password "Jun'ichirou"[39m
+  [33m? Given I have asked the forum system to create a new admin account[39m
+  [33m? When I provide "Naomi" as the username of the admin account I'm trying to create[39m
+  [33m? Then The system won't let me create the admin account because the username "Naomi" is taken[39m
+  [33m? Then There is still a registered user in the forum with username "Naomi" and email "IamNaomi@gmail.com"[39m
+  [33m? Then There is no admin account with username "Naomi" registered in the forum[39m
+
+  Scenario: Fail to create admin account with an existing username of an admin
+  [33m? Given There is a registered admin user in the forum with username "Kasa", email "IamKasa@gmail.com" and password "KasaMeansUmbrella"[39m
+  [33m? Given I have asked the forum system to create a new admin account[39m
+  [33m? When I provide "Kasa" as the username of the admin account I'm trying to create[39m
+  [33m? Then The system won't let me create the admin account because the username "Kasa" is taken[39m
+  [33m? Then There is still only one admin account with username "Kasa" in the forum, and its email is "IamKasa@gmail.com"[39m
+
+Feature: criar uma lista de discussão
+
+      As a usuário
+      I want to criar uma lista de discussão
+      so that eu possa discutir um tema de meu interesse com outros usuários
+
+  Scenario: criar lista de discussão
+  [32m✔ Given não há nenhuma lista de discussão chamada "Biscoitos do modo ARAM" no tópico "python"[39m
+  [32m✔ Given eu estou na página "Criação de lista de discussão"[39m
+  [32m✔ When eu insiro o nome "Biscoitos do modo ARAM"[39m
+  [32m✔ When eu seleciono o tópico "python"[39m
+  [32m✔ When eu confirmo a criação da thread[39m
+  [32m✔ Then recebo uma confirmação de que a lista de discussão foi criada[39m
+  [32m✔ Then eu vejo que foi criada a lista de discussão de nome "Biscoitos do modo ARAM" no tópico "python"[39m
+
+  Scenario: criar lista de discussão com nome já existente
+  [33m? Given há uma lista de discussão chamada "Como castar spell" no tópico "c++"[39m
+  [36m- Given eu estou na página "Criação de lista de discussão"[39m
+  [36m- When eu insiro o nome "Como castar spell"[39m
+  [36m- When eu seleciono o tópico "c++"[39m
+  [36m- When eu confirmo a criação da thread[39m
+  [33m? Then eu vejo que não foi criada a lista de discussão[39m
+  [33m? Then recebo um aviso de erro relacionado à duplicata de nome da lista de discussão[39m
+
+  Scenario: criar lista de discussão sem tópico
+  [33m? Given não há uma lista de discussão chamada "Poção de invisibilidade" no tópico "html"[39m
+  [36m- Given eu estou na página "Criação de lista de discussão"[39m
+  [36m- When eu insiro o nome "Poção de invisibilidade"[39m
+  [33m? When eu não seleciono qualquer tópico[39m
+  [36m- When eu confirmo a criação da thread[39m
+  [33m? Then eu vejo que não foi criada a lista de discussão[39m
+  [33m? Then recebo um aviso de erro indicando à falta de tópico[39m
+
+  Scenario: criar lista de discussão que já existe
+  [33m? Given há uma lista de discussão de nome "Não consigo achar a próxima missão!" e tópico "html" no sistema[39m
+  [33m? When eu envio outra lista com as mesmas especificações para o sistema[39m
+  [33m? Then o sistema continua a possuir apenas uma lista de discussão de nome "Não consigo achar a próxima missão!" no tópico "html"[39m
+
+Feature: Página inicial
+
+      As a User
+      I want to be able to see the posts titles in a specific order, expand these posts and search for topics/posts on the  "main" page.
+      So that I can have a smoother experience while using the "Forum".
+
+  Scenario: Filter threads by name
+  [32m✔ Given I am at the "Home" page.[39m
+  [32m✔ Given I see a discussion with title "How to print in Python" and topic "python"[39m
+  [32m✔ Given I see a discussion with title "How to create concurrent programs in C++" and topic "c++"[39m
+  [32m✔ Given I see a discussion with title "Why isn't HTML a programming language?" and topic "html"[39m
+  [32m✔ When I filter the threads by name "How to"[39m
+  [32m✔ Then I can see a discussion with title "How to print in Python" and topic "python"[39m
+  [32m✔ Then I can see a discussion with title "How to create concurrent programs in C++" and topic "c++"[39m
+  [32m✔ Then I can't see any discussion with title "Why isn't HTML a programming language?"[39m
+
+  Scenario: GUI - Filtrar posts no menu inicial por múltiplos tópicos.
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I can see the "Topic filter".[39m
+  [33m? Given There are no selected topics in the "Topic filter".[39m
+  [33m? When I request to filter by the topics: "Futebol", "Anime".[39m
+  [33m? Then I can now see only the threads related to the topics: "Futebol" or "Anime"[39m
+  [33m? Then I'm still at the "Home" page.[39m
+
+  Scenario: GUI - despor posts do menu inicial por ordem "Mais recente"
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I can see the first post title is "Putin invadiu a Ucrânia." with time of post "2 days ago"[39m
+  [33m? Given I can see the second post title "Aviões militares chineses no espaço aéreo de Taiwan" with time of post "1 day ago".[39m
+  [33m? Given I can see the third post title "USA e a NATO executam sanções a Russia" with time of post "12 hours ago"[39m
+  [33m? When I request to sort the posts by "Most Recent"[39m
+  [33m? Then I can see that the first post is "USA e a OTAN executam sanções a Russia"[39m
+  [33m? Then I can see that the second post is "Aviões militares chineses no espaço aéreo de Taiwan"[39m
+  [33m? Then I can see that the third post is "Putin invadiu a Ucrânia."[39m
+  [33m? Then I'm still at the "Home" page.[39m
+
+  Scenario: GUI - Expandir um post que foi deletado.
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I can see the post title "A NA'VI se tornará um time russo?".[39m
+  [33m? When I select this post title.[39m
+  [33m? Then I can see a warning explaining that this post does not exist..[39m
+  [36m- Then I am at the "Home" page.[39m
+
+  Scenario: GUI - Usuário não cadastrado: Tentar visualizar os próprios posts
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I am not logged in.[39m
+  [33m? Given I can all the post from all users sorted by "Mais Recente"[39m
+  [33m? When I select to filter by "Only my posts".[39m
+  [33m? Then I'm still at the "Home" Page[39m
+  [33m? Then I can see a warning that only logged users can see their posts.[39m
+  [33m? Then I still can see all the post from all users sorted by "Mais Recente"[39m
+  [33m? Then I am redirected to "login" page.[39m
+
+  Scenario: GUI - Usuário cadastrado: Tentar visualizar os próprios posts
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I am logged in as "user00".[39m
+  [33m? Given I can all the post from all users sorted by "Mais Recente"[39m
+  [33m? When I select to filter by "Only my posts".[39m
+  [33m? Then I'm still at the "Home" Page[39m
+  [33m? Then I can see all the posts made by "user00"[39m
+
+  Scenario: GUI - Expandir um post.
+  [32m✔ Given I am at the "Home" page.[39m
+  [33m? Given I can see the post title "A NA'VI se tornará um time russo?".[39m
+  [33m? When I select this post title.[39m
+  [33m? Then I'm redirected to "A NA'VI se tornará um time Russo?" page.[39m
+  [33m? Then I can now see the whole post, its information("topics", "creator", "date/hour"), its commentaries.[39m
+
+Feature: remover lista de discussão
+
+      As a usuário
+      I want to excluir minha(s) lista(s) de discussão(ões)
+      so that eu possa garantir que ela(s) não exista(m) mais no sistema
+
+  Scenario: remover uma lista de discussão
+  [33m? Given há uma lista de discussão chamada “Pior mapa do jogo” no tópico “Battlefield 1”[39m
+  [33m? Given eu estou na página “Remoção de lista de discussão”[39m
+  [33m? When eu seleciono a lista de discussão “Pior mapa do jogo”[39m
+  [33m? Then eu recebo uma confirmação de remoção[39m
+  [33m? Then eu vejo que a lista de discussão de nome “Pior mapa do jogo” não mais está presente no tópico “Battlefield 1”[39m
+
+  Scenario: remover lista de discussão que não existe
+  [33m? Given não há uma lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema[39m
+  [33m? When eu envio a solicitação para a exclusão da lista de discussão para o sistema[39m
+  [33m? Then o sistema continua a não possuir a lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema[39m
+
+Feature: Reply
+
+    As a usuário cadastrado do sistema
+    I want to adicionar respostas e comentários às listas de discussões do fórum
+    So that eu possa participar das listas de discussões respondendo a elas ou a cometários delas
+
+  Scenario: Responder à lista de discussão
+  [33m? Given eu estou logado como usuário[39m
+  [33m? Given eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[39m
+  [33m? Given eu vejo a resposta do usuário João: "Não faço ideia"[39m
+  [33m? When eu envio a resposta "É 2" ao sistema[39m
+  [33m? Then eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[39m
+  [33m? Then eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Then eu vejo logo abaixo da resposta de João a minha mensagem "É 2"[39m
+
+  Scenario: Tentar responder lista com resposta em branco
+  [33m? Given eu estou logado como usuário[39m
+  [33m? Given eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[39m
+  [33m? Given eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? When eu envio uma resposta vazia ao sistema[39m
+  [33m? Then eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[39m
+  [33m? Then eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Then eu vejo uma mensagem de erro indicando que não podem ser enviadas mensagens vazias[39m
+
+  Scenario: Tentar responder à lista trancada
+  [33m? Given eu estou logado como usuário[39m
+  [33m? Given eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[39m
+  [33m? Given eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Given a lista de discussão está trancada[39m
+  [33m? When eu envio a resposta "É 2" ao sistema[39m
+  [33m? Then eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[39m
+  [33m? Then eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Then eu vejo uma mensagem de erro indicando que a discussão está trancada e não aceita novas respostas[39m
+
+  Scenario: Responder comentário da lista
+  [33m? Given eu estou logado como usuário[39m
+  [33m? Given eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[39m
+  [33m? Given eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? When eu envio "É 2" como resposta ao comentário de João[39m
+  [33m? Then eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[39m
+  [33m? Then eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Then eu vejo logo abaixo da resposta de João a minha resposta, composta por uma citação à mensagem de João e o conteúdo "É 2".[39m
+
+  Scenario: Tentar responder lista sem estar logado
+  [33m? Given eu não estou logado no fórum[39m
+  [33m? Given eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[39m
+  [33m? Given eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? When eu tento enviar "É 2" como resposta à discussão[39m
+  [33m? Then eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[39m
+  [33m? Then eu vejo a resposta do usuário "João": "Não faço ideia"[39m
+  [33m? Then eu vejo uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão[39m
+
+  Scenario: Armazenar resposta à lista de discussão
+  [33m? Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Given a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? When eu envio "É 2" como resposta à discussão ao sistema[39m
+  [33m? Then há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Then a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Then a discussão possui a minha resposta "É 2"[39m
+
+  Scenario: Tentar armazenar resposta em branco à lista
+  [33m? Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Given a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? When eu envio uma resposta vazia como resposta à discussão ao sistema[39m
+  [33m? Then há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Then a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Then o sistema envia uma mensagem de erro devido ao fato de uma mensagem vazia ter sido recebida[39m
+
+  Scenario: Tentar armazenar resposta à lista trancada
+  [33m? Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Given a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Given a lista está trancada[39m
+  [33m? When eu envio a resposta "É 2" à discussão ao sistema[39m
+  [33m? Then a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Then o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas[39m
+  [33m? Then a lista continua trancada[39m
+
+  Scenario: Tentar armazenar resposta sem estar logado
+  [33m? Given eu não estou logado no fórum[39m
+  [33m? Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Given a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? When eu envio a resposta "É 2" à discussão ao sistema[39m
+  [33m? Then a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Then o sistema envia uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão[39m
+
+  Scenario: Armazenar resposta à comentário
+  [33m? Given há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[39m
+  [33m? Given a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? When eu envio ao sistema a resposta "É 2" ao comentário de "João"[39m
+  [33m? Then a discussão possui a resposta "Não faço ideia" do usuário "João"[39m
+  [33m? Then a discussão possui a minha resposta "É 2" armazenada como uma resposta à resposta de "João"[39m
+
+Feature: User account
+
+  Scenario: Successful creation of user account
+  [32m✔ Given There is no registered user in the forum with username "Fred", be it admin or non-admin[39m
+  [32m✔ Given I am at the sign up page[39m
+  [32m✔ When I try to create an account with username "Fred", email "IAmFred12345@gmail.com" and password "ThisIsNotAPassword"[39m
+  [32m✔ Then The system acknowledges successful account creation[39m
+  [32m✔ When I go to the log in page[39m
+  [32m✔ When I input "IAmFred12345@gmail.com" for the email and "ThisIsNotAPassword" for the password[39m
+  [32m✔ Then I am able to authenticate successfully[39m
+  [32m✔ Then I am at the forum's initial page[39m
+
+Warnings:
+
+1) Scenario: [1mSuccessful creation of admin account[22m - [90mfeatures/Admin.feature:8[39m
+   Step: [1mWhen I ask the forum system to create a new admin account with username "Sora", email "SoraAmI@gmail.com" and password "SoraMeansSky"[22m - [90mfeatures/Admin.feature:10[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  When('I ask the forum system to create a new admin account with username {stringInDoubleQuotes}, email {stringInDoubleQuotes} and password {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, stringInDoubleQuotes3, callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+2) Scenario: [1mSuccessful creation of admin account[22m - [90mfeatures/Admin.feature:8[39m
+   Step: [1mThen The system acknowledges successful admin account creation[22m - [90mfeatures/Admin.feature:11[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Then('The system acknowledges successful admin account creation', function (callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+3) Scenario: [1mSuccessful creation of admin account[22m - [90mfeatures/Admin.feature:8[39m
+   Step: [1mWhen I go to the forum's authentication page[22m - [90mfeatures/Admin.feature:13[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  When('I go to the forum\'s authentication page', function (callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+4) Scenario: [1mSuccessful creation of admin account[22m - [90mfeatures/Admin.feature:8[39m
+   Step: [1mWhen "SoraAmI@gmail.com" for the email and "SoraMeansSky" for the password[22m - [90mfeatures/Admin.feature:14[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  When('{stringInDoubleQuotes} for the email and {stringInDoubleQuotes} for the password', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+5) Scenario: [1mSuccessful creation of admin account[22m - [90mfeatures/Admin.feature:8[39m
+   Step: [1mThen I can see my account is an admin account[22m - [90mfeatures/Admin.feature:17[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Then('I can see my account is an admin account', function (callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+6) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+   Step: [1mGiven There is an admin user Junia in the forum with email "JuniaWhoAreYa@gmail.com" and password "IamALiar"[22m - [90mfeatures/Admin.feature:20[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Given('There is an admin user Junia in the forum with email {stringInDoubleQuotes} and password {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+7) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+   Step: [1mGiven I am logged as the admin user Junia[22m - [90mfeatures/Admin.feature:21[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Given('I am logged as the admin user Junia', function (callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+8) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+   Step: [1mGiven I am at the page of the discussion with question "How to print in C?", made by user Johnathan[22m - [90mfeatures/Admin.feature:22[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Johnathan', function (stringInDoubleQuotes, callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+9) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+   Step: [1mGiven The only answer to the question is "I don't know, let's see what an admin says", made by user Joice[22m - [90mfeatures/Admin.feature:23[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:[39m
+
+     [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by user Joice', function (stringInDoubleQuotes, callback) {[39m
+     [33m    // Write code here that turns the phrase above into concrete actions[39m
+     [33m    callback(null, 'pending');[39m
+     [33m  });[39m
+
+10) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mWhen I answer "I don't know, let's see what a non-admin says"[22m - [90mfeatures/Admin.feature:25[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I answer {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+11) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mThen I can see my answer "I don't know, let's see what a non-admin says" below Joice's answer[22m - [90mfeatures/Admin.feature:26[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can see my answer {stringInDoubleQuotes} below Joice\'s answer', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+12) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mThen I can see a label along with my answer telling I am an admin[22m - [90mfeatures/Admin.feature:27[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can see a label along with my answer telling I am an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+13) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mWhen I log in with a non-admin account[22m - [90mfeatures/Admin.feature:29[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I log in with a non-admin account', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+14) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mWhen I go to the page of the discussion with question "How to print in C?", made by user Johnathan[22m - [90mfeatures/Admin.feature:30[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I go to the page of the discussion with question {stringInDoubleQuotes}, made by user Johnathan', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+15) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mThen The first answer to the question is "I don't know, let's see what an admin says", made by user Joice[22m - [90mfeatures/Admin.feature:31[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The first answer to the question is {stringInDoubleQuotes}, made by user Joice', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+16) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mThen The second and last answer is "I don't know, let's see what a non-admin says", made by Junia[22m - [90mfeatures/Admin.feature:32[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The second and last answer is {stringInDoubleQuotes}, made by Junia', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+17) Scenario: [1m'Admin' flag on admin answer[22m - [90mfeatures/Admin.feature:19[39m
+    Step: [1mThen I can see a label along with Junia's answer telling Junia is an admin[22m - [90mfeatures/Admin.feature:33[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can see a label along with Junia\'s answer telling Junia is an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+18) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:36[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+19) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mGiven I am at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[22m - [90mfeatures/Admin.feature:37[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Joseph', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+20) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mGiven The first answer to the question is "No, I live in Recife", made by Anne[22m - [90mfeatures/Admin.feature:38[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The first answer to the question is {stringInDoubleQuotes}, made by Anne', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+21) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mGiven The second and last answer to the question is "Yes, I live in South Carolina, Belleview Avenue, 123", made by Mathew[22m - [90mfeatures/Admin.feature:39[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The second and last answer to the question is {stringInDoubleQuotes}, made by Mathew', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+22) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mWhen I select the option to edit Mathews's answer[22m - [90mfeatures/Admin.feature:41[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I select the option to edit Mathews\'s answer', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+23) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mWhen I edit it to "Yes, I live in South Carolina"[22m - [90mfeatures/Admin.feature:42[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I edit it to {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+24) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mWhen I confirm the edition[22m - [90mfeatures/Admin.feature:43[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I confirm the edition', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+25) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen I'm still at the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[22m - [90mfeatures/Admin.feature:44[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I\'m still at the page of the discussion with question {stringInDoubleQuotes}, made by user Joseph', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+26) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen The first answer to the question is "No, I live in Recife", made by Anne[22m - [90mfeatures/Admin.feature:45[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The first answer to the question is {stringInDoubleQuotes}, made by Anne', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+27) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew[22m - [90mfeatures/Admin.feature:46[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The second and last answer to the question is {stringInDoubleQuotes}, made by Mathew', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+28) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin[22m - [90mfeatures/Admin.feature:47[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('Next to Mathew\'s anwer, I can see a message telling that the answer was edited by an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+29) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mWhen I log in with a non-admin account[22m - [90mfeatures/Admin.feature:49[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I log in with a non-admin account', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+30) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mWhen I go to the page of the discussion with question "Is it cold where you guys live?", made by user Joseph[22m - [90mfeatures/Admin.feature:50[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I go to the page of the discussion with question {stringInDoubleQuotes}, made by user Joseph', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+31) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen The first answer to the question is "No, I live in Recife", made by Anne[22m - [90mfeatures/Admin.feature:51[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The first answer to the question is {stringInDoubleQuotes}, made by Anne', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+32) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen The second and last answer to the question is "Yes, I live in South Carolina", made by Mathew[22m - [90mfeatures/Admin.feature:52[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The second and last answer to the question is {stringInDoubleQuotes}, made by Mathew', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+33) Scenario: [1mEditing of an answer from another user[22m - [90mfeatures/Admin.feature:35[39m
+    Step: [1mThen Next to Mathew's anwer, I can see a message telling that the answer was edited by an admin[22m - [90mfeatures/Admin.feature:53[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('Next to Mathew\'s anwer, I can see a message telling that the answer was edited by an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+34) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:56[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+35) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in JavaScript?", made by user John[22m - [90mfeatures/Admin.feature:57[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user John', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+36) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mGiven The only answer to the question is "I don't know", made by Mary[22m - [90mfeatures/Admin.feature:58[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by Mary', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+37) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mWhen I select the option to delete Mary's answer[22m - [90mfeatures/Admin.feature:60[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I select the option to delete Mary\'s answer', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+38) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mWhen I confirm my intention to delete[22m - [90mfeatures/Admin.feature:61[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I confirm my intention to delete', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+39) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mThen I'm still at the page of the discussion with question "How to print in JavaScript?", made by user John[22m - [90mfeatures/Admin.feature:62[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I\'m still at the page of the discussion with question {stringInDoubleQuotes}, made by user John', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+40) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mThen I see a confirmation message of the deletion[22m - [90mfeatures/Admin.feature:63[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I see a confirmation message of the deletion', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+41) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mThen In the place of Mary's former answer, I see a message telling that the answer was deleted by an admin[22m - [90mfeatures/Admin.feature:64[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('In the place of Mary\'s former answer, I see a message telling that the answer was deleted by an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+42) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mWhen I log in with a non-admin account[22m - [90mfeatures/Admin.feature:66[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I log in with a non-admin account', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+43) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mWhen I go to the page of the discussion with question "How to print in JavaScript?", made by user John[22m - [90mfeatures/Admin.feature:67[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I go to the page of the discussion with question {stringInDoubleQuotes}, made by user John', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+44) Scenario: [1mRemoval of an answer from an existing thread[22m - [90mfeatures/Admin.feature:55[39m
+    Step: [1mThen In the place of an answer by Mary, I see a message telling that Mary's answer was deleted by an admin[22m - [90mfeatures/Admin.feature:68[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('In the place of an answer by Mary, I see a message telling that Mary\'s answer was deleted by an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+45) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:71[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+46) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in C#?", made by user Johnathan[22m - [90mfeatures/Admin.feature:72[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Johnathan', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+47) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mGiven The only answer to the question is "Just check the docs…", made by Maryanne[22m - [90mfeatures/Admin.feature:73[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by Maryanne', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+48) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mWhen I select the option to delete the discussion[22m - [90mfeatures/Admin.feature:75[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I select the option to delete the discussion', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+49) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mWhen I confirm my intention to delete[22m - [90mfeatures/Admin.feature:76[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I confirm my intention to delete', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+50) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mThen I am redirected to the start page of the forum[22m - [90mfeatures/Admin.feature:77[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I am redirected to the start page of the forum', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+51) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mWhen I see a confirmation message of the deletion[22m - [90mfeatures/Admin.feature:78[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I see a confirmation message of the deletion', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+52) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mWhen I search for a discussion with question "How to print in C#?"[22m - [90mfeatures/Admin.feature:80[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I search for a discussion with question {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+53) Scenario: [1mRemoval of an existing discussion thread[22m - [90mfeatures/Admin.feature:70[39m
+    Step: [1mThen A discussion with that name does not show up as a result[22m - [90mfeatures/Admin.feature:81[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('A discussion with that name does not show up as a result', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+54) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:84[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+55) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mGiven There is a user Julius in the forum whose registered email is "julius12345@gmail.com"[22m - [90mfeatures/Admin.feature:85[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('There is a user Julius in the forum whose registered email is {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+56) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in Ruby?", made by Julius[22m - [90mfeatures/Admin.feature:86[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by Julius', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+57) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mGiven The only answer to the question is "This guy is asking "How to print in" questions for every language! He is trolling", made by Madeline[22m - [90mfeatures/Admin.feature:87[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}How to print in{stringInDoubleQuotes}, made by Madeline', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+58) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mWhen I select the option to exclude user Julius[22m - [90mfeatures/Admin.feature:89[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I select the option to exclude user Julius', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+59) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mWhen I confirm my intention to exclude[22m - [90mfeatures/Admin.feature:90[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I confirm my intention to exclude', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+60) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mThen I am redirected to the start page[22m - [90mfeatures/Admin.feature:91[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I am redirected to the start page', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+61) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mThen I see a confirmation message of the deletion[22m - [90mfeatures/Admin.feature:92[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I see a confirmation message of the deletion', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+62) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mWhen I search for a discussion with question "How to print in Ruby?"[22m - [90mfeatures/Admin.feature:94[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I search for a discussion with question {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+63) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mThen A discussion with that name does not show up as a result[22m - [90mfeatures/Admin.feature:95[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('A discussion with that name does not show up as a result', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+64) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mWhen I try to create a new user account using the email "julius12345@gmail.com"[22m - [90mfeatures/Admin.feature:97[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I try to create a new user account using the email {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+65) Scenario: [1mExclusion of a non-admin user[22m - [90mfeatures/Admin.feature:83[39m
+    Step: [1mThen The forum will not allow me to do so[22m - [90mfeatures/Admin.feature:98[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The forum will not allow me to do so', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+66) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:101[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+67) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in Python?", made by user Williams[22m - [90mfeatures/Admin.feature:102[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Williams', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+68) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mGiven The only answer to the question is "Use the print function.", made by Kaori, an admin user[22m - [90mfeatures/Admin.feature:103[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by Kaori, an admin user', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+69) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mWhen I try to exclude Kaori[22m - [90mfeatures/Admin.feature:104[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I try to exclude Kaori', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+70) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mThen I can't exclude because Kaori is an admin user[22m - [90mfeatures/Admin.feature:105[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can\'t exclude because Kaori is an admin user', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+71) Scenario: [1mFail to exclude an admin user[22m - [90mfeatures/Admin.feature:100[39m
+    Step: [1mThen The only answer to the question is still "Use the print function.", made by Kaori[22m - [90mfeatures/Admin.feature:106[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The only answer to the question is still {stringInDoubleQuotes}, made by Kaori', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+72) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:109[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+73) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in Python?", made by user Williams[22m - [90mfeatures/Admin.feature:110[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Williams', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+74) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mGiven The only answer to the question is "Use the print function.", made by Kaori, an admin user[22m - [90mfeatures/Admin.feature:111[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by Kaori, an admin user', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+75) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mWhen I try to edit Kaori's answer[22m - [90mfeatures/Admin.feature:112[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I try to edit Kaori\'s answer', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+76) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mThen I can't edit because Kaori is an admin user[22m - [90mfeatures/Admin.feature:113[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can\'t edit because Kaori is an admin user', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+77) Scenario: [1mFail to edit another admin's answer[22m - [90mfeatures/Admin.feature:108[39m
+    Step: [1mThen The only answer to the question is still "Use the print function.", made by Kaori[22m - [90mfeatures/Admin.feature:114[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The only answer to the question is still {stringInDoubleQuotes}, made by Kaori', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+78) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mGiven I am logged as an admin[22m - [90mfeatures/Admin.feature:117[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am logged as an admin', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+79) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mGiven I am at the page of the discussion with question "How to print in Python?", made by user Williams[22m - [90mfeatures/Admin.feature:118[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I am at the page of the discussion with question {stringInDoubleQuotes}, made by user Williams', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+80) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mGiven The only answer to the question is "Use the print function.", made by Kaori, an admin user[22m - [90mfeatures/Admin.feature:119[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('The only answer to the question is {stringInDoubleQuotes}, made by Kaori, an admin user', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+81) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mWhen I try to delete Kaori's answer[22m - [90mfeatures/Admin.feature:120[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I try to delete Kaori\'s answer', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+82) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mThen I can't delete because Kaori is an admin user[22m - [90mfeatures/Admin.feature:121[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('I can\'t delete because Kaori is an admin user', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+83) Scenario: [1mFail to delete another admin's answer[22m - [90mfeatures/Admin.feature:116[39m
+    Step: [1mThen The only answer to the question is still "Use the print function.", made by Kaori[22m - [90mfeatures/Admin.feature:122[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The only answer to the question is still {stringInDoubleQuotes}, made by Kaori', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+84) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mGiven There is a registered user in the forum with username "Naomi", email "IamNaomi@gmail.com" and password "Jun'ichirou"[22m - [90mfeatures/Admin.feature:125[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('There is a registered user in the forum with username {stringInDoubleQuotes}, email {stringInDoubleQuotes} and password {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, stringInDoubleQuotes3, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+85) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mGiven I have asked the forum system to create a new admin account[22m - [90mfeatures/Admin.feature:126[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I have asked the forum system to create a new admin account', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+86) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mWhen I provide "Naomi" as the username of the admin account I'm trying to create[22m - [90mfeatures/Admin.feature:127[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I provide {stringInDoubleQuotes} as the username of the admin account I\'m trying to create', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+87) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mThen The system won't let me create the admin account because the username "Naomi" is taken[22m - [90mfeatures/Admin.feature:128[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The system won\'t let me create the admin account because the username {stringInDoubleQuotes} is taken', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+88) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mThen There is still a registered user in the forum with username "Naomi" and email "IamNaomi@gmail.com"[22m - [90mfeatures/Admin.feature:129[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('There is still a registered user in the forum with username {stringInDoubleQuotes} and email {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+89) Scenario: [1mFail to create admin account with an existing username[22m - [90mfeatures/Admin.feature:124[39m
+    Step: [1mThen There is no admin account with username "Naomi" registered in the forum[22m - [90mfeatures/Admin.feature:130[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('There is no admin account with username {stringInDoubleQuotes} registered in the forum', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+90) Scenario: [1mFail to create admin account with an existing username of an admin[22m - [90mfeatures/Admin.feature:132[39m
+    Step: [1mGiven There is a registered admin user in the forum with username "Kasa", email "IamKasa@gmail.com" and password "KasaMeansUmbrella"[22m - [90mfeatures/Admin.feature:133[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('There is a registered admin user in the forum with username {stringInDoubleQuotes}, email {stringInDoubleQuotes} and password {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, stringInDoubleQuotes3, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+91) Scenario: [1mFail to create admin account with an existing username of an admin[22m - [90mfeatures/Admin.feature:132[39m
+    Step: [1mGiven I have asked the forum system to create a new admin account[22m - [90mfeatures/Admin.feature:134[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('I have asked the forum system to create a new admin account', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+92) Scenario: [1mFail to create admin account with an existing username of an admin[22m - [90mfeatures/Admin.feature:132[39m
+    Step: [1mWhen I provide "Kasa" as the username of the admin account I'm trying to create[22m - [90mfeatures/Admin.feature:135[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('I provide {stringInDoubleQuotes} as the username of the admin account I\'m trying to create', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+93) Scenario: [1mFail to create admin account with an existing username of an admin[22m - [90mfeatures/Admin.feature:132[39m
+    Step: [1mThen The system won't let me create the admin account because the username "Kasa" is taken[22m - [90mfeatures/Admin.feature:136[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('The system won\'t let me create the admin account because the username {stringInDoubleQuotes} is taken', function (stringInDoubleQuotes, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+94) Scenario: [1mFail to create admin account with an existing username of an admin[22m - [90mfeatures/Admin.feature:132[39m
+    Step: [1mThen There is still only one admin account with username "Kasa" in the forum, and its email is "IamKasa@gmail.com"[22m - [90mfeatures/Admin.feature:137[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('There is still only one admin account with username {stringInDoubleQuotes} in the forum, and its email is {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+95) Scenario: [1mcriar lista de discussão com nome já existente[22m - [90mfeatures/CriarListaDiscussao.feature:17[39m
+    Step: [1mGiven há uma lista de discussão chamada "Como castar spell" no tópico "c++"[22m - [90mfeatures/CriarListaDiscussao.feature:18[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('há uma lista de discussão chamada {stringInDoubleQuotes} no tópico {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+96) Scenario: [1mcriar lista de discussão com nome já existente[22m - [90mfeatures/CriarListaDiscussao.feature:17[39m
+    Step: [1mThen eu vejo que não foi criada a lista de discussão[22m - [90mfeatures/CriarListaDiscussao.feature:23[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('eu vejo que não foi criada a lista de discussão', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+97) Scenario: [1mcriar lista de discussão com nome já existente[22m - [90mfeatures/CriarListaDiscussao.feature:17[39m
+    Step: [1mThen recebo um aviso de erro relacionado à duplicata de nome da lista de discussão[22m - [90mfeatures/CriarListaDiscussao.feature:24[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Then('recebo um aviso de erro relacionado à duplicata de nome da lista de discussão', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+98) Scenario: [1mcriar lista de discussão sem tópico[22m - [90mfeatures/CriarListaDiscussao.feature:27[39m
+    Step: [1mGiven não há uma lista de discussão chamada "Poção de invisibilidade" no tópico "html"[22m - [90mfeatures/CriarListaDiscussao.feature:28[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  Given('não há uma lista de discussão chamada {stringInDoubleQuotes} no tópico {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+99) Scenario: [1mcriar lista de discussão sem tópico[22m - [90mfeatures/CriarListaDiscussao.feature:27[39m
+    Step: [1mWhen eu não seleciono qualquer tópico[22m - [90mfeatures/CriarListaDiscussao.feature:31[39m
+    Message:
+      [33mUndefined. Implement with the following snippet:[39m
+
+      [33m  When('eu não seleciono qualquer tópico', function (callback) {[39m
+      [33m    // Write code here that turns the phrase above into concrete actions[39m
+      [33m    callback(null, 'pending');[39m
+      [33m  });[39m
+
+100) Scenario: [1mcriar lista de discussão sem tópico[22m - [90mfeatures/CriarListaDiscussao.feature:27[39m
+     Step: [1mThen eu vejo que não foi criada a lista de discussão[22m - [90mfeatures/CriarListaDiscussao.feature:33[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo que não foi criada a lista de discussão', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+101) Scenario: [1mcriar lista de discussão sem tópico[22m - [90mfeatures/CriarListaDiscussao.feature:27[39m
+     Step: [1mThen recebo um aviso de erro indicando à falta de tópico[22m - [90mfeatures/CriarListaDiscussao.feature:34[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('recebo um aviso de erro indicando à falta de tópico', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+102) Scenario: [1mcriar lista de discussão que já existe[22m - [90mfeatures/CriarListaDiscussao.feature:36[39m
+     Step: [1mGiven há uma lista de discussão de nome "Não consigo achar a próxima missão!" e tópico "html" no sistema[22m - [90mfeatures/CriarListaDiscussao.feature:37[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão de nome {stringInDoubleQuotes} e tópico {stringInDoubleQuotes} no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+103) Scenario: [1mcriar lista de discussão que já existe[22m - [90mfeatures/CriarListaDiscussao.feature:36[39m
+     Step: [1mWhen eu envio outra lista com as mesmas especificações para o sistema[22m - [90mfeatures/CriarListaDiscussao.feature:38[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio outra lista com as mesmas especificações para o sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+104) Scenario: [1mcriar lista de discussão que já existe[22m - [90mfeatures/CriarListaDiscussao.feature:36[39m
+     Step: [1mThen o sistema continua a possuir apenas uma lista de discussão de nome "Não consigo achar a próxima missão!" no tópico "html"[22m - [90mfeatures/CriarListaDiscussao.feature:39[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('o sistema continua a possuir apenas uma lista de discussão de nome {stringInDoubleQuotes} no tópico {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+105) Scenario: [1mGUI - Filtrar posts no menu inicial por múltiplos tópicos.[22m - [90mfeatures/HomePage.feature:16[39m
+     Step: [1mGiven I can see the "Topic filter".[22m - [90mfeatures/HomePage.feature:18[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+106) Scenario: [1mGUI - Filtrar posts no menu inicial por múltiplos tópicos.[22m - [90mfeatures/HomePage.feature:16[39m
+     Step: [1mGiven There are no selected topics in the "Topic filter".[22m - [90mfeatures/HomePage.feature:19[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('There are no selected topics in the {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+107) Scenario: [1mGUI - Filtrar posts no menu inicial por múltiplos tópicos.[22m - [90mfeatures/HomePage.feature:16[39m
+     Step: [1mWhen I request to filter by the topics: "Futebol", "Anime".[22m - [90mfeatures/HomePage.feature:20[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I request to filter by the topics: {stringInDoubleQuotes}, {stringInDoubleQuotes}.', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+108) Scenario: [1mGUI - Filtrar posts no menu inicial por múltiplos tópicos.[22m - [90mfeatures/HomePage.feature:16[39m
+     Step: [1mThen I can now see only the threads related to the topics: "Futebol" or "Anime"[22m - [90mfeatures/HomePage.feature:21[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can now see only the threads related to the topics: {stringInDoubleQuotes} or {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+109) Scenario: [1mGUI - Filtrar posts no menu inicial por múltiplos tópicos.[22m - [90mfeatures/HomePage.feature:16[39m
+     Step: [1mThen I'm still at the "Home" page.[22m - [90mfeatures/HomePage.feature:22[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I\'m still at the {stringInDoubleQuotes} page.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+110) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mGiven I can see the first post title is "Putin invadiu a Ucrânia." with time of post "2 days ago"[22m - [90mfeatures/HomePage.feature:26[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the first post title is {stringInDoubleQuotes} with time of post {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+111) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mGiven I can see the second post title "Aviões militares chineses no espaço aéreo de Taiwan" with time of post "1 day ago".[22m - [90mfeatures/HomePage.feature:27[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the second post title {stringInDoubleQuotes} with time of post {stringInDoubleQuotes}.', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+112) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mGiven I can see the third post title "USA e a NATO executam sanções a Russia" with time of post "12 hours ago"[22m - [90mfeatures/HomePage.feature:28[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the third post title {stringInDoubleQuotes} with time of post {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+113) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mWhen I request to sort the posts by "Most Recent"[22m - [90mfeatures/HomePage.feature:29[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I request to sort the posts by {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+114) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mThen I can see that the first post is "USA e a OTAN executam sanções a Russia"[22m - [90mfeatures/HomePage.feature:30[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see that the first post is {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+115) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mThen I can see that the second post is "Aviões militares chineses no espaço aéreo de Taiwan"[22m - [90mfeatures/HomePage.feature:31[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see that the second post is {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+116) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mThen I can see that the third post is "Putin invadiu a Ucrânia."[22m - [90mfeatures/HomePage.feature:32[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see that the third post is {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+117) Scenario: [1mGUI - despor posts do menu inicial por ordem "Mais recente"[22m - [90mfeatures/HomePage.feature:24[39m
+     Step: [1mThen I'm still at the "Home" page.[22m - [90mfeatures/HomePage.feature:33[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I\'m still at the {stringInDoubleQuotes} page.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+118) Scenario: [1mGUI - Expandir um post que foi deletado.[22m - [90mfeatures/HomePage.feature:35[39m
+     Step: [1mGiven I can see the post title "A NA'VI se tornará um time russo?".[22m - [90mfeatures/HomePage.feature:37[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the post title {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+119) Scenario: [1mGUI - Expandir um post que foi deletado.[22m - [90mfeatures/HomePage.feature:35[39m
+     Step: [1mWhen I select this post title.[22m - [90mfeatures/HomePage.feature:38[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I select this post title.', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+120) Scenario: [1mGUI - Expandir um post que foi deletado.[22m - [90mfeatures/HomePage.feature:35[39m
+     Step: [1mThen I can see a warning explaining that this post does not exist..[22m - [90mfeatures/HomePage.feature:39[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see a warning explaining that this post does not exist..', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+121) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mGiven I am not logged in.[22m - [90mfeatures/HomePage.feature:44[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I am not logged in.', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+122) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mGiven I can all the post from all users sorted by "Mais Recente"[22m - [90mfeatures/HomePage.feature:45[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can all the post from all users sorted by {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+123) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mWhen I select to filter by "Only my posts".[22m - [90mfeatures/HomePage.feature:46[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I select to filter by {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+124) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mThen I'm still at the "Home" Page[22m - [90mfeatures/HomePage.feature:47[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I\'m still at the {stringInDoubleQuotes} Page', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+125) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mThen I can see a warning that only logged users can see their posts.[22m - [90mfeatures/HomePage.feature:48[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see a warning that only logged users can see their posts.', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+126) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mThen I still can see all the post from all users sorted by "Mais Recente"[22m - [90mfeatures/HomePage.feature:49[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I still can see all the post from all users sorted by {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+127) Scenario: [1mGUI - Usuário não cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:42[39m
+     Step: [1mThen I am redirected to "login" page.[22m - [90mfeatures/HomePage.feature:50[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I am redirected to {stringInDoubleQuotes} page.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+128) Scenario: [1mGUI - Usuário cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:52[39m
+     Step: [1mGiven I am logged in as "user00".[22m - [90mfeatures/HomePage.feature:54[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I am logged in as {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+129) Scenario: [1mGUI - Usuário cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:52[39m
+     Step: [1mGiven I can all the post from all users sorted by "Mais Recente"[22m - [90mfeatures/HomePage.feature:55[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can all the post from all users sorted by {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+130) Scenario: [1mGUI - Usuário cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:52[39m
+     Step: [1mWhen I select to filter by "Only my posts".[22m - [90mfeatures/HomePage.feature:56[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I select to filter by {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+131) Scenario: [1mGUI - Usuário cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:52[39m
+     Step: [1mThen I'm still at the "Home" Page[22m - [90mfeatures/HomePage.feature:57[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I\'m still at the {stringInDoubleQuotes} Page', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+132) Scenario: [1mGUI - Usuário cadastrado: Tentar visualizar os próprios posts[22m - [90mfeatures/HomePage.feature:52[39m
+     Step: [1mThen I can see all the posts made by "user00"[22m - [90mfeatures/HomePage.feature:58[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can see all the posts made by {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+133) Scenario: [1mGUI - Expandir um post.[22m - [90mfeatures/HomePage.feature:60[39m
+     Step: [1mGiven I can see the post title "A NA'VI se tornará um time russo?".[22m - [90mfeatures/HomePage.feature:62[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('I can see the post title {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+134) Scenario: [1mGUI - Expandir um post.[22m - [90mfeatures/HomePage.feature:60[39m
+     Step: [1mWhen I select this post title.[22m - [90mfeatures/HomePage.feature:63[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('I select this post title.', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+135) Scenario: [1mGUI - Expandir um post.[22m - [90mfeatures/HomePage.feature:60[39m
+     Step: [1mThen I'm redirected to "A NA'VI se tornará um time Russo?" page.[22m - [90mfeatures/HomePage.feature:64[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I\'m redirected to {stringInDoubleQuotes} page.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+136) Scenario: [1mGUI - Expandir um post.[22m - [90mfeatures/HomePage.feature:60[39m
+     Step: [1mThen I can now see the whole post, its information("topics", "creator", "date/hour"), its commentaries.[22m - [90mfeatures/HomePage.feature:65[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('I can now see the whole post, its information({stringInDoubleQuotes}, {stringInDoubleQuotes}, {stringInDoubleQuotes}), its commentaries.', function (stringInDoubleQuotes, stringInDoubleQuotes2, stringInDoubleQuotes3, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+137) Scenario: [1mremover uma lista de discussão[22m - [90mfeatures/RemoverListaDiscussao.feature:6[39m
+     Step: [1mGiven há uma lista de discussão chamada “Pior mapa do jogo” no tópico “Battlefield 1”[22m - [90mfeatures/RemoverListaDiscussao.feature:7[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão chamada “Pior mapa do jogo” no tópico “Battlefield {int}”', function (int, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+138) Scenario: [1mremover uma lista de discussão[22m - [90mfeatures/RemoverListaDiscussao.feature:6[39m
+     Step: [1mGiven eu estou na página “Remoção de lista de discussão”[22m - [90mfeatures/RemoverListaDiscussao.feature:8[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página “Remoção de lista de discussão”', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+139) Scenario: [1mremover uma lista de discussão[22m - [90mfeatures/RemoverListaDiscussao.feature:6[39m
+     Step: [1mWhen eu seleciono a lista de discussão “Pior mapa do jogo”[22m - [90mfeatures/RemoverListaDiscussao.feature:9[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu seleciono a lista de discussão “Pior mapa do jogo”', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+140) Scenario: [1mremover uma lista de discussão[22m - [90mfeatures/RemoverListaDiscussao.feature:6[39m
+     Step: [1mThen eu recebo uma confirmação de remoção[22m - [90mfeatures/RemoverListaDiscussao.feature:10[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu recebo uma confirmação de remoção', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+141) Scenario: [1mremover uma lista de discussão[22m - [90mfeatures/RemoverListaDiscussao.feature:6[39m
+     Step: [1mThen eu vejo que a lista de discussão de nome “Pior mapa do jogo” não mais está presente no tópico “Battlefield 1”[22m - [90mfeatures/RemoverListaDiscussao.feature:11[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo que a lista de discussão de nome “Pior mapa do jogo” não mais está presente no tópico “Battlefield {int}”', function (int, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+142) Scenario: [1mremover lista de discussão que não existe[22m - [90mfeatures/RemoverListaDiscussao.feature:13[39m
+     Step: [1mGiven não há uma lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema[22m - [90mfeatures/RemoverListaDiscussao.feature:14[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('não há uma lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+143) Scenario: [1mremover lista de discussão que não existe[22m - [90mfeatures/RemoverListaDiscussao.feature:13[39m
+     Step: [1mWhen eu envio a solicitação para a exclusão da lista de discussão para o sistema[22m - [90mfeatures/RemoverListaDiscussao.feature:15[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio a solicitação para a exclusão da lista de discussão para o sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+144) Scenario: [1mremover lista de discussão que não existe[22m - [90mfeatures/RemoverListaDiscussao.feature:13[39m
+     Step: [1mThen o sistema continua a não possuir a lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema[22m - [90mfeatures/RemoverListaDiscussao.feature:16[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('o sistema continua a não possuir a lista de discussão de nome “Limpei o radiador do meu carro” no tópico “Automóveis” no sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+145) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mGiven eu estou logado como usuário[22m - [90mfeatures/Reply.feature:7[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou logado como usuário', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+146) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mGiven eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[22m - [90mfeatures/Reply.feature:8[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página da lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+147) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mGiven eu vejo a resposta do usuário João: "Não faço ideia"[22m - [90mfeatures/Reply.feature:9[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu vejo a resposta do usuário João: {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+148) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mWhen eu envio a resposta "É 2" ao sistema[22m - [90mfeatures/Reply.feature:10[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio a resposta {stringInDoubleQuotes} ao sistema', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+149) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mThen eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[22m - [90mfeatures/Reply.feature:11[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu continuo na página da discussão {stringInDoubleQuotes} criada por {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+150) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mThen eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:12[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+151) Scenario: [1mResponder à lista de discussão[22m - [90mfeatures/Reply.feature:6[39m
+     Step: [1mThen eu vejo logo abaixo da resposta de João a minha mensagem "É 2"[22m - [90mfeatures/Reply.feature:13[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo logo abaixo da resposta de João a minha mensagem {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+152) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mGiven eu estou logado como usuário[22m - [90mfeatures/Reply.feature:16[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou logado como usuário', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+153) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mGiven eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[22m - [90mfeatures/Reply.feature:17[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página da lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+154) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mGiven eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:18[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+155) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mWhen eu envio uma resposta vazia ao sistema[22m - [90mfeatures/Reply.feature:19[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio uma resposta vazia ao sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+156) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mThen eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[22m - [90mfeatures/Reply.feature:20[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu continuo na página da discussão {stringInDoubleQuotes} criada por {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+157) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mThen eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:21[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+158) Scenario: [1mTentar responder lista com resposta em branco[22m - [90mfeatures/Reply.feature:15[39m
+     Step: [1mThen eu vejo uma mensagem de erro indicando que não podem ser enviadas mensagens vazias[22m - [90mfeatures/Reply.feature:22[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo uma mensagem de erro indicando que não podem ser enviadas mensagens vazias', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+159) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mGiven eu estou logado como usuário[22m - [90mfeatures/Reply.feature:25[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou logado como usuário', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+160) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mGiven eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[22m - [90mfeatures/Reply.feature:26[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página da lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+161) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mGiven eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:27[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+162) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mGiven a lista de discussão está trancada[22m - [90mfeatures/Reply.feature:28[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a lista de discussão está trancada', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+163) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mWhen eu envio a resposta "É 2" ao sistema[22m - [90mfeatures/Reply.feature:29[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio a resposta {stringInDoubleQuotes} ao sistema', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+164) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mThen eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[22m - [90mfeatures/Reply.feature:30[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu continuo na página da discussão {stringInDoubleQuotes} criada por {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+165) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mThen eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:31[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+166) Scenario: [1mTentar responder à lista trancada[22m - [90mfeatures/Reply.feature:24[39m
+     Step: [1mThen eu vejo uma mensagem de erro indicando que a discussão está trancada e não aceita novas respostas[22m - [90mfeatures/Reply.feature:32[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo uma mensagem de erro indicando que a discussão está trancada e não aceita novas respostas', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+167) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mGiven eu estou logado como usuário[22m - [90mfeatures/Reply.feature:35[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou logado como usuário', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+168) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mGiven eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[22m - [90mfeatures/Reply.feature:36[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página da lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+169) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mGiven eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:37[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+170) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mWhen eu envio "É 2" como resposta ao comentário de João[22m - [90mfeatures/Reply.feature:38[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio {stringInDoubleQuotes} como resposta ao comentário de João', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+171) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mThen eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[22m - [90mfeatures/Reply.feature:39[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu continuo na página da discussão {stringInDoubleQuotes} criada por {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+172) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mThen eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:40[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+173) Scenario: [1mResponder comentário da lista[22m - [90mfeatures/Reply.feature:34[39m
+     Step: [1mThen eu vejo logo abaixo da resposta de João a minha resposta, composta por uma citação à mensagem de João e o conteúdo "É 2".[22m - [90mfeatures/Reply.feature:41[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo logo abaixo da resposta de João a minha resposta, composta por uma citação à mensagem de João e o conteúdo {stringInDoubleQuotes}.', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+174) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mGiven eu não estou logado no fórum[22m - [90mfeatures/Reply.feature:44[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu não estou logado no fórum', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+175) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mGiven eu estou na página da lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos"[22m - [90mfeatures/Reply.feature:45[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu estou na página da lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+176) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mGiven eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:46[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+177) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mWhen eu tento enviar "É 2" como resposta à discussão[22m - [90mfeatures/Reply.feature:47[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu tento enviar {stringInDoubleQuotes} como resposta à discussão', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+178) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mThen eu continuo na página da discussão "Qual é a derivada de 2x" criada por "Carlos"[22m - [90mfeatures/Reply.feature:48[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu continuo na página da discussão {stringInDoubleQuotes} criada por {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+179) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mThen eu vejo a resposta do usuário "João": "Não faço ideia"[22m - [90mfeatures/Reply.feature:49[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo a resposta do usuário {stringInDoubleQuotes}: {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+180) Scenario: [1mTentar responder lista sem estar logado[22m - [90mfeatures/Reply.feature:43[39m
+     Step: [1mThen eu vejo uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão[22m - [90mfeatures/Reply.feature:50[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('eu vejo uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+181) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mGiven há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:53[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+182) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mGiven a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:54[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+183) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mWhen eu envio "É 2" como resposta à discussão ao sistema[22m - [90mfeatures/Reply.feature:55[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio {stringInDoubleQuotes} como resposta à discussão ao sistema', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+184) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mThen há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:56[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+185) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mThen a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:57[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+186) Scenario: [1mArmazenar resposta à lista de discussão[22m - [90mfeatures/Reply.feature:52[39m
+     Step: [1mThen a discussão possui a minha resposta "É 2"[22m - [90mfeatures/Reply.feature:58[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a minha resposta {stringInDoubleQuotes}', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+187) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mGiven há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:61[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+188) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mGiven a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:62[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+189) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mWhen eu envio uma resposta vazia como resposta à discussão ao sistema[22m - [90mfeatures/Reply.feature:63[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio uma resposta vazia como resposta à discussão ao sistema', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+190) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mThen há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:64[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+191) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mThen a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:65[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+192) Scenario: [1mTentar armazenar resposta em branco à lista[22m - [90mfeatures/Reply.feature:60[39m
+     Step: [1mThen o sistema envia uma mensagem de erro devido ao fato de uma mensagem vazia ter sido recebida[22m - [90mfeatures/Reply.feature:66[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('o sistema envia uma mensagem de erro devido ao fato de uma mensagem vazia ter sido recebida', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+193) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mGiven há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:69[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+194) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mGiven a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:70[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+195) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mGiven a lista está trancada[22m - [90mfeatures/Reply.feature:71[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a lista está trancada', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+196) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mWhen eu envio a resposta "É 2" à discussão ao sistema[22m - [90mfeatures/Reply.feature:72[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio a resposta {stringInDoubleQuotes} à discussão ao sistema', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+197) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mThen a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:73[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+198) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mThen o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas[22m - [90mfeatures/Reply.feature:74[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('o sistema envia uma mensagem de erro indicando que a discussão está trancada e não recebe novas respostas', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+199) Scenario: [1mTentar armazenar resposta à lista trancada[22m - [90mfeatures/Reply.feature:68[39m
+     Step: [1mThen a lista continua trancada[22m - [90mfeatures/Reply.feature:75[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a lista continua trancada', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+200) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mGiven eu não estou logado no fórum[22m - [90mfeatures/Reply.feature:78[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('eu não estou logado no fórum', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+201) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mGiven há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:79[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+202) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mGiven a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:80[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+203) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mWhen eu envio a resposta "É 2" à discussão ao sistema[22m - [90mfeatures/Reply.feature:81[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio a resposta {stringInDoubleQuotes} à discussão ao sistema', function (stringInDoubleQuotes, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+204) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mThen a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:82[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+205) Scenario: [1mTentar armazenar resposta sem estar logado[22m - [90mfeatures/Reply.feature:77[39m
+     Step: [1mThen o sistema envia uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão[22m - [90mfeatures/Reply.feature:83[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('o sistema envia uma mensagem de erro indicando que eu devo logar no fórum para responder à discussão', function (callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+206) Scenario: [1mArmazenar resposta à comentário[22m - [90mfeatures/Reply.feature:85[39m
+     Step: [1mGiven há uma lista de discussão "Qual é a derivada de 2x" criada pelo usuário "Carlos" armazenada no sistema[22m - [90mfeatures/Reply.feature:86[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('há uma lista de discussão {stringInDoubleQuotes} criada pelo usuário {stringInDoubleQuotes} armazenada no sistema', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+207) Scenario: [1mArmazenar resposta à comentário[22m - [90mfeatures/Reply.feature:85[39m
+     Step: [1mGiven a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:87[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Given('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+208) Scenario: [1mArmazenar resposta à comentário[22m - [90mfeatures/Reply.feature:85[39m
+     Step: [1mWhen eu envio ao sistema a resposta "É 2" ao comentário de "João"[22m - [90mfeatures/Reply.feature:88[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  When('eu envio ao sistema a resposta {stringInDoubleQuotes} ao comentário de {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+209) Scenario: [1mArmazenar resposta à comentário[22m - [90mfeatures/Reply.feature:85[39m
+     Step: [1mThen a discussão possui a resposta "Não faço ideia" do usuário "João"[22m - [90mfeatures/Reply.feature:89[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a resposta {stringInDoubleQuotes} do usuário {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+210) Scenario: [1mArmazenar resposta à comentário[22m - [90mfeatures/Reply.feature:85[39m
+     Step: [1mThen a discussão possui a minha resposta "É 2" armazenada como uma resposta à resposta de "João"[22m - [90mfeatures/Reply.feature:90[39m
+     Message:
+       [33mUndefined. Implement with the following snippet:[39m
+
+       [33m  Then('a discussão possui a minha resposta {stringInDoubleQuotes} armazenada como uma resposta à resposta de {stringInDoubleQuotes}', function (stringInDoubleQuotes, stringInDoubleQuotes2, callback) {[39m
+       [33m    // Write code here that turns the phrase above into concrete actions[39m
+       [33m    callback(null, 'pending');[39m
+       [33m  });[39m
+
+35 scenarios ([33m32 undefined[39m, [32m3 passed[39m)
+250 steps ([33m210 undefined[39m, [36m10 skipped[39m, [32m30 passed[39m)
+0m25.397s
+[21:42:33] I/launcher - 0 instance(s) of WebDriver still running
+[21:42:33] I/launcher - firefox #01 failed 32 test(s)
+[21:42:33] I/launcher - overall: 32 failed spec(s)
+[21:42:33] E/launcher - Process exited with error code 1

@@ -22,6 +22,14 @@ export class TopBarComponent implements OnInit {
 	private route: ActivatedRoute,
 	private _userService: UserService,
 	private _threadService: ThreadService){ 
+    if(window.innerWidth < 920){
+      this.mobille = false;
+      this._threadService.manda(false)
+    }  else
+    {
+      this._threadService.manda(true)
+      this.mobille = true;
+    }
   };
   loggedUser: User | null = null;
   public que: string = "";
@@ -40,7 +48,7 @@ export class TopBarComponent implements OnInit {
         this.mobille = true;
       }
   }
-  window.onload = () => {
+  window.onmousemove = () => {
     if(window.innerWidth < 920){
       this.mobille = false;
       this._threadService.manda(false)
@@ -50,8 +58,7 @@ export class TopBarComponent implements OnInit {
       this.mobille = true;
     }
 }
-
-  }
+}
   
   public async islogged(){
     this.loggedUser = this._userService.loggedUser;
