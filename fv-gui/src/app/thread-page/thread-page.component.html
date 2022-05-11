@@ -1,9 +1,7 @@
 <html>
-
-
-    
+ 
 <div class="centerlize">
-    <h1 class="tittle">Manage Discussions</h1>
+    <h1 class="tittle">Thread: {{thread.name}}</h1>
 <div class="thread-component-blob">
         <div class="thread-box">
                 <div class="thread-top">
@@ -11,34 +9,27 @@
                         <p class="fktxt">By: </p>
                         <p id="fkLink">{{thread.author.name}} </p>
                     </div>
-                    <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Created: </p>
                         <p id="fkfkLink">{{formatTime(thread.timeCreated)}}</p>
                     </div>
-                    <p class="sp">・</p>
-                    <div class="op-wrapper">
-                        <p class="fktxt">Last Activity: </p>
-                        <p class="fktxt" id="fkfkLink">{{formatTime(LastActivity)}}</p>
-                    </div>
-                    <p class="sp">・</p>
                     <div class="op-wrapper">
                         <p class="fktxt">Replies: </p>
                         <p class="fktxt" id="fkfkLink">{{thread.replies.length}}</p>
                     </div>
 
-                    <p class="sp">・</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic1;">PYTHON</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic2;">C++</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.topic3;">HTML</p>
-                    <p class="op-wrapper" id="fkLinkk" *ngIf="thread.isLocked">LOCKED</p>
+                    <div class="op-wrapper" id="op-wrapper-topic">
+                        <p id="fkLinkk" name="python-topic" *ngIf="thread.topic1;">PY</p>
+                        <p id="fkLinkk" name="c++-topic" *ngIf="thread.topic2;">C++</p>
+                        <p id="fkLinkk" name="html-topic" *ngIf="thread.topic3;">HTML</p>
+                        <p id="fkLinkk" *ngIf="thread.isLocked">LOCKED</p>
+                    </div>
                 </div>
                 <hr>
                 <div class="thread-bot">
                     <h1 id="thread-title">{{thread.name}}</h1>
                     <br>
                     <p id="thread-text"> {{thread.text}}</p>
-                    <br>
                     <br>
                 </div>
         </div>
@@ -50,7 +41,7 @@
                 <div class="op-wrapper">
                 <p id="fkLink"> {{r.author.name}} </p>
                 <p class="fktxt"> on </p>
-                <p id="fkfkLink">{{r.timeSent}}</p>
+                <p id="fkfkLink"> {{formatTime(r.timeSent)}}</p>
                 </div>
                 <div class="op-wrapper" id="repl-top">
                     <button class="reply-buttons" id="fkLinkk" *ngIf="loggedUser" (click)="quoteReply(r)">Quote</button>

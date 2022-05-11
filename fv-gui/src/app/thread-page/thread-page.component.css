@@ -51,6 +51,11 @@ ul{
     padding-bottom: 20%;
 }
 
+#op-wrapper-topic
+{
+    flex-direction: column;
+}
+
 .wrapper
 {
     padding-top: 5%;
@@ -171,19 +176,19 @@ select{
     padding-right: 5px;
     width: max-content;
     display: flex;
-    font-size:1vw;
+    font-size:1rem;
 }
 
 .fktxt{
-    padding-left: 3px;
-    padding-right: 3px;
-    font-size: 1em;
+    padding-left:  0.1vw;
+    padding-right:  0.05vw;
+    font-size: 1rem;
 }
 
 #fkLink{
     color: #12CDD4;
     text-decoration: underline;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 #fkfkLink{
@@ -193,13 +198,13 @@ select{
 #fkLinkk{
     color: #12CDD4;
     text-decoration: underline;
-    padding-right: 10px;
+    padding-right: 1rem;
     font-weight: bold;
 }
 
 .thread-bot{
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 2vw;
+    padding-right: 2vw;
     padding-top: 2%;
     min-height: 100%;
     flex-grow: 3;
@@ -311,4 +316,21 @@ button:hover{
 }
 .error-send-answer{
     color:#deac1e;
+}
+
+@media screen and (max-width: 900px) {
+    .thread-component-topbar
+    {
+        flex-direction: column;
+    }
+    #fkLinkk, .fktxt, #fkfkLink, #fkLink
+    {
+        font-size: 0.64rem;
+    }
+    .wrapper
+    {
+        padding: 1rem;
+        margin: 0;
+        align-content: center;
+    }
 }

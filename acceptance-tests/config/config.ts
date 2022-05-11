@@ -11,12 +11,12 @@ export let config: Config = {
 		'marionette': true,
 
         // Para rodar no WSL, descomente as linhas abaixo:
-        // firefoxOptions: {
-        //   args: ['--headless']
-        // },
-        // 'moz:firefoxOptions': {
-        //   args: ['--headless']
-        // }
+        firefoxOptions: {
+          args: ['--headless']
+        },
+        'moz:firefoxOptions': {
+          args: ['--headless']
+        }
     },
 
     framework: 'custom',
